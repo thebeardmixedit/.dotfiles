@@ -10,28 +10,23 @@ Zsh is the primary shell. Bash is maintained as a portable fallback and should m
 
 ```text
 bash/
+├── .aliases
 ├── .bash_profile
 ├── .bashrc
-├── .aliases
 ├── .functions
 ├── .history
-├── .prompt
-└── config.links
+└── .prompt
 
 zsh/
-├── .zprofile
-├── .zshrc
 ├── .aliases
 ├── .functions
 ├── .history
 ├── .p10k.zsh
-└── config.links
+├── .zprofile
+└── .zshrc
 
 bin/
     User-facing executable commands.
-
-lib/
-    Shared shell support code sourced by scripts.
 ```
 
 ## Zsh Startup Flow
