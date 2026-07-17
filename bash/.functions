@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+# Create a directory and enter it.
+mkd() {
+    if [[ -z "${1:-}" ]]; then
+        printf 'Usage: mkd <directory>\n' >&2
+        return 2
+    fi
+
+    mkdir -p -- "$1" || return
+    cd -- "$1" || return
+}
+
+# Change to the directory shown in the frontmost Finder window.
+cdf() {
+    local directory
+
+    directory="$(
+        osascript -e 'tell application "Finder" to POSIX path of (insertion location as alias)'
+    )" || return
+
+    cd -- "$directory" || return
+}
+
+# Print each PATH entry on a separate line.
+path() {
+    printf '%s\n' "${PATH//:/$'\n'}"
+}

@@ -1,0 +1,4 @@
+#!/usr/bin/env zsh
+
+source ~/.zshrc   
+compaudit | xargs chmod g-w &>/dev/null

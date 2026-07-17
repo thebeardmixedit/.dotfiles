@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+disklist=$(diskutil list)
+
+if echo "$disklist" | grep -q "The Beard Sessions 2TB" && echo "$disklist" | grep -q "The Beard Sessions Copy"; then
+    ccc -s "The Beard Sessions 2TB"
+fi
+
+if echo "$disklist" | grep -q "The Beard M4 Macbook"; then
+    ccc -s "The Beard M4 Macbook Pro"
+fi
+
+if echo "$disklist" | grep -q "MB Sessions 2TB" && echo "$disklist" | grep -q "MB Sessions Copy"; then
+    ccc -s "MB Sessions 2TB"
+fi
+
+if echo "$disklist" | grep -q "MB Sessions 2TB" && echo "$disklist" | grep -q "MB Sessions COPY BB"; then
+    ccc -s "MB Sessions 2TB BB Copy"
+fi

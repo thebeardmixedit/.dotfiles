@@ -1,0 +1,68 @@
+#!/usr/bin/env zsh
+
+set -euo pipefail
+
+bundle_id="${1:-}"
+workspace="${2:-}"
+new_win_cmd="${3:-}"
+
+usage() {
+    echo "Usage: $(basename "$0") <bundle_id> <workspace> [new_window_command]" >&2
+    exit 1
+}
+
+process_name_from_bundle_id() {
+    osascript -e "name of application id \"$bundle_id\""
+}
+
+is_running() {
+    local process_name
+    process_name="$(process_name_from_bundle_id)"
+
+    pgrep -x "$process_name" >/dev/null
+}
+
+workspace_window_count() {
+    aerospace list-windows \
+        --workspace "$workspace" \
+        --count
+}
+
+target_window_count() {
+    aerospace list-windows \
+        --monitor all \
+        --app-bundle-id "$bundle_id" \
+        --count
+}
+
+activate_app() {
+    osascript \
+        -e "tell application id \"$bundle_id\" to activate" \
+        2>/dev/null || true
+}
+
+[[ -z "$bundle_id" || -z "$workspace" ]] && usage
+
+if ! is_running; then
+    count="$(workspace_window_count)"
+
+    if ((count > 0)); then
+        aerospace workspace "$workspace"
+        exit 0
+    fi
+
+    open -b "$bundle_id"
+    exit 0
+fi
+
+aerospace workspace "$workspace"
+activate_app
+
+if [[ -n "$new_win_cmd" ]]; then
+    count="$(target_window_count)"
+
+    if ((count == 0)); then
+        eval "$new_win_cmd" || true
+        activate_app
+    fi
+fi

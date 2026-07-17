@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<kPropDriverIOMap version="1">
+  <kPropDriverIOMapInput>
+    <IOMapEntry hwID="922037005" hwType="Apollo x8p" name="MIC/LINE/HIZ 1" channelType="MicLineHiZ"
+                channel="1"/>
+    <IOMapEntry hwID="922037005" hwType="Apollo x8p" name="MIC/LINE/HIZ 2" channelType="MicLineHiZ"
+                channel="2"/>
+    <IOMapEntry hwID="922037005" hwType="Apollo x8p" name="MIC/LINE 3" channelType="MicLine"
+                channel="3"/>
+    <IOMapEntry hwID="922037005" hwType="Apollo x8p" name="MIC/LINE 4" channelType="MicLine"
+                channel="4"/>
+    <IOMapEntry hwID="922037005" hwType="Apollo x8p" name="MIC/LINE 5" channelType="Line"
+                channel="5"/>
+    <IOMapEntry hwID="922037005" hwType="Apollo x8p" name="MIC/LINE 6" channelType="Line"
+                channel="6"/>
+    <IOMapEntry hwID="922037005" hwType="Apollo x8p" name="MIC/LINE 7" channelType="Line"
+                channel="7"/>
+    <IOMapEntry hwID="922037005" hwType="Apollo x8p" name="MIC/LINE 8" channelType="Line"
+                channel="8"/>
+  </kPropDriverIOMapInput>
+  <kPropDriverIOMapOutput>
+    <IOMapEntry hwID="922037005" hwType="Apollo x8p" name="MON L" channelType="Mon"
+                channel="1"/>
+    <IOMapEntry hwID="922037005" hwType="Apollo x8p" name="MON R" channelType="Mon"
+                channel="2"/>
+    <IOMapEntry hwID="922037005" hwType="Apollo x8p" name="LINE 3" channelType="Line"
+                channel="3"/>
+    <IOMapEntry hwID="922037005" hwType="Apollo x8p" name="LINE 4" channelType="Line"
+                channel="4"/>
+    <IOMapEntry hwID="922037005" hwType="Apollo x8p" name="LINE 5" channelType="Line"
+                channel="5"/>
+    <IOMapEntry hwID="922037005" hwType="Apollo x8p" name="LINE 6" channelType="Line"
+                channel="6"/>
+    <IOMapEntry hwID="922037005" hwType="Apollo x8p" name="LINE 7" channelType="Line"
+                channel="7"/>
+    <IOMapEntry hwID="922037005" hwType="Apollo x8p" name="LINE 8" channelType="Line"
+                channel="8"/>
+  </kPropDriverIOMapOutput>
+</kPropDriverIOMap>

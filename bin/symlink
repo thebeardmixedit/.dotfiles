@@ -1,0 +1,108 @@
+#!/usr/bin/env zsh
+
+set -euo pipefail
+
+notify() {
+    local message="$1"
+    local title="${2:-Symlink}"
+
+    osascript -e "display notification \"${message}\" with title \"${title}\""
+}
+
+alert() {
+    local message="$1"
+    local title="${2:-Symlink Error}"
+
+    osascript -e "display alert \"${title}\" message \"${message}\""
+}
+
+get_first_finder_selection() {
+    osascript <<'APPLESCRIPT'
+tell application "Finder"
+  set selectedItems to selection
+
+  if selectedItems is {} then
+    return ""
+  end if
+
+  return POSIX path of (item 1 of selectedItems as alias)
+end tell
+APPLESCRIPT
+}
+
+choose_destination() {
+    local src="$1"
+    local default_name
+    local default_dir
+
+    default_name="$(basename "$src")"
+    default_dir="$(dirname "$src")"
+
+    osascript - "$default_name" "$default_dir" <<'APPLESCRIPT'
+on run argv
+  set defaultName to item 1 of argv
+  set defaultDir to item 2 of argv
+
+  tell application "Finder"
+    activate
+
+    try
+      set chosenFile to choose file name ¬
+        with prompt "Choose symlink destination:" ¬
+        default name defaultName ¬
+        default location (POSIX file defaultDir)
+
+      return POSIX path of chosenFile
+    on error number -128
+      return ""
+    end try
+  end tell
+end run
+APPLESCRIPT
+}
+
+main() {
+    local src="${1:-}"
+    local dest="${2:-}"
+    local dest_parent
+
+    if [[ -z "$src" ]]; then
+        src="$(get_first_finder_selection)"
+    fi
+
+    if [[ -z "$src" ]]; then
+        alert "No source path provided and no Finder item selected."
+        exit 1
+    fi
+
+    if [[ ! -e "$src" && ! -L "$src" ]]; then
+        alert "Source does not exist:\n$src"
+        exit 1
+    fi
+
+    src="${src:A}"
+
+    if [[ -z "$dest" ]]; then
+        dest="$(choose_destination "$src")"
+    fi
+
+    if [[ -z "$dest" ]]; then
+        exit 0
+    fi
+
+    dest="${dest:A}"
+    dest_parent="${dest:h}"
+
+    mkdir -p "$dest_parent"
+
+    if [[ -e "$dest" && ! -L "$dest" ]]; then
+        alert "Refusing to overwrite non-symlink destination:\n$dest" "Destination Exists"
+        exit 1
+    fi
+
+    ln -sfn "$src" "$dest"
+
+    notify "$(basename "$src") → $dest" "Symlink Created"
+}
+
+main "$@"

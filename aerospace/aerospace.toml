@@ -1,0 +1,157 @@
+config-version = 2
+
+after-login-command = []
+
+after-startup-command = []
+
+start-at-login = true
+
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
+
+accordion-padding = 40
+default-root-container-layout = 'tiles'
+default-root-container-orientation = 'auto'
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+automatically-unhide-macos-hidden-apps = true
+
+persistent-workspaces = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'ex']
+
+on-window-detected = [
+    {
+        if = "test %{app-bundle-id} = com.apple.finder",
+        run = ["move-node-to-workspace fd"],
+    },
+    {
+        if = "test %{app-bundle-id} ~= com.uaudio.console3",
+        run = ["move-node-to-workspace ua"],
+    },
+    {
+        if = "test %{app-bundle-id} = com.avid.ProTools",
+        run = ["move-node-to-workspace pt"],
+    },
+    {
+        if = "test %{app-bundle-id} = com.apple.logic10",
+        run = ["move-node-to-workspace lg"],
+    },
+    {
+        if = "test %{app-bundle-id} = com.ableton.live",
+        run = ["move-node-to-workspace ab"],
+    },
+    {
+        if = "test %{app-bundle-id} = com.mitchellh.ghostty",
+        run = ["move-node-to-workspace tm"],
+    },
+    {
+        if = "test %{app-bundle-id} = com.brave.Browser",
+        run = ["move-node-to-workspace br"],
+    },
+    {
+        if = "test %{app-bundle-id} = com.apple.MobileSMS",
+        run = ["move-node-to-workspace ms"],
+    },
+    {
+        if = "test %{app-bundle-id} = com.apple.mail",
+        run = ["move-node-to-workspace ml"],
+    },
+    {
+        if = "test %{app-bundle-id} = com.brave.Browser.app.agimnkijcaahngcdmfeangaknmldooml",
+        run = ["move-node-to-workspace yt"],
+    },
+    {
+        if = "test %{app-bundle-id} = us.zoom.xos",
+        run = ["move-node-to-workspace zm"],
+    },
+    {
+        if = "test %{app-bundle-id} = com.apple.iCal",
+        run = ["move-node-to-workspace ca"],
+    },
+    {
+        if = "test %{app-bundle-id} = com.apple.reminders",
+        run = ["move-node-to-workspace rm"],
+    },
+    {
+        if = "test %{app-bundle-id} = com.apple.Notes",
+        run = ["move-node-to-workspace nt"],
+    },
+    {
+        if = "test %{app-bundle-id} = com.spotify.client",
+        run = ["move-node-to-workspace sp"],
+    },
+    {
+        if = "test %{app-bundle-id} = com.openai.chat",
+        run = ["move-node-to-workspace ai"],
+    },
+    {
+        if = "test %{app-bundle-id} = com.apple.audio.AudioMIDISetup",
+        run = ["move-node-to-workspace am"],
+    },
+    {
+        if = "test %{app-bundle-id} = com.adobe.illustrator",
+        run = ["move-node-to-workspace il"],
+    },
+    {
+        if = "test %{app-bundle-id} = org.pqrs.Karabiner-Elements.Settings",
+        run = ["move-node-to-workspace kr"],
+    },
+    {
+        if = "test %{app-bundle-id} = org.pqrs.Karabiner-EventViewer",
+        run = ["move-node-to-workspace ke"],
+    },
+    {
+        if = """\
+            test %{app-bundle-id} = org.m0k.transmission \
+            || test %{app-bundle-id} = com.apple.AppStore \
+            || test %{app-bundle-id} = com.apple.ActivityMonitor \
+            || test %{app-bundle-id} = com.apple.Preview \
+            || test %{app-bundle-id} = com.1password.1password \
+            || test %{app-bundle-id} = com.runningwithcrayons.Alfred-Preferences \
+            || test %{app-bundle-id} = io.zsa.keymapp \
+            || test %{app-bundle-id} = com.bjango.istatmenus \
+        """,
+        run = ["layout floating"],
+    },
+]
+
+[key-mapping]
+preset = 'qwerty'
+
+[gaps]
+inner.horizontal = 15
+inner.vertical = 15
+outer.bottom = 25
+outer.left = 25
+outer.right = 25
+outer.top = 5
+
+[workspace-to-monitor-force-assignment]
+ex = 'secondary'
+
+[mode.main.binding]
+
+# All possible keys:
+# - Letters.        a, b, c, ..., z
+# - Numbers.        0, 1, 2, ..., 9
+# - Keypad numbers. keypad0, keypad1, keypad2, ..., keypad9
+# - F-keys.         f1, f2, ..., f20
+# - Special keys.   minus, equal, period, comma, slash, backslash, quote, semicolon,
+#                   backtick, leftSquareBracket, rightSquareBracket, space, enter, esc,
+#                   backspace, tab, pageUp, pageDown, home, end, forwardDelete,
+#                   sectionSign (ISO keyboards only, european keyboards only)
+# - Keypad special. keypadClear, keypadDecimalMark, keypadDivide, keypadEnter, keypadEqual,
+#                   keypadMinus, keypadMultiply, keypadPlus
+# - Arrows.         left, down, up, right
+
+# All possible modifiers: cmd, alt, ctrl, shift
+
+alt-u = 'mode service'
+alt-tab = 'workspace-back-and-forth'
+
+[mode.service.binding]
+
+enter = ['reload-config', 'mode main']
+esc = ['reload-config', 'mode main']
+
+r = ['flatten-workspace-tree', 'mode main']
+
+backspace = ['close-all-windows-but-current', 'mode main']

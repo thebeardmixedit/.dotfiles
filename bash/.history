@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+# History file configuration
+HISTFILE="$HOME/.bash_history"
+HISTSIZE=50000
+HISTFILESIZE=100000
+
+# Ignore duplicate commands and commands beginning with a space.
+HISTCONTROL="ignoreboth:erasedups"
+
+# Include timestamps when displaying history.
+HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S  "
+
+# Append new commands and read commands written by other open shells.
+history_sync() {
+    history -a
+    history -n
+}

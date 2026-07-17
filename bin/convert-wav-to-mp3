@@ -1,0 +1,64 @@
+#!/usr/bin/env zsh
+
+set -euo pipefail
+
+get_finder_selection() {
+    osascript <<'APPLESCRIPT'
+tell application "Finder"
+	set selectedItems to selection
+	set output to ""
+	repeat with selectedItem in selectedItems
+		set itemPath to POSIX path of (selectedItem as alias)
+		set output to output & itemPath & linefeed
+	end repeat
+	return output
+end tell
+APPLESCRIPT
+}
+
+convert_file() {
+    local file="$1"
+
+    if [[ ! -f "$file" ]]; then
+        echo "Skipping missing file: $file"
+        return
+    fi
+
+    if [[ "${file:l}" != *.wav ]]; then
+        echo "Skipping non-WAV file: $file"
+        return
+    fi
+
+    local output="${file:r}.mp3"
+
+    echo "Encoding:"
+    echo "  Input:  $file"
+    echo "  Output: $output"
+
+    lame -b 320 -h "$file" "$output"
+}
+
+main() {
+    local files=()
+
+    if (($# > 0)); then
+        files=("$@")
+    else
+        files=("${(@f)$(get_finder_selection)}")
+    fi
+
+    if ((${#files[@]} == 0)); then
+        echo "No files provided or selected in Finder."
+        exit 1
+    fi
+
+    osascript -e 'display notification "Starting conversion" with title "WAV to MP3"'
+
+    for file in "${files[@]}"; do
+        convert_file "$file"
+    done
+
+    osascript -e 'display notification "Conversion complete" with title "WAV to MP3"'
+}
+
+main "$@"

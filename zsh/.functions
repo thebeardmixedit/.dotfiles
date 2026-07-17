@@ -1,0 +1,66 @@
+#!/usr/bin/env zsh
+
+# Create a directory and enter it.
+mkd() {
+    if [[ -z "$1" ]]; then
+        print -u2 -- "Usage: mkd <directory>"
+        return 2
+    fi
+
+    mkdir -p -- "$1" || return
+    cd -- "$1" || return
+}
+
+# Change to the directory shown in the frontmost Finder window.
+cdf() {
+    local directory
+
+    directory="$(osascript -e 'tell application "Finder" to POSIX path of (insertion location as alias)')" || return
+
+    cd -- "$directory" || return
+}
+
+# Make files or directories executable.
+chx() {
+    chmod +x -- "$@"
+}
+
+# Search Zsh command history and insert or execute the selected command.
+zsh-history() {
+    emulate -L zsh
+
+    local run=false
+    local opt
+    local selected_command
+
+    OPTIND=1
+
+    while getopts ":r" opt; do
+        case "$opt" in
+        r)
+            run=true
+            ;;
+        \?)
+            print -u2 -- "Invalid option: -$OPTARG"
+            return 2
+            ;;
+        esac
+    done
+
+    shift "$((OPTIND - 1))"
+
+    selected_command="$(
+        omz_history |
+            fzf +s --tac --height 60% --border |
+            sed -E 's/ *[0-9]*\*? *//' |
+            sed -E 's/\\/\\\\/g'
+    )" || return
+
+    [[ -n "$selected_command" ]] || return
+
+    if [[ "$run" == true ]]; then
+        eval "$selected_command"
+    else
+        print -z -- "$selected_command"
+    fi
+}

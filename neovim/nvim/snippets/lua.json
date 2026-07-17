@@ -1,0 +1,90 @@
+{
+  "Component Module + component": {
+    "body": [
+      "local Component = require(\"jawline.component\")",
+      "",
+      "local ${1:Class} = Component:extend()",
+      "",
+      "function ${1:Class}:write(context)",
+      "    ${2:write_func}",
+      "end",
+      "",
+      "return ${1:Class}"
+    ],
+    "prefix": [
+      "Component Module",
+      "component"
+    ]
+  },
+  "class-obj + cls": {
+    "body": [
+      "--",
+      "-- classic",
+      "--",
+      "-- Copyright (c) 2014, rxi",
+      "--",
+      "-- This module is free software; you can redistribute it and/or modify it under",
+      "-- the terms of the MIT license. See LICENSE for details.",
+      "--",
+      "",
+      "local Object = {}",
+      "Object.__index = Object",
+      "",
+      "function Object:init(...) end",
+      "",
+      "function Object:extend()",
+      "\tlocal cls = {}",
+      "\tfor k, v in pairs(self) do",
+      "\t\tif k:find(\"__\") == 1 then",
+      "\t\t\tcls[k] = v",
+      "\t\tend",
+      "\tend",
+      "\tcls.__index = cls",
+      "\tcls.super = self",
+      "\tsetmetatable(cls, self)",
+      "\treturn cls",
+      "end",
+      "",
+      "function Object:implement(...)",
+      "\tfor _, cls in pairs({ ... }) do",
+      "\t\tfor k, v in pairs(cls) do",
+      "\t\t\tif self[k] == nil and type(v) == \"function\" then",
+      "\t\t\t\tself[k] = v",
+      "\t\t\tend",
+      "\t\tend",
+      "\tend",
+      "end",
+      "",
+      "function Object:__tostring()",
+      "\treturn \"Object\"",
+      "end",
+      "",
+      "function Object:new(...)",
+      "\tlocal obj = setmetatable({}, self)",
+      "\tobj:init(...)",
+      "\treturn obj",
+      "end",
+      "",
+      "function Object:__call(...)",
+      "\treturn self:new(...)",
+      "end",
+      "",
+      "return Object"
+    ],
+    "prefix": [
+      "class-obj",
+      "cls"
+    ]
+  },
+  "lua-module + module": {
+    "body": [
+      "local M = {}",
+      "",
+      "return M"
+    ],
+    "prefix": [
+      "lua-module",
+      "module"
+    ]
+  }
+}

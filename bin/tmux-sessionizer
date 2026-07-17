@@ -1,0 +1,287 @@
+#!/usr/bin/env zsh
+
+search_dir="${CODE:-$HOME/Code}"
+path_arg=""
+excluded_paths=()
+
+fzf_options=(
+    --height 100%
+    --border
+    --color='bg:#0a0a0a,bg+:#313244,gutter:#0a0a0a,preview-bg:#0a0a0a'
+    --color='fg:#cdd6f4,fg+:#cdd6f4'
+    --color='hl:#f38ba8,hl+:#f38ba8'
+    --color='pointer:#cba6f7,marker:#a6e3a1,prompt:#89b4fa'
+    --color='border:#6c7086,separator:#6c7086'
+)
+
+usage() {
+    cat <<EOF
+Usage:
+  tmux-sessionizer [path]
+  tmux-sessionizer -s <search_dir> [path]
+  tmux-sessionizer --search <search_dir> [path]
+  tmux-sessionizer -e <path> [path]
+  tmux-sessionizer --exclude <path> [path]
+  tmux-sessionizer -n <path> [path]
+  tmux-sessionizer --not-path <path> [path]
+
+Examples:
+  tmux-sessionizer
+  tmux-sessionizer personal/karabiner
+  tmux-sessionizer -s "\$CODE" -e "\$CODE/personal" -e "\$CODE/neovim"
+  tmux-sessionizer -s "\$DOTFILES"
+  tmux-sessionizer -s "\$NEOVIM"
+EOF
+}
+
+normalize_path() {
+    local input="$1"
+
+    if [[ "$input" == "~" ]]; then
+        print -r -- "$HOME"
+        return
+    fi
+
+    if [[ "$input" == "~/"* ]]; then
+        print -r -- "$HOME/${input#"~/"}"
+        return
+    fi
+
+    print -r -- "$input"
+}
+
+while (($# > 0)); do
+    case "$1" in
+    -s | --search)
+        shift
+
+        if (($# == 0)); then
+            print -u2 "Missing path after -s | --search"
+            usage
+            exit 2
+        fi
+
+        search_dir="$(normalize_path "$1")"
+        ;;
+
+    -e | --exclude)
+        shift
+
+        if (($# == 0)); then
+            print -u2 "Missing path after $1"
+            usage
+            exit 2
+        fi
+
+        excluded_paths+=("$(normalize_path "$1")")
+        ;;
+
+    -h | --help)
+        usage
+        exit 0
+        ;;
+
+    --)
+        shift
+        break
+        ;;
+
+    -*)
+        print -u2 "Invalid option: $1"
+        usage
+        exit 2
+        ;;
+
+    *)
+        path_arg="$1"
+        ;;
+    esac
+
+    shift
+done
+
+command -v fzf >/dev/null 2>&1 || {
+    print -u2 "fzf is not installed or not in PATH"
+    exit 1
+}
+
+command -v tmux >/dev/null 2>&1 || {
+    print -u2 "tmux is not installed or not in PATH"
+    exit 1
+}
+
+[[ -n "$search_dir" ]] || {
+    print -u2 "Search directory is empty"
+    exit 1
+}
+
+[[ -d "$search_dir" ]] || {
+    print -u2 "Search directory does not exist: $search_dir"
+    exit 1
+}
+
+sanitize_relative_path() {
+    local input="$1"
+
+    # Trim leading/trailing whitespace.
+    input="${input#"${input%%[![:space:]]*}"}"
+    input="${input%"${input##*[![:space:]]}"}"
+
+    # Convert spaces to dashes.
+    input="${input// /-}"
+
+    # Keep fzf-created paths under $search_dir.
+    input="${input##/}"
+
+    # Prevent escaping $search_dir.
+    if [[ "$input" == *".."* ]]; then
+        print -u2 "Invalid path: parent traversal is not allowed"
+        exit 1
+    fi
+
+    print -r -- "$input"
+}
+
+resolve_path() {
+    local input="$1"
+
+    if [[ "$input" == "~" ]]; then
+        print -r -- "$HOME"
+        return
+    fi
+
+    if [[ "$input" == "~/"* ]]; then
+        print -r -- "$HOME/${input#"~/"}"
+        return
+    fi
+
+    if [[ "$input" == /* || "$input" == ./* || "$input" == ../* ]]; then
+        print -r -- "$input"
+        return
+    fi
+
+    input="$(sanitize_relative_path "$input")"
+    print -r -- "$search_dir/$input"
+}
+
+is_excluded_path() {
+    local path="$1"
+    local excluded
+
+    for excluded in "${excluded_paths[@]}"; do
+        if [[ "$path" == "$excluded" ]]; then
+            return 0
+        fi
+    done
+
+    return 1
+}
+
+list_search_paths() {
+    local candidate
+
+    find "$search_dir" \
+        -mindepth 1 \
+        -maxdepth 2 \
+        -type d \
+        ! -name "dev" \
+        ! -name "node_modules" \
+        ! -name ".git" |
+        while IFS= read -r candidate; do
+            if ! is_excluded_path "$candidate"; then
+                print -r -- "$candidate"
+            fi
+        done
+}
+
+select_path_with_fzf() {
+    local fzf_result
+    local fzf_status
+    local query
+    local selection
+
+    fzf_result="$(
+        list_search_paths |
+            fzf "${fzf_options[@]}" --print-query
+    )"
+
+    fzf_status=$?
+
+    query="$(print -r -- "$fzf_result" | sed -n '1p')"
+    selection="$(print -r -- "$fzf_result" | sed -n '2p')"
+
+    if [[ -n "$selection" ]]; then
+        print -r -- "$selection"
+        return
+    fi
+
+    if [[ -n "$query" ]]; then
+        query="$(sanitize_relative_path "$query")"
+        print -r -- "$search_dir/$query"
+        return
+    fi
+
+    exit "$fzf_status"
+}
+
+make_session_name() {
+    local target="$1"
+    local target_name
+    local target_hash
+
+    target_name="$(basename "$target")"
+    target_name="${target_name//[^[:alnum:]_-]/_}"
+
+    while [[ "$target_name" == _* ]]; do
+        target_name="${target_name#_}"
+    done
+
+    while [[ "$target_name" == *_ ]]; do
+        target_name="${target_name%_}"
+    done
+
+    target_hash="$(
+        print -rn -- "$target" |
+            shasum |
+            awk '{ print substr($1, 1, 8) }'
+    )"
+
+    print -r -- "${target_name}_${target_hash}"
+}
+
+if [[ -n "$path_arg" ]]; then
+    target="$(resolve_path "$path_arg")"
+else
+    target="$(select_path_with_fzf)"
+fi
+
+[[ -n "$target" ]] || exit
+
+mkdir -p -- "$target" || {
+    print -u2 "Failed to create directory: $target"
+    exit 1
+}
+
+session_name="$(make_session_name "$target")"
+
+if ! tmux has-session -t "$session_name" 2>/dev/null; then
+    tmux new-session -d \
+        -s "$session_name" \
+        -c "$target" \
+        -n "shell" || {
+        print -u2 "Failed to create tmux session: $session_name"
+        exit 1
+    }
+fi
+
+if [[ -n "${TMUX:-}" ]]; then
+    tmux switch-client -t "$session_name" || {
+        print -u2 "Failed to switch to tmux session: $session_name"
+        exit 1
+    }
+else
+    tmux attach-session -t "$session_name" || {
+        print -u2 "Failed to attach tmux session: $session_name"
+        exit 1
+    }
+fi

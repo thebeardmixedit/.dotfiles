@@ -1,0 +1,63 @@
+# Based on Oh My Zsh's history helper:
+# https://github.com/ohmyzsh/ohmyzsh/blob/master/lib/history.zsh
+
+omz_history() {
+    local clear
+    local list
+    local arg
+    local last_arg=""
+
+    zparseopts -E c=clear l=list
+
+    for arg in "$@"; do
+        last_arg="$arg"
+    done
+
+    if [[ -n "$clear" ]]; then
+        # Clobber the history file when called with -c.
+        : >|"$HISTFILE"
+        print -u2 -- "History file deleted. Reload the session to see its effects."
+    elif [[ -n "$list" ]]; then
+        # Pass arguments directly to fc when called with -l.
+        builtin fc "$@"
+    else
+        # Show all history events unless a starting event is provided.
+        if [[ "$last_arg" == *[0-9]* ]]; then
+            builtin fc -l "$@"
+        else
+            builtin fc -l "$@" 1
+        fi
+    fi
+}
+
+# Configure the timestamp format used by the history command.
+case ${HIST_STAMPS-} in
+"mm/dd/yyyy")
+    alias history="omz_history -f"
+    ;;
+"dd.mm.yyyy")
+    alias history="omz_history -E"
+    ;;
+"yyyy-mm-dd")
+    alias history="omz_history -i"
+    ;;
+"")
+    alias history="omz_history"
+    ;;
+*)
+    alias history="omz_history -t '\$HIST_STAMPS'"
+    ;;
+esac
+
+# History file configuration
+HISTFILE="${HISTFILE:-$HOME/.zsh_history}"
+HISTSIZE=50000
+SAVEHIST=100000
+
+# History behavior
+setopt extended_history       # Record command timestamps in the history file.
+setopt hist_expire_dups_first # Remove duplicates first when trimming history.
+setopt hist_ignore_dups       # Do not record consecutive duplicate commands.
+setopt hist_ignore_space      # Do not record commands beginning with a space.
+setopt hist_verify            # Show expanded history commands before execution.
+setopt inc_append_history     # Write commands to the history file immediately.

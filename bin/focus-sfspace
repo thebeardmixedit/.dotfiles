@@ -1,0 +1,17 @@
+#!/usr/bin/env zsh
+
+set -euo pipefail
+
+workspace="sf"
+
+window_count="$(
+    aerospace list-windows --workspace "$workspace" --format '%{window-id}' | wc -l | tr -d ' '
+)"
+
+if [[ "$window_count" -eq 0 ]]; then
+    aerospace workspace "$workspace"
+    soundflow run "user:cm0q38zb5001dzo10985ol1cd:cmrd94zlg0000nz23uabf7t89"
+    exit 0
+fi
+
+aerospace workspace "$workspace"

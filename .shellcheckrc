@@ -1,0 +1,14 @@
+# Allow ShellCheck to follow sourced files when explicitly requested.
+external-sources=true
+
+# SC1071: ShellCheck does not support zsh scripts.
+disable=SC1071
+
+# SC1090: ShellCheck cannot follow non-constant source paths.
+# Example: source "$HOME/.config/shell/shared.sh"
+disable=SC1090
+
+# SC1091: ShellCheck cannot find or open sourced files.
+# Useful when sourced files are created dynamically, live outside the project,
+# or are only available on your local machine.
+disable=SC1091

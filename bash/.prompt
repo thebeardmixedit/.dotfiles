@@ -1,0 +1,161 @@
+#!/usr/bin/env bash
+
+# Catppuccin Mocha ANSI foreground colors
+ctp_reset=$'\e[0m'
+ctp_subtext0=$'\e[38;2;166;173;200m'
+ctp_blue=$'\e[38;2;137;180;250m'
+ctp_green=$'\e[38;2;166;227;161m'
+ctp_peach=$'\e[38;2;250;179;135m'
+ctp_red=$'\e[38;2;243;139;168m'
+ctp_yellow=$'\e[38;2;249;226;175m'
+ctp_sky=$'\e[38;2;137;220;235m'
+
+prompt_color() {
+    printf '\001%s\002' "$1"
+}
+
+prompt_git() {
+    local branch=""
+    local oid=""
+    local remote_url=""
+    local host_icon=""
+    local branch_icon=$'\uF126'
+
+    local ahead=0
+    local behind=0
+    local stashes=0
+    local conflicted=0
+    local staged=0
+    local unstaged=0
+    local untracked=0
+
+    local line
+    local xy
+    local index_status
+    local worktree_status
+    local ahead_value
+    local behind_value
+
+    # Read branch and working-tree state with one Git status command.
+    while IFS= read -r line; do
+        case "$line" in
+        "# branch.oid "*)
+            oid="${line#\# branch.oid }"
+            ;;
+
+        "# branch.head "*)
+            branch="${line#\# branch.head }"
+            ;;
+
+        "# branch.ab "*)
+            read -r _ _ ahead_value behind_value <<<"$line"
+            ahead="${ahead_value#+}"
+            behind="${behind_value#-}"
+            ;;
+
+        "# stash "*)
+            stashes="${line#\# stash }"
+            ;;
+
+        "1 "* | "2 "*)
+            xy="${line:2:2}"
+            index_status="${xy:0:1}"
+            worktree_status="${xy:1:1}"
+
+            [[ "$index_status" != "." ]] && ((staged++))
+            [[ "$worktree_status" != "." ]] && ((unstaged++))
+            ;;
+
+        "u "*)
+            ((conflicted++))
+            ;;
+
+        "? "*)
+            ((untracked++))
+            ;;
+        esac
+    done < <(
+        git status \
+            --porcelain=v2 \
+            --branch \
+            --show-stash \
+            --untracked-files=normal \
+            2>/dev/null
+    )
+
+    # An empty branch means the current directory is not a Git repository.
+    [[ -n "$branch" ]] || return
+
+    # Use the short commit ID when HEAD is detached.
+    if [[ "$branch" == "(detached)" ]]; then
+        branch="${oid:0:7}"
+    fi
+
+    # Detect the remote host separately.
+    remote_url="$(git config --get remote.origin.url 2>/dev/null)"
+
+    case "$remote_url" in
+    *github.com*)
+        host_icon=""
+        ;;
+    *gitlab.com*)
+        host_icon=""
+        ;;
+    *bitbucket.org*)
+        host_icon=""
+        ;;
+    esac
+
+    # Remote, branch, and clean repository information.
+    printf ' %s%s %s %s' \
+        "$(prompt_color "$ctp_green")" \
+        "$host_icon" \
+        "$branch_icon" \
+        "$branch"
+
+    ((behind > 0)) && printf ' ⇣%d' "$behind"
+    ((ahead > 0)) && printf ' ⇡%d' "$ahead"
+    ((stashes > 0)) && printf ' *%d' "$stashes"
+
+    if ((conflicted > 0)); then
+        printf ' %s~%d' "$(prompt_color "$ctp_red")" "$conflicted"
+    fi
+
+    if ((staged > 0)); then
+        printf ' %s+%d' "$(prompt_color "$ctp_peach")" "$staged"
+    fi
+
+    if ((unstaged > 0)); then
+        printf ' %s!%d' "$(prompt_color "$ctp_peach")" "$unstaged"
+    fi
+
+    if ((untracked > 0)); then
+        printf ' %s?%d' "$(prompt_color "$ctp_sky")" "$untracked"
+    fi
+}
+
+prompt_update() {
+    local exit_status="$1"
+    local prompt_color="$ctp_green"
+
+    if ((exit_status != 0)); then
+        prompt_color="$ctp_red"
+    fi
+
+    PS1="\[${ctp_subtext0}\]  "
+    PS1+="\[${ctp_blue}\]\w"
+    PS1+="\$(prompt_git)"
+    PS1+="\n"
+    PS1+="\[${prompt_color}\]❯ \[${ctp_reset}\]"
+}
+
+PS2="\[${ctp_yellow}\]❯ \[${ctp_reset}\]"
+
+prompt_command() {
+    local exit_status=$?
+
+    history_sync
+    prompt_update "$exit_status"
+}
+
+PROMPT_COMMAND=prompt_command

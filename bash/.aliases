@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+
+alias src='source "$HOME/.bashrc"'
+
+# Good ol' clear abbr
+alias cl='clear'
+
+# Directory navigation
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+
+# Neovim
+alias nv='nvim'
+alias nv.='nvim .'
+alias nvpt='nvim --clean -u tests/minimal.lua'
+alias nv_dotfiles='nvim "$DOTFILES"'
+
+# Git
+alias gi='git init -b main'
+alias gs='git status'
+alias ga='git add'
+alias gas='git submodule add'
+alias gco='git checkout'
+alias gb='git branch'
+alias gbd='git branch -d'
+alias gbu='git branch --set-upstream-to=origin/main'
+alias gar='git remote add'
+alias grv='git remote -v'
+alias gc='git commit -S'
+alias gcm='git commit -S -m'
+alias grs='git restore --staged'
+alias gp='git push origin'
+alias gpa='git push --recurse-submodules=on-demand origin'
+
+# Utilities
+alias aic='ascii-image-converter'
+
+# Detect which `ls` flavor is available.
+if command ls --color >/dev/null 2>&1; then
+    export LS_COLORS='no=00:fi=00:di=01;31:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.avi=01;35:*.fli=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.ogg=01;35:*.mp3=01;35:*.wav=01;35:'
+
+    alias ls='command ls --color'
+    alias l='command ls -lF --color'
+    alias la='command ls -lAF --color'
+    alias lsd="command ls -lF --color | grep --color=never '^d'"
+else
+    export LSCOLORS='BxBxhxDxfxhxhxhxhxcxcx'
+
+    alias ls='command ls -G'
+    alias l='command ls -lF -G'
+    alias la='command ls -lAF -G'
+    alias lsd="command ls -lF -G | grep --color=never '^d'"
+fi
+
+# Always enable colored `grep` output
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+# Print the public IP address.
+alias myip='curl -fsS https://ipecho.net/plain && printf "\n"'
+
+# PlistBuddy alias, because sometimes `defaults` just doesn’t cut it
+alias plistbuddy='/usr/libexec/PlistBuddy'

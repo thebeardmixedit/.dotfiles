@@ -1,0 +1,48 @@
+# Personal notes and todos
+notes.md
+
+# Editor project settings
+.vscode/
+
+# Backup directories
+**/backups/
+
+# Logs
+*.log
+**/*.log
+
+# macOS metadata
+.DS_Store
+._*
+.Spotlight-V100/
+.Trashes/
+.fseventsd/
+.DocumentRevisions-V100/
+.TemporaryItems/
+TheVolumeSettingsFolder
+
+# Windows metadata
+Desktop.ini
+Thumbs.db
+
+# Local environment files
+.env
+.env.*
+**/.env
+**/.env.*
+
+# Keep example environment files
+!.env.example
+!.env.sample
+!**/.env.example
+!**/.env.sample
+
+# Vim and Neovim temporary files
+*.swp
+*.swo
+*.swn
+*~
+*.un~
+
+# Local directory environment
+.direnv/

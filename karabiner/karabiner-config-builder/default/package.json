@@ -1,0 +1,8 @@
+{
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "kcb build",
+        "deploy": "kcb deploy"
+    }
+}

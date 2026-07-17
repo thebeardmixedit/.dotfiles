@@ -1,0 +1,218 @@
+{
+    "Version": {
+        "Major": "1",
+        "Minor": "0"
+    },
+    "Bindings": [
+        {
+            "Command": "DeleteTracks",
+            "New Key": "BackSpace",
+            "New Modifiers": "<Cmd>"
+        },
+        {
+            "Command": "RenameTracks",
+            "New Key": "R",
+            "New Modifiers": "<Cmd>"
+        },
+        {
+            "Command": "ChangeSelectedTracksActiveState",
+            "New Key": "A",
+            "New Modifiers": "<Opt>+<Shift>"
+        },
+        {
+            "Command": "ChangeSelectedTracksShowHideState",
+            "New Key": "H",
+            "New Modifiers": "<Shift>"
+        },
+        {
+            "Command": "HideMakeInactiveChangeSelectedTracks",
+            "New Key": "H",
+            "New Modifiers": "<Ctrl>+<Shift>"
+        },
+        {
+            "Command": "CreateClickTrack",
+            "New Key": "N",
+            "New Modifiers": "<Cmd>+<Opt>+<Shift>"
+        },
+        {
+            "Command": "SoloClearAllTracks",
+            "New Key": "BackSpace",
+            "New Modifiers": "<Cmd>+<Ctrl>"
+        },
+        {
+            "Command": "DeleteSelection",
+            "Original Key": "BackSpace",
+            "Original Modifiers": "<Cmd>",
+            "New Key": "Invalid",
+            "New Modifiers": ""
+        },
+        {
+            "Command": "CaptureRegion",
+            "Original Key": "R",
+            "Original Modifiers": "<Cmd>",
+            "New Key": "Invalid",
+            "New Modifiers": ""
+        },
+        {
+            "Command": "NudgeClipGainLeftByNextBiggerGrid",
+            "Original Key": "M",
+            "Original Modifiers": "<Ctrl>+<Shift>",
+            "New Key": "Invalid",
+            "New Modifiers": ""
+        },
+        {
+            "Command": "ShowDSPUsageWindow",
+            "New Key": "U",
+            "New Modifiers": "<Cmd>+<Opt>+<Ctrl>+<Shift>"
+        },
+        {
+            "Command": "ShowSessionView",
+            "Original Key": "Numpad 7",
+            "Original Modifiers": "<Opt>",
+            "New Key": "Invalid",
+            "New Modifiers": ""
+        },
+        {
+            "Command": "ShowLeftSideViews",
+            "New Key": "1",
+            "New Modifiers": "<Ctrl>"
+        },
+        {
+            "Command": "ShowColorPaletteWindow",
+            "New Key": "C",
+            "New Modifiers": "<Opt>+<Ctrl>+<Shift>"
+        },
+        {
+            "Command": "ShowElasticPropertiesWindow",
+            "Original Key": "Numpad 5",
+            "Original Modifiers": "<Opt>",
+            "New Key": "Invalid",
+            "New Modifiers": ""
+        },
+        {
+            "Command": "PlaybackEngine",
+            "New Key": "P",
+            "New Modifiers": "<Cmd>+<Opt>+<Ctrl>+<Shift>"
+        },
+        {
+            "Command": "StemDialog",
+            "New Key": "I",
+            "New Modifiers": "<Cmd>+<Opt>+<Ctrl>+<Shift>"
+        },
+        {
+            "Command": "RecallPresetMemory1",
+            "Original Key": "1",
+            "Original Modifiers": "<Ctrl>",
+            "New Key": "Invalid",
+            "New Modifiers": ""
+        },
+        {
+            "Command": "RecallPresetMemory1",
+            "Original Key": "1",
+            "Original Modifiers": "<Ctrl>+<Focus>",
+            "New Key": "Invalid",
+            "New Modifiers": ""
+        },
+        {
+            "Command": "RecallPresetMemory2",
+            "Original Key": "2",
+            "Original Modifiers": "<Ctrl>",
+            "New Key": "Invalid",
+            "New Modifiers": ""
+        },
+        {
+            "Command": "RecallPresetMemory2",
+            "Original Key": "2",
+            "Original Modifiers": "<Ctrl>+<Focus>",
+            "New Key": "Invalid",
+            "New Modifiers": ""
+        },
+        {
+            "Command": "ShuttleAtSpeed8",
+            "Original Key": "Numpad 8",
+            "Original Modifiers": "<Opt>+<Ctrl>",
+            "New Key": "Invalid",
+            "New Modifiers": ""
+        },
+        {
+            "Command": "PtApp_ExtendEditInsertionToPreviousMarkerZone",
+            "Original Key": "P",
+            "Original Modifiers": "<Cmd>+<Opt>+<Ctrl>+<Shift>",
+            "New Key": "Invalid",
+            "New Modifiers": ""
+        },
+        {
+            "Command": "PreviousTrackWhatToShow",
+            "Original Key": "LeftArrow",
+            "Original Modifiers": "<Cmd>+<Ctrl>",
+            "New Key": "Invalid",
+            "New Modifiers": ""
+        },
+        {
+            "Command": "NextTrackWhatToShow",
+            "Original Key": "RightArrow",
+            "Original Modifiers": "<Cmd>+<Ctrl>",
+            "New Key": "Invalid",
+            "New Modifiers": ""
+        },
+        {
+            "Command": "MoveTrackToNewFolder",
+            "Original Key": "N",
+            "Original Modifiers": "<Cmd>+<Opt>+<Shift>",
+            "New Key": "Invalid",
+            "New Modifiers": ""
+        },
+        {
+            "Command": "ShowMaxDockedMelodyne",
+            "Original Key": "8",
+            "Original Modifiers": "<Opt>+<Ctrl>",
+            "New Key": "Numpad 8",
+            "New Modifiers": "<Opt>+<Ctrl>"
+        },
+        {
+            "Command": "RenderARAClipsMelodyne",
+            "New Key": "M",
+            "New Modifiers": "<Ctrl>+<Shift>"
+        },
+        {
+            "Command": "ShowDockedARATabVocAlign 6 Pro",
+            "New Key": "Numpad 7",
+            "New Modifiers": "<Opt>"
+        },
+        {
+            "Command": "GoToNextMemoryLocation",
+            "New Key": "RightArrow",
+            "New Modifiers": "<Cmd>+<Ctrl>"
+        },
+        {
+            "Command": "ExtendSelectionToNextMemoryLocation",
+            "New Key": "RightArrow",
+            "New Modifiers": "<Cmd>+<Ctrl>+<Shift>"
+        },
+        {
+            "Command": "GoToPreviousMemoryLocation",
+            "New Key": "LeftArrow",
+            "New Modifiers": "<Cmd>+<Ctrl>"
+        },
+        {
+            "Command": "ExtendSelectionToPreviousMemoryLocation",
+            "New Key": "LeftArrow",
+            "New Modifiers": "<Cmd>+<Ctrl>+<Shift>"
+        },
+        {
+            "Command": "ShowClipList",
+            "New Key": "2",
+            "New Modifiers": "<Ctrl>"
+        },
+        {
+            "Command": "ShowDockedPanelPluginTabSplice",
+            "New Key": "Numpad 9",
+            "New Modifiers": "<Opt>"
+        },
+        {
+            "Command": "ShowSoundFlowPanel",
+            "New Key": "Numpad 5",
+            "New Modifiers": "<Opt>"
+        }
+    ]
+}
