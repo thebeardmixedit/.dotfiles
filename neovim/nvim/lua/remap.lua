@@ -1,8 +1,5 @@
 local u = require("utils")
 
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
-
 local function restart_nvim()
 	vim.ui.select({ "Yes", "No" }, {
 		prompt = "Restart Neovim?",
