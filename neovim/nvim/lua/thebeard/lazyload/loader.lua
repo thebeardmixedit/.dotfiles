@@ -188,12 +188,12 @@ end
 ---@param plugin_spec TheBeardLazyloadPluginSpec
 ---@param keymap TheBeardLazyloadKeymap
 ---@param rhs string
----@return string|function
+---@return function?
 local function maybe_wrap_string_keymap(plugin_spec, keymap, rhs)
 	local cmd = parse_ex_keymap(rhs)
 
 	if not cmd then
-		return rhs
+		return nil
 	end
 
 	return wrap_lazy(plugin_spec, keymap, function()
@@ -219,7 +219,18 @@ local function load_keymaps(plugin_spec)
 			if type(cmd) == "function" then
 				map.cmd = wrap_lazy(plugin_spec, map, cmd)
 			elseif type(cmd) == "string" then
-				map.cmd = maybe_wrap_string_keymap(plugin_spec, map, cmd)
+				local wrapped = maybe_wrap_string_keymap(plugin_spec, map, cmd)
+
+				assert(
+					type(wrapped) == "function",
+					string.format(
+						"Lazy keymap '%s' in spec '%s' must use a function or an Ex command",
+						map.keys,
+						plugin_spec.spec_name
+					)
+				)
+
+				map.cmd = wrapped
 			end
 
 			util.keymap(map)

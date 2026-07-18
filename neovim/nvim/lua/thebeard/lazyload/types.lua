@@ -12,7 +12,7 @@
 
 ---@class TheBeardLazyloadKeymap
 ---@field keys string
----@field cmd string|function
+---@field cmd string|function String commands must be Ex commands (`:...` or `<Cmd>...`). Other mappings should use a Lua function or be defined outside the plugin spec.
 ---@field opts? vim.api.keyset.keymap
 ---@field modes? string|string[]
 

@@ -10,9 +10,7 @@ local function scan(import)
 	local specs = {}
 
 	for _, file in ipairs(vim.fn.glob(dir .. "/*.lua", false, true)) do
-		if vim.fs.basename(vim.fs.dirname(file)) ~= "unused" then
-			table.insert(specs, vim.fn.fnamemodify(file, ":t:r"))
-		end
+		table.insert(specs, vim.fn.fnamemodify(file, ":t:r"))
 	end
 
 	table.sort(specs)
