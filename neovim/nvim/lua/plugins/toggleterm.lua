@@ -22,7 +22,11 @@ return {
 		})
 	end,
 	keymaps = {
-		{ keys = "<C-t>", cmd = ":ToggleTerm size=40 direction=horizontal<CR>" },
+		{
+			keys = "<C-t>",
+			cmd = ":ToggleTerm size=40 direction=horizontal<CR>",
+			desc = "Toggle terminal",
+		},
 		{
 			modes = "t",
 			keys = "<C-t>",
@@ -30,11 +34,7 @@ return {
 				vim.cmd("stopinsert")
 				vim.cmd("ToggleTerm size=40 direction=horizontal")
 			end,
+			desc = "Close terminal",
 		},
-		{ modes = "t", keys = "<Esc>", cmd = [[<C-\><C-n>]] },
-		{ modes = "t", keys = "<C-h>", cmd = "<C-w><C-h>" },
-		{ modes = "t", keys = "<C-j>", cmd = "<C-w><C-j>" },
-		{ modes = "t", keys = "<C-k>", cmd = "<C-w><C-k>" },
-		{ modes = "t", keys = "<C-l>", cmd = "<C-w><C-l>" },
 	},
 }

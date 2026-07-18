@@ -110,3 +110,6 @@ u.keymap({ keys = "<C-u>", cmd = "<C-u>zz", opts = { desc = "Move a half page up
 
 -- Search
 u.keymap({ keys = "<Esc>", cmd = "<cmd>nohlsearch<CR>", opts = { desc = "Clear search highlights" } })
+
+-- Terminal
+u.keymap({ modes = "t", keys = "<Esc>", cmd = [[<C-\><C-n>]], opts = { desc = "Exit terminal mode" } })
