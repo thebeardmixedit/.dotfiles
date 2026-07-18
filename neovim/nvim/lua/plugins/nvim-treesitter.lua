@@ -1,7 +1,27 @@
-local languages = {
+local parsers = {
 	"lua",
 	"vim",
 	"bash",
+	"gitignore",
+	"javascript",
+	"typescript",
+	"css",
+	"go",
+	"json",
+	"html",
+	"markdown",
+	"python",
+	"sql",
+	"yaml",
+	"c",
+}
+
+local filetypes = {
+	"lua",
+	"vim",
+	"bash",
+	"sh",
+	"zsh",
 	"gitignore",
 	"javascript",
 	"typescript",
@@ -26,7 +46,7 @@ return {
 		"TSInstallConfigured",
 		"TSUpdateConfigured",
 	},
-	on_filetype = languages,
+	on_filetype = filetypes,
 	config = function()
 		local treesitter = require("nvim-treesitter")
 
@@ -45,13 +65,13 @@ return {
 		treesitter.setup({})
 
 		vim.api.nvim_create_user_command("TSInstallConfigured", function()
-			treesitter.install(languages)
+			treesitter.install(parsers)
 		end, {
 			desc = "Install configured Treesitter parsers",
 		})
 
 		vim.api.nvim_create_user_command("TSUpdateConfigured", function()
-			treesitter.update(languages)
+			treesitter.update(parsers)
 		end, {
 			desc = "Update configured Treesitter parsers",
 		})
@@ -62,7 +82,7 @@ return {
 
 		vim.api.nvim_create_autocmd("FileType", {
 			group = vim.api.nvim_create_augroup("thebeard-treesitter", { clear = true }),
-			pattern = languages,
+			pattern = filetypes,
 			callback = function(event)
 				start_treesitter(event.buf)
 			end,
