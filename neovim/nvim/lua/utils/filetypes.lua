@@ -14,7 +14,6 @@ return {
 		"bash",
 		"sh",
 		"zsh",
-		"svelte",
 	},
 	format = {
 		"lua",

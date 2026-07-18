@@ -121,7 +121,6 @@ return {
 					"scss",
 					"javascriptreact",
 					"typescriptreact",
-					"svelte",
 				},
 			},
 			emmet_ls = {
@@ -131,7 +130,6 @@ return {
 					"scss",
 					"javascriptreact",
 					"typescriptreact",
-					"svelte",
 				},
 			},
 		}
