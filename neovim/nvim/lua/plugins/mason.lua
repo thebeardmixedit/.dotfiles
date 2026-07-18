@@ -21,7 +21,6 @@ return {
 			"pyright",
 			"json-lsp",
 			"emmet-ls",
-			"copilot-language-server",
 
 			-- Formatters and linters
 			"stylua",
