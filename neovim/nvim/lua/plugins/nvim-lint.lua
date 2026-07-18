@@ -13,8 +13,6 @@ return {
 			typescript = { "eslint_d" },
 			typescriptreact = { "eslint_d" },
 
-			python = { "pylint" },
-
 			bash = { "shellcheck" },
 			sh = { "shellcheck" },
 		}

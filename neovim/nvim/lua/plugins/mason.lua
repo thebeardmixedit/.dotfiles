@@ -28,9 +28,7 @@ return {
 			"shfmt",
 			"prettier",
 			"eslint_d",
-			"isort",
 			"black",
-			"pylint",
 		}
 
 		---@type table<string, vim.lsp.Config>

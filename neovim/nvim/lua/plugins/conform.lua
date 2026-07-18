@@ -26,7 +26,7 @@ return {
 			sh = { "shfmt" },
 			zsh = { "shfmt" },
 
-			python = { "isort", "black" },
+			python = { "black" },
 		}
 
 		conform.setup({
