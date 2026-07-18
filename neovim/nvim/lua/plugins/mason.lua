@@ -115,8 +115,6 @@ return {
 			tailwindcss = {
 				filetypes = {
 					"html",
-					"css",
-					"scss",
 					"javascriptreact",
 					"typescriptreact",
 				},
