@@ -38,11 +38,6 @@ return {
 		"https://github.com/thebeardmixedit/nvim-treesitter.git",
 		"https://github.com/thebeardmixedit/nvim-treesitter-textobjects.git",
 	},
-	on_cmd = {
-		"TSInstallConfigured",
-		"TSUpdateConfigured",
-	},
-	on_filetype = filetypes,
 	config = function()
 		local treesitter = require("nvim-treesitter")
 
