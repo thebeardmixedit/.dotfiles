@@ -25,7 +25,6 @@ return {
 
 		luasnip.filetype_extend("javascriptreact", { "javascript", "html" })
 		luasnip.filetype_extend("typescriptreact", { "typescript", "javascript", "html" })
-		luasnip.filetype_extend("svelte", { "html", "javascript", "typescript", "css" })
 	end,
 	keymaps = {
 		{

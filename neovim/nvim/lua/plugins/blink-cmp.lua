@@ -27,9 +27,6 @@ return {
 			snippets = {
 				preset = "luasnip",
 			},
-			fuzzy = {
-				implementation = "lua",
-			},
 			signature = {
 				enabled = false,
 			},
