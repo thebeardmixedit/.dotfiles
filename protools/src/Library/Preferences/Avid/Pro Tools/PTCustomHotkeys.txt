@@ -130,6 +130,20 @@
             "New Modifiers": ""
         },
         {
+            "Command": "DisplayTimelineSelectionStart",
+            "Original Key": "Q",
+            "Original Modifiers": "<Focus>",
+            "New Key": "Invalid",
+            "New Modifiers": ""
+        },
+        {
+            "Command": "DisplayTimelineSelectionEnd",
+            "Original Key": "W",
+            "Original Modifiers": "<Focus>",
+            "New Key": "Invalid",
+            "New Modifiers": ""
+        },
+        {
             "Command": "ShuttleAtSpeed8",
             "Original Key": "Numpad 8",
             "Original Modifiers": "<Opt>+<Ctrl>",
@@ -151,6 +165,20 @@
             "New Modifiers": ""
         },
         {
+            "Command": "MoveEditInsertionToPreviousEdit",
+            "Original Key": "L",
+            "Original Modifiers": "<Focus>",
+            "New Key": "Q",
+            "New Modifiers": "<Focus>"
+        },
+        {
+            "Command": "MoveEditInsertionToNextEdit",
+            "Original Key": "'",
+            "Original Modifiers": "<Focus>",
+            "New Key": "W",
+            "New Modifiers": "<Focus>"
+        },
+        {
             "Command": "PtApp_ExtendEditInsertionToPreviousMarkerZone",
             "Original Key": "P",
             "Original Modifiers": "<Cmd>+<Opt>+<Ctrl>+<Shift>",
@@ -163,23 +191,6 @@
             "Original Modifiers": "<Cmd>+<Opt>+<Shift>",
             "New Key": "Invalid",
             "New Modifiers": ""
-        },
-        {
-            "Command": "ShowMaxDockedMelodyne",
-            "Original Key": "8",
-            "Original Modifiers": "<Opt>+<Ctrl>",
-            "New Key": "Numpad 8",
-            "New Modifiers": "<Opt>+<Ctrl>"
-        },
-        {
-            "Command": "RenderARAClipsMelodyne",
-            "New Key": "M",
-            "New Modifiers": "<Ctrl>+<Shift>"
-        },
-        {
-            "Command": "ShowDockedARATabVocAlign 6 Pro",
-            "New Key": "Numpad 7",
-            "New Modifiers": "<Opt>"
         },
         {
             "Command": "GoToNextMemoryLocation",
