@@ -130,6 +130,48 @@
             "New Modifiers": ""
         },
         {
+            "Command": "RecallPresetMemory3",
+            "Original Key": "3",
+            "Original Modifiers": "<Ctrl>",
+            "New Key": "Invalid",
+            "New Modifiers": ""
+        },
+        {
+            "Command": "RecallPresetMemory3",
+            "Original Key": "3",
+            "Original Modifiers": "<Ctrl>+<Focus>",
+            "New Key": "Invalid",
+            "New Modifiers": ""
+        },
+        {
+            "Command": "RecallPresetMemory4",
+            "Original Key": "4",
+            "Original Modifiers": "<Ctrl>",
+            "New Key": "Invalid",
+            "New Modifiers": ""
+        },
+        {
+            "Command": "RecallPresetMemory4",
+            "Original Key": "4",
+            "Original Modifiers": "<Ctrl>+<Focus>",
+            "New Key": "Invalid",
+            "New Modifiers": ""
+        },
+        {
+            "Command": "RecallPresetMemory5",
+            "Original Key": "5",
+            "Original Modifiers": "<Ctrl>",
+            "New Key": "Invalid",
+            "New Modifiers": ""
+        },
+        {
+            "Command": "RecallPresetMemory5",
+            "Original Key": "5",
+            "Original Modifiers": "<Ctrl>+<Focus>",
+            "New Key": "Invalid",
+            "New Modifiers": ""
+        },
+        {
             "Command": "DisplayTimelineSelectionStart",
             "Original Key": "Q",
             "Original Modifiers": "<Focus>",
@@ -151,6 +193,20 @@
             "New Modifiers": ""
         },
         {
+            "Command": "PlayToEditStart",
+            "Original Key": "6",
+            "Original Modifiers": "<Ctrl>",
+            "New Key": "Invalid",
+            "New Modifiers": ""
+        },
+        {
+            "Command": "PlayFromEditStart",
+            "Original Key": "7",
+            "Original Modifiers": "<Ctrl>",
+            "New Key": "Invalid",
+            "New Modifiers": ""
+        },
+        {
             "Command": "PlayThroughEditStart",
             "Original Key": "LeftArrow",
             "Original Modifiers": "<Cmd>+<Opt>",
@@ -167,16 +223,30 @@
         {
             "Command": "MoveEditInsertionToPreviousEdit",
             "Original Key": "L",
-            "Original Modifiers": "<Focus>",
+            "Original Modifiers": "<Ctrl>+<Shift>",
             "New Key": "Q",
-            "New Modifiers": "<Focus>"
+            "New Modifiers": "<Shift>"
+        },
+        {
+            "Command": "MoveEditInsertionToPreviousEdit",
+            "Original Key": "L",
+            "Original Modifiers": "<Ctrl>",
+            "New Key": "Q",
+            "New Modifiers": ""
         },
         {
             "Command": "MoveEditInsertionToNextEdit",
             "Original Key": "'",
-            "Original Modifiers": "<Focus>",
+            "Original Modifiers": "<Ctrl>+<Shift>",
             "New Key": "W",
-            "New Modifiers": "<Focus>"
+            "New Modifiers": "<Shift>"
+        },
+        {
+            "Command": "MoveEditInsertionToNextEdit",
+            "Original Key": "'",
+            "Original Modifiers": "<Ctrl>",
+            "New Key": "W",
+            "New Modifiers": ""
         },
         {
             "Command": "PtApp_ExtendEditInsertionToPreviousMarkerZone",
@@ -191,6 +261,27 @@
             "Original Modifiers": "<Cmd>+<Opt>+<Shift>",
             "New Key": "Invalid",
             "New Modifiers": ""
+        },
+        {
+            "Command": "BypassAllModulation",
+            "Original Key": "W",
+            "Original Modifiers": "<Shift>",
+            "New Key": "Invalid",
+            "New Modifiers": ""
+        },
+        {
+            "Command": "MuteAllSends",
+            "Original Key": "Q",
+            "Original Modifiers": "<Shift>",
+            "New Key": "Invalid",
+            "New Modifiers": ""
+        },
+        {
+            "Command": "ClipFXReveal",
+            "Original Key": "6",
+            "Original Modifiers": "<Opt>",
+            "New Key": "3",
+            "New Modifiers": "<Ctrl>"
         },
         {
             "Command": "GoToNextMemoryLocation",
@@ -219,13 +310,13 @@
         },
         {
             "Command": "ShowDockedPanelPluginTabSplice",
-            "New Key": "Numpad 9",
-            "New Modifiers": "<Opt>"
+            "New Key": "7",
+            "New Modifiers": "<Ctrl>"
         },
         {
             "Command": "ShowSoundFlowPanel",
-            "New Key": "Numpad 5",
-            "New Modifiers": "<Opt>"
+            "New Key": "6",
+            "New Modifiers": "<Ctrl>"
         }
     ]
 }
