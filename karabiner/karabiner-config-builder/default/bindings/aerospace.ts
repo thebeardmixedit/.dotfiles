@@ -25,10 +25,10 @@ export default [
     bind(opt("k"), aerospace("focus up")),
     bind(opt("l"), aerospace("focus right")),
 
-    bind(cmd("h"), aerospace("move left")),
-    bind(cmd("j"), aerospace("move down")),
-    bind(cmd("k"), aerospace("move up")),
-    bind(cmd("l"), aerospace("move right")),
+    bind(opt(cmd("h")), aerospace("move left")),
+    bind(opt(cmd("j")), aerospace("move down")),
+    bind(opt(cmd("k")), aerospace("move up")),
+    bind(opt(cmd("l")), aerospace("move right")),
 
     bind("quote", aerospace("workspace ex")),
     bind("0", aerospace("workspace 0")),

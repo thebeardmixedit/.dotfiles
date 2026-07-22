@@ -126,16 +126,6 @@ export default [
         aerospace("move-node-to-workspace --focus-follows-window rm"),
     ),
     bind(
-        "n",
-        script(focusAppspace, {
-            args: ["com.apple.Notes", "nt"],
-        }),
-    ),
-    bind(
-        cmd("n"),
-        aerospace("move-node-to-workspace --focus-follows-window nt"),
-    ),
-    bind(
         shift("s"),
         script(focusAppspace, { args: ["com.spotify.client", "sp"] }),
     ),
@@ -177,5 +167,10 @@ export default [
     bind(
         cmd("k"),
         aerospace("move-node-to-workspace --focus-follows-window kr"),
+    ),
+    bind("v", script(focusAppspace, { args: ["com.electron.samply", "sm"] })),
+    bind(
+        cmd("v"),
+        aerospace("move-node-to-workspace --focus-follows-window sm"),
     ),
 ];

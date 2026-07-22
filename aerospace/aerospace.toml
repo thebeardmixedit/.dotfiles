@@ -99,6 +99,10 @@ on-window-detected = [
         run = ["move-node-to-workspace ke"],
     },
     {
+        if = "test %{app-bundle-id} = com.electron.samply",
+        run = ["move-node-to-workspace sm"],
+    },
+    {
         if = """\
             test %{app-bundle-id} = org.m0k.transmission \
             || test %{app-bundle-id} = com.apple.AppStore \
