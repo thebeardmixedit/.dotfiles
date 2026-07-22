@@ -11,6 +11,16 @@ import {
 } from "karabiner-config-builder";
 
 export const moonlanderPtMarkerBindings: Manipulator[] = [
+    bind("n", key(opt(cmd("left_arrow"))), {
+        description: "Pro Tools Marker: Go to previous",
+    }),
+    bind("m", key(opt(cmd("right_arrow"))), {
+        description: "Pro Tools Marker: Go to next",
+    }),
+    bind("comma", key(cmd("keypad_5")), {
+        description: "Pro Tools Marker: Open Marker Window",
+    }),
+
     bind(
         "1",
         macro(key("keypad_period"), key("keypad_1"), key("keypad_period")),
@@ -61,6 +71,7 @@ export const moonlanderPtMarkerBindings: Manipulator[] = [
         macro(key("keypad_period"), key("keypad_10"), key("keypad_period")),
         { description: "Pro Tools Marker: Go to 10" },
     ),
+
     bind(
         "q",
         macro(key("keypad_period"), key("keypad_11"), key("keypad_period")),
@@ -202,6 +213,7 @@ export const moonlanderPtMarkerBindings: Manipulator[] = [
         ),
         { description: "Pro Tools Marker: Select to 10" },
     ),
+
     bind(
         shift("q"),
         macro(
@@ -442,18 +454,19 @@ export const moonlanderPtMarkerBindings: Manipulator[] = [
         ),
         { description: "Pro Tools Marker: Create VAMP" },
     ),
-    bind("n", key("left_arrow", { modifiers: ["option", "command"] }), {
-        description: "Pro Tools Marker: Go to previous",
-    }),
-    bind("m", key("right_arrow", { modifiers: ["option", "command"] }), {
-        description: "Pro Tools Marker: Go to next",
-    }),
-    bind("comma", key("keypad_5", { modifiers: ["command"] }), {
-        description: "Pro Tools Marker: Go to next",
-    }),
 ];
 
 export const normalPtMarkerBindings = [
+    bind("hyphen", key(opt(cmd("left_arrow"))), {
+        description: "Pro Tools Marker: Go to previous",
+    }),
+    bind("equal_sign", key(opt(cmd("right_arrow"))), {
+        description: "Pro Tools Marker: Go to next",
+    }),
+    bind("return_or_enter", key(cmd("keypad_5")), {
+        description: "Pro Tools Marker: Open Marker Window",
+    }),
+
     bind(
         "1",
         macro(key("keypad_period"), key("keypad_1"), key("keypad_period")),
@@ -504,6 +517,7 @@ export const normalPtMarkerBindings = [
         macro(key("keypad_period"), key("keypad_10"), key("keypad_period")),
         { description: "Pro Tools Marker: Go to 10" },
     ),
+
     bind(
         "q",
         macro(key("keypad_period"), key("keypad_11"), key("keypad_period")),
@@ -550,9 +564,191 @@ export const normalPtMarkerBindings = [
         { description: "Pro Tools Marker: Go to 19" },
     ),
     bind(
-        "p",
+        ";",
         macro(key("keypad_period"), key("keypad_20"), key("keypad_period")),
         { description: "Pro Tools Marker: Go to 20" },
+    ),
+
+    bind(
+        shift("1"),
+        macro(
+            key(shift("keypad_period")),
+            key(shift("keypad_1")),
+            key(shift("keypad_period")),
+        ),
+        { description: "Pro Tools Marker: Select to 1" },
+    ),
+    bind(
+        shift("2"),
+        macro(
+            key(shift("keypad_period")),
+            key(shift("keypad_2")),
+            key(shift("keypad_period")),
+        ),
+        { description: "Pro Tools Marker: Select to 2" },
+    ),
+    bind(
+        shift("3"),
+        macro(
+            key(shift("keypad_period")),
+            key(shift("keypad_3")),
+            key(shift("keypad_period")),
+        ),
+        { description: "Pro Tools Marker: Select to 3" },
+    ),
+    bind(
+        shift("4"),
+        macro(
+            key(shift("keypad_period")),
+            key(shift("keypad_4")),
+            key(shift("keypad_period")),
+        ),
+        { description: "Pro Tools Marker: Select to 4" },
+    ),
+    bind(
+        shift("5"),
+        macro(
+            key(shift("keypad_period")),
+            key(shift("keypad_5")),
+            key(shift("keypad_period")),
+        ),
+        { description: "Pro Tools Marker: Select to 5" },
+    ),
+    bind(
+        shift("6"),
+        macro(
+            key(shift("keypad_period")),
+            key(shift("keypad_6")),
+            key(shift("keypad_period")),
+        ),
+        { description: "Pro Tools Marker: Select to 6" },
+    ),
+    bind(
+        shift("7"),
+        macro(
+            key(shift("keypad_period")),
+            key(shift("keypad_7")),
+            key(shift("keypad_period")),
+        ),
+        { description: "Pro Tools Marker: Select to 7" },
+    ),
+    bind(
+        shift("8"),
+        macro(
+            key(shift("keypad_period")),
+            key(shift("keypad_8")),
+            key(shift("keypad_period")),
+        ),
+        { description: "Pro Tools Marker: Select to 8" },
+    ),
+    bind(
+        shift("9"),
+        macro(
+            key(shift("keypad_period")),
+            key(shift("keypad_9")),
+            key(shift("keypad_period")),
+        ),
+        { description: "Pro Tools Marker: Select to 9" },
+    ),
+    bind(
+        shift("0"),
+        macro(
+            key(shift("keypad_period")),
+            key(shift("keypad_10")),
+            key(shift("keypad_period")),
+        ),
+        { description: "Pro Tools Marker: Select to 10" },
+    ),
+
+    bind(
+        shift("q"),
+        macro(
+            key(shift("keypad_period")),
+            key(shift("keypad_11")),
+            key(shift("keypad_period")),
+        ),
+        { description: "Pro Tools Marker: Select to 11" },
+    ),
+    bind(
+        shift("w"),
+        macro(
+            key(shift("keypad_period")),
+            key(shift("keypad_12")),
+            key(shift("keypad_period")),
+        ),
+        { description: "Pro Tools Marker: Select to 12" },
+    ),
+    bind(
+        shift("e"),
+        macro(
+            key(shift("keypad_period")),
+            key(shift("keypad_13")),
+            key(shift("keypad_period")),
+        ),
+        { description: "Pro Tools Marker: Select to 13" },
+    ),
+    bind(
+        shift("r"),
+        macro(
+            key(shift("keypad_period")),
+            key(shift("keypad_14")),
+            key(shift("keypad_period")),
+        ),
+        { description: "Pro Tools Marker: Select to 14" },
+    ),
+    bind(
+        shift("t"),
+        macro(
+            key(shift("keypad_period")),
+            key(shift("keypad_15")),
+            key(shift("keypad_period")),
+        ),
+        { description: "Pro Tools Marker: Select to 15" },
+    ),
+    bind(
+        shift("y"),
+        macro(
+            key(shift("keypad_period")),
+            key(shift("keypad_16")),
+            key(shift("keypad_period")),
+        ),
+        { description: "Pro Tools Marker: Select to 16" },
+    ),
+    bind(
+        shift("u"),
+        macro(
+            key(shift("keypad_period")),
+            key(shift("keypad_17")),
+            key(shift("keypad_period")),
+        ),
+        { description: "Pro Tools Marker: Select to 17" },
+    ),
+    bind(
+        shift("i"),
+        macro(
+            key(shift("keypad_period")),
+            key(shift("keypad_18")),
+            key(shift("keypad_period")),
+        ),
+        { description: "Pro Tools Marker: Select to 18" },
+    ),
+    bind(
+        shift("o"),
+        macro(
+            key(shift("keypad_period")),
+            key(shift("keypad_19")),
+            key(shift("keypad_period")),
+        ),
+        { description: "Pro Tools Marker: Select to 19" },
+    ),
+    bind(
+        shift(";"),
+        macro(
+            key(shift("keypad_period")),
+            key(shift("keypad_20")),
+            key(shift("keypad_period")),
+        ),
+        { description: "Pro Tools Marker: Select to 20" },
     ),
 
     bind(
@@ -704,17 +900,4 @@ export const normalPtMarkerBindings = [
         ),
         { description: "Pro Tools Marker: Create VAMP" },
     ),
-    bind("hyphen", key("left_arrow", { modifiers: ["option", "command"] }), {
-        description: "Pro Tools Marker: Go to previous",
-    }),
-    bind(
-        "equal_sign",
-        key("right_arrow", { modifiers: ["option", "command"] }),
-        {
-            description: "Pro Tools Marker: Go to next",
-        },
-    ),
-    bind("return_or_enter", key("keypad_5", { modifiers: ["command"] }), {
-        description: "Pro Tools Marker: Go to next",
-    }),
 ];

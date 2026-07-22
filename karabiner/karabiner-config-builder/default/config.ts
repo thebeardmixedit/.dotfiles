@@ -15,6 +15,7 @@ import {
     shift,
     opt,
     cmd,
+    shell,
 } from "karabiner-config-builder";
 
 import aerospaceBindings from "./bindings/aerospace.ts";
@@ -24,7 +25,10 @@ import {
     normalPtMarkerBindings,
     moonlanderPtMarkerBindings,
 } from "./bindings/protools/markers.ts";
-import { moonlanderPtCommandBindings } from "./bindings/protools/commands.ts";
+import {
+    moonlanderPtCommandBindingsLeft,
+    moonlanderPtCommandBindingsRight,
+} from "./bindings/protools/commands.ts";
 
 export default setup({
     global: {
@@ -55,6 +59,7 @@ export default setup({
                     tapTimeoutMs: 150,
                     bindings: [...aerospaceBindings, ...appBindings],
                 }),
+
                 group(
                     {
                         description: "Global disable app specific command keys",
@@ -66,6 +71,7 @@ export default setup({
                     bind("f19", none()),
                     bind("f20", none()),
                 ),
+
                 group(
                     {
                         description: "Pro Tools app specific command keys",
@@ -78,12 +84,20 @@ export default setup({
                         tapTimeoutMs: 150,
                         bindings: moonlanderPtMarkerBindings,
                     }),
+
                     layer("moonlander-pt-commands", {
                         trigger: "f16",
                         tapped: key("f16"),
                         block: true,
                         tapTimeoutMs: 150,
-                        bindings: moonlanderPtCommandBindings,
+                        bindings: [
+                            ...moonlanderPtCommandBindingsLeft,
+                            ...moonlanderPtCommandBindingsRight,
+                        ],
+                    }),
+
+                    bind("f17", key(ctrl("backslash")), {
+                        description: "Pro Tools Command: New playlist",
                     }),
                     bind("f20", key(ctrl("f2")), {
                         description:
@@ -91,12 +105,16 @@ export default setup({
                     }),
                     bind("right_command", key("right_command"), {
                         tapped: key(hyper("equal_sign")),
+                        description: "Pro Tools SF Command: Toggle mix window",
                     }),
                     bind("right_option", key("right_option"), {
                         tapped: key(shift(opt(cmd("o")))),
+                        description:
+                            "Pro Tools SF Command: Open current session directory in Finder",
                     }),
                     bind("right_control", key("right_control"), {
                         tapped: key(ctrl("keypad_7")),
+                        description: "Pro Tools SF Command: Toggle click mute",
                     }),
                 ),
             ),
