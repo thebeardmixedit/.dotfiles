@@ -43,7 +43,6 @@ return {
 				if formatters_by_ft[ft] then
 					return {
 						timeout_ms = 500,
-						lsp_format = "fallback",
 					}
 				end
 
