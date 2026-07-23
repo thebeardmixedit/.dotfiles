@@ -17,7 +17,7 @@ return {
 			sh = { "shellcheck" },
 		}
 
-		vim.api.nvim_create_autocmd({ "BufWritePost", "InsertLeave" }, {
+		vim.api.nvim_create_autocmd("BufWritePost", {
 			group = vim.api.nvim_create_augroup("thebeard-lint", { clear = true }),
 			callback = function(event)
 				local ft = vim.bo[event.buf].filetype
