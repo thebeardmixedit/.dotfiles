@@ -39,7 +39,6 @@ local filetypes = {
 return {
 	sources = {
 		"https://github.com/thebeardmixedit/nvim-treesitter.git",
-		"https://github.com/thebeardmixedit/nvim-treesitter-textobjects.git",
 	},
 	config = function()
 		local treesitter = require("nvim-treesitter")
@@ -71,8 +70,6 @@ return {
 		})
 
 		vim.treesitter.language.register("bash", { "zsh", "sh" })
-
-		require("nvim-treesitter-textobjects").setup({})
 
 		vim.api.nvim_create_autocmd("FileType", {
 			group = vim.api.nvim_create_augroup("thebeard-treesitter", { clear = true }),
