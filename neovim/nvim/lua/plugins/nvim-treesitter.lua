@@ -78,7 +78,5 @@ return {
 				start_treesitter(event.buf)
 			end,
 		})
-
-		start_treesitter()
 	end,
 }
