@@ -6,7 +6,6 @@ return {
 	deps = {
 		"https://github.com/L3MON4D3/LuaSnip.git",
 	},
-	on_event = "InsertEnter",
 	config = function()
 		require("blink.cmp").setup({
 			keymap = {
