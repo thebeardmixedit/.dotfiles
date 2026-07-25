@@ -103,6 +103,10 @@ on-window-detected = [
         run = ["move-node-to-workspace sm"],
     },
     {
+        if = "test %{app-bundle-id} = com.apple.Music",
+        run = ["move-node-to-workspace mu"],
+    },
+    {
         if = """\
             test %{app-bundle-id} = org.m0k.transmission \
             || test %{app-bundle-id} = com.apple.AppStore \
