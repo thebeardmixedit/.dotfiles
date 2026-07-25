@@ -119,6 +119,7 @@ return {
 					},
 				},
 			},
+			taplo = {},
 		}
 
 		for name, server in pairs(servers) do

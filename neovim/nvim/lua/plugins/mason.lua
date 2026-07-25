@@ -18,6 +18,7 @@ return {
 			"json-lsp",
 			"emmet-ls",
 			"yaml-language-server",
+			"taplo",
 
 			-- Formatters and linters
 			"stylua",

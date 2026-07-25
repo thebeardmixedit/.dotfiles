@@ -29,6 +29,7 @@ return {
 			python = { "black" },
 
 			yaml = { "prettier" },
+			toml = { "taplo" },
 		}
 
 		conform.setup({
