@@ -4,6 +4,7 @@ return {
 		"https://github.com/mason-org/mason.nvim.git",
 		"https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim.git",
 	},
+	eager = true,
 	config = function()
 		local ensure_installed = {
 			-- LSP servers
@@ -31,7 +32,7 @@ return {
 
 		require("mason-tool-installer").setup({
 			ensure_installed = ensure_installed,
-            run_on_start = true,
+			run_on_start = true,
 		})
 	end,
 	keymaps = {
