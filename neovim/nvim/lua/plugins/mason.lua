@@ -26,6 +26,7 @@ return {
 			"prettier",
 			"eslint_d",
 			"black",
+			"yamllint",
 		}
 
 		require("mason").setup({})

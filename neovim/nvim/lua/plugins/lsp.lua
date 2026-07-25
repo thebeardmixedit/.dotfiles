@@ -7,7 +7,6 @@ return {
 	},
 	deps = {
 		"https://github.com/mason-org/mason.nvim.git",
-		"https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim.git",
 	},
 	on_filetype = u.filetypes.lsp,
 	config = function()
@@ -106,7 +105,20 @@ return {
 					"typescriptreact",
 				},
 			},
-			yamlls = {},
+			yamlls = {
+				settings = {
+					yaml = {
+						format = {
+							enable = false,
+						},
+					},
+					redhat = {
+						telemetry = {
+							enabled = false,
+						},
+					},
+				},
+			},
 		}
 
 		for name, server in pairs(servers) do

@@ -27,6 +27,8 @@ return {
 			zsh = { "shfmt" },
 
 			python = { "black" },
+
+			yaml = { "prettier" },
 		}
 
 		conform.setup({
