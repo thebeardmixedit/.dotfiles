@@ -1,13 +1,9 @@
-local u = require("utils")
-
 ---@type TheBeardLazyloadPluginSpec
 return {
 	sources = {
 		"https://github.com/mason-org/mason.nvim.git",
 		"https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim.git",
 	},
-	on_cmd = { "Mason" },
-	on_filetype = u.filetypes.lsp,
 	config = function()
 		local ensure_installed = {
 			-- LSP servers
@@ -20,6 +16,7 @@ return {
 			"pyright",
 			"json-lsp",
 			"emmet-ls",
+			"yaml-language-server",
 
 			-- Formatters and linters
 			"stylua",
@@ -34,9 +31,9 @@ return {
 
 		require("mason-tool-installer").setup({
 			ensure_installed = ensure_installed,
+            run_on_start = true,
 		})
 	end,
-	load_keymaps_eagerly = true,
 	keymaps = {
 		{ keys = "<leader>lm", cmd = "<cmd>Mason<CR>", opts = { desc = "[m]ason" } },
 	},

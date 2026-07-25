@@ -5,6 +5,10 @@ return {
 	sources = {
 		"https://github.com/neovim/nvim-lspconfig.git",
 	},
+	deps = {
+		"https://github.com/mason-org/mason.nvim.git",
+		"https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim.git",
+	},
 	on_filetype = u.filetypes.lsp,
 	config = function()
 		---@type table<string, vim.lsp.Config>
@@ -102,6 +106,7 @@ return {
 					"typescriptreact",
 				},
 			},
+			yamlls = {},
 		}
 
 		for name, server in pairs(servers) do
