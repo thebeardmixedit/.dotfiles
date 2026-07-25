@@ -35,8 +35,6 @@ return {
 		local servers = {
 			lua_ls = {
 				on_init = function(client)
-					client.server_capabilities.documentFormattingProvider = false -- Disable formatting (formatting is done by stylua)
-
 					if client.workspace_folders then
 						local path = client.workspace_folders[1].name
 
