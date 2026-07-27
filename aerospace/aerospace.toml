@@ -18,96 +18,73 @@ automatically-unhide-macos-hidden-apps = true
 persistent-workspaces = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'ex']
 
 on-window-detected = [
-    {
-        if = "test %{app-bundle-id} = com.apple.finder",
-        run = ["move-node-to-workspace fd"],
-    },
-    {
-        if = "test %{app-bundle-id} ~= com.uaudio.console3",
-        run = ["move-node-to-workspace ua"],
-    },
-    {
-        if = "test %{app-bundle-id} = com.avid.ProTools",
-        run = ["move-node-to-workspace pt"],
-    },
-    {
-        if = "test %{app-bundle-id} = com.apple.logic10",
-        run = ["move-node-to-workspace lg"],
-    },
-    {
-        if = "test %{app-bundle-id} = com.ableton.live",
-        run = ["move-node-to-workspace ab"],
-    },
-    {
-        if = "test %{app-bundle-id} = com.mitchellh.ghostty",
-        run = ["move-node-to-workspace tm"],
-    },
-    {
-        if = "test %{app-bundle-id} = com.brave.Browser",
-        run = ["move-node-to-workspace br"],
-    },
-    {
-        if = "test %{app-bundle-id} = com.apple.MobileSMS",
-        run = ["move-node-to-workspace ms"],
-    },
-    {
-        if = "test %{app-bundle-id} = com.apple.mail",
-        run = ["move-node-to-workspace ml"],
-    },
-    {
-        if = "test %{app-bundle-id} = com.brave.Browser.app.agimnkijcaahngcdmfeangaknmldooml",
-        run = ["move-node-to-workspace yt"],
-    },
-    {
-        if = "test %{app-bundle-id} = us.zoom.xos",
-        run = ["move-node-to-workspace zm"],
-    },
-    {
-        if = "test %{app-bundle-id} = com.apple.iCal",
-        run = ["move-node-to-workspace ca"],
-    },
-    {
-        if = "test %{app-bundle-id} = com.apple.reminders",
-        run = ["move-node-to-workspace rm"],
-    },
-    {
-        if = "test %{app-bundle-id} = com.apple.Notes",
-        run = ["move-node-to-workspace nt"],
-    },
-    {
-        if = "test %{app-bundle-id} = com.spotify.client",
-        run = ["move-node-to-workspace sp"],
-    },
-    {
-        if = "test %{app-bundle-id} = com.openai.chat",
-        run = ["move-node-to-workspace ai"],
-    },
-    {
-        if = "test %{app-bundle-id} = com.apple.audio.AudioMIDISetup",
-        run = ["move-node-to-workspace am"],
-    },
-    {
-        if = "test %{app-bundle-id} = com.adobe.illustrator",
-        run = ["move-node-to-workspace il"],
-    },
-    {
-        if = "test %{app-bundle-id} = org.pqrs.Karabiner-Elements.Settings",
-        run = ["move-node-to-workspace kr"],
-    },
-    {
-        if = "test %{app-bundle-id} = org.pqrs.Karabiner-EventViewer",
-        run = ["move-node-to-workspace ke"],
-    },
-    {
-        if = "test %{app-bundle-id} = com.electron.samply",
-        run = ["move-node-to-workspace sm"],
-    },
-    {
-        if = "test %{app-bundle-id} = com.apple.Music",
-        run = ["move-node-to-workspace mu"],
-    },
-    {
-        if = """\
+  { if = "test %{app-bundle-id} = com.apple.finder", run = [
+    "move-node-to-workspace fd",
+  ] },
+  { if = "test %{app-bundle-id} ~= com.uaudio.console3", run = [
+    "move-node-to-workspace ua",
+  ] },
+  { if = "test %{app-bundle-id} = com.avid.ProTools", run = [
+    "move-node-to-workspace pt",
+  ] },
+  { if = "test %{app-bundle-id} = com.apple.logic10", run = [
+    "move-node-to-workspace lg",
+  ] },
+  { if = "test %{app-bundle-id} = com.ableton.live", run = [
+    "move-node-to-workspace ab",
+  ] },
+  { if = "test %{app-bundle-id} = com.mitchellh.ghostty", run = [
+    "move-node-to-workspace tm",
+  ] },
+  { if = "test %{app-bundle-id} = com.brave.Browser", run = [
+    "move-node-to-workspace br",
+  ] },
+  { if = "test %{app-bundle-id} = com.apple.MobileSMS", run = [
+    "move-node-to-workspace ms",
+  ] },
+  { if = "test %{app-bundle-id} = com.apple.mail", run = [
+    "move-node-to-workspace ml",
+  ] },
+  { if = "test %{app-bundle-id} = com.brave.Browser.app.agimnkijcaahngcdmfeangaknmldooml", run = [
+    "move-node-to-workspace yt",
+  ] },
+  { if = "test %{app-bundle-id} = us.zoom.xos", run = [
+    "move-node-to-workspace zm",
+  ] },
+  { if = "test %{app-bundle-id} = com.apple.iCal", run = [
+    "move-node-to-workspace ca",
+  ] },
+  { if = "test %{app-bundle-id} = com.apple.reminders", run = [
+    "move-node-to-workspace rm",
+  ] },
+  { if = "test %{app-bundle-id} = com.apple.Notes", run = [
+    "move-node-to-workspace nt",
+  ] },
+  { if = "test %{app-bundle-id} = com.spotify.client", run = [
+    "move-node-to-workspace sp",
+  ] },
+  { if = "test %{app-bundle-id} = com.openai.chat", run = [
+    "move-node-to-workspace ai",
+  ] },
+  { if = "test %{app-bundle-id} = com.apple.audio.AudioMIDISetup", run = [
+    "move-node-to-workspace am",
+  ] },
+  { if = "test %{app-bundle-id} = com.adobe.illustrator", run = [
+    "move-node-to-workspace il",
+  ] },
+  { if = "test %{app-bundle-id} = org.pqrs.Karabiner-Elements.Settings", run = [
+    "move-node-to-workspace kr",
+  ] },
+  { if = "test %{app-bundle-id} = org.pqrs.Karabiner-EventViewer", run = [
+    "move-node-to-workspace ke",
+  ] },
+  { if = "test %{app-bundle-id} = com.electron.samply", run = [
+    "move-node-to-workspace sm",
+  ] },
+  { if = "test %{app-bundle-id} = com.apple.Music", run = [
+    "move-node-to-workspace mu",
+  ] },
+  { if = """\
             test %{app-bundle-id} = org.m0k.transmission \
             || test %{app-bundle-id} = com.apple.AppStore \
             || test %{app-bundle-id} = com.apple.ActivityMonitor \
@@ -116,9 +93,9 @@ on-window-detected = [
             || test %{app-bundle-id} = com.runningwithcrayons.Alfred-Preferences \
             || test %{app-bundle-id} = io.zsa.keymapp \
             || test %{app-bundle-id} = com.bjango.istatmenus \
-        """,
-        run = ["layout floating"],
-    },
+        """, run = [
+    "layout floating",
+  ] },
 ]
 
 [key-mapping]
