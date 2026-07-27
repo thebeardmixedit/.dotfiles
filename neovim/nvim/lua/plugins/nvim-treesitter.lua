@@ -43,10 +43,12 @@ return {
 	config = function()
 		local treesitter = require("nvim-treesitter")
 
-		local function start_treesitter(bufnr)
-			bufnr = bufnr or vim.api.nvim_get_current_buf()
+		local function configure_buffer(bufnr)
+			local started = pcall(vim.treesitter.start, bufnr)
 
-			pcall(vim.treesitter.start, bufnr)
+			if not started then
+				return
+			end
 
 			vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 			vim.wo.foldmethod = "expr"
@@ -69,13 +71,13 @@ return {
 			desc = "Update configured Treesitter parsers",
 		})
 
-		vim.treesitter.language.register("bash", { "zsh", "sh" })
+		vim.treesitter.language.register("bash", { "sh", "zsh" })
 
 		vim.api.nvim_create_autocmd("FileType", {
 			group = vim.api.nvim_create_augroup("thebeard-treesitter", { clear = true }),
 			pattern = filetypes,
 			callback = function(event)
-				start_treesitter(event.buf)
+				configure_buffer(event.buf)
 			end,
 		})
 	end,
