@@ -12,6 +12,7 @@ local parsers = {
 	"markdown",
 	"python",
 	"yaml",
+	"toml",
 	"c",
 }
 
@@ -32,6 +33,7 @@ local filetypes = {
 	"markdown",
 	"python",
 	"yaml",
+	"toml",
 	"c",
 }
 
