@@ -26,8 +26,6 @@ return {
 			sh = { "shfmt" },
 			zsh = { "shfmt" },
 
-			python = { "black" },
-
 			yaml = { "prettier" },
 			toml = { "taplo" },
 		}

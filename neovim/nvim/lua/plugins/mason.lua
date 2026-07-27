@@ -14,7 +14,6 @@ return {
 			"html-lsp",
 			"css-lsp",
 			"tailwindcss-language-server",
-			"pyright",
 			"json-lsp",
 			"emmet-ls",
 			"yaml-language-server",
@@ -26,7 +25,6 @@ return {
 			"shfmt",
 			"prettier",
 			"eslint_d",
-			"black",
 			"yamllint",
 		}
 

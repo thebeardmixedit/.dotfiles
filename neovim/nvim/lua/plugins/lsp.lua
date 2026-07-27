@@ -87,7 +87,6 @@ return {
 			ts_ls = {},
 			html = {},
 			cssls = {},
-			pyright = {},
 			jsonls = {},
 			tailwindcss = {
 				filetypes = {
