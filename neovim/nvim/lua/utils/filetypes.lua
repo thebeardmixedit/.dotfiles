@@ -13,6 +13,8 @@ return {
 		"bash",
 		"sh",
 		"zsh",
+		"yaml",
+		"toml",
 	},
 	format = {
 		"lua",
@@ -29,6 +31,8 @@ return {
 		"bash",
 		"sh",
 		"zsh",
+		"yaml",
+		"toml",
 	},
 	lint = {
 		"javascript",
@@ -38,5 +42,6 @@ return {
 		"python",
 		"bash",
 		"sh",
+		"yaml",
 	},
 }
