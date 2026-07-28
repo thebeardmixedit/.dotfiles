@@ -68,58 +68,112 @@ export const moonlanderPtMarkerBindings: Manipulator[] = [
     ),
     bind(
         "0",
-        macro(key("keypad_period"), key("keypad_10"), key("keypad_period")),
+        macro(
+            key("keypad_period"),
+            key("keypad_1"),
+            key("keypad_0"),
+            key("keypad_period"),
+        ),
         { description: "Pro Tools Marker: Go to 10" },
     ),
-
     bind(
         "q",
-        macro(key("keypad_period"), key("keypad_11"), key("keypad_period")),
+        macro(
+            key("keypad_period"),
+            key("keypad_1"),
+            key("keypad_1"),
+            key("keypad_period"),
+        ),
         { description: "Pro Tools Marker: Go to 11" },
     ),
     bind(
         "w",
-        macro(key("keypad_period"), key("keypad_12"), key("keypad_period")),
+        macro(
+            key("keypad_period"),
+            key("keypad_1"),
+            key("keypad_2"),
+            key("keypad_period"),
+        ),
         { description: "Pro Tools Marker: Go to 12" },
     ),
     bind(
         "e",
-        macro(key("keypad_period"), key("keypad_13"), key("keypad_period")),
+        macro(
+            key("keypad_period"),
+            key("keypad_1"),
+            key("keypad_3"),
+            key("keypad_period"),
+        ),
         { description: "Pro Tools Marker: Go to 13" },
     ),
     bind(
         "r",
-        macro(key("keypad_period"), key("keypad_14"), key("keypad_period")),
+        macro(
+            key("keypad_period"),
+            key("keypad_1"),
+            key("keypad_4"),
+            key("keypad_period"),
+        ),
         { description: "Pro Tools Marker: Go to 14" },
     ),
     bind(
         "t",
-        macro(key("keypad_period"), key("keypad_15"), key("keypad_period")),
+        macro(
+            key("keypad_period"),
+            key("keypad_1"),
+            key("keypad_5"),
+            key("keypad_period"),
+        ),
         { description: "Pro Tools Marker: Go to 15" },
     ),
     bind(
         "y",
-        macro(key("keypad_period"), key("keypad_16"), key("keypad_period")),
+        macro(
+            key("keypad_period"),
+            key("keypad_1"),
+            key("keypad_6"),
+            key("keypad_period"),
+        ),
         { description: "Pro Tools Marker: Go to 16" },
     ),
     bind(
         "u",
-        macro(key("keypad_period"), key("keypad_17"), key("keypad_period")),
+        macro(
+            key("keypad_period"),
+            key("keypad_1"),
+            key("keypad_7"),
+            key("keypad_period"),
+        ),
         { description: "Pro Tools Marker: Go to 17" },
     ),
     bind(
         "i",
-        macro(key("keypad_period"), key("keypad_18"), key("keypad_period")),
+        macro(
+            key("keypad_period"),
+            key("keypad_1"),
+            key("keypad_8"),
+            key("keypad_period"),
+        ),
         { description: "Pro Tools Marker: Go to 18" },
     ),
     bind(
         "o",
-        macro(key("keypad_period"), key("keypad_19"), key("keypad_period")),
+        macro(
+            key("keypad_period"),
+            key("keypad_1"),
+            key("keypad_9"),
+            key("keypad_period"),
+        ),
         { description: "Pro Tools Marker: Go to 19" },
     ),
     bind(
         ";",
-        macro(key("keypad_period"), key("keypad_20"), key("keypad_period")),
+        macro(
+            key("keypad_period"),
+            key("keypad_2"),
+            key("keypad_0"),
+            key("keypad_period"),
+        ),
         { description: "Pro Tools Marker: Go to 20" },
     ),
 
@@ -208,17 +262,18 @@ export const moonlanderPtMarkerBindings: Manipulator[] = [
         shift("0"),
         macro(
             key(shift("keypad_period")),
-            key(shift("keypad_10")),
+            key(shift("keypad_1")),
+            key(shift("keypad_0")),
             key(shift("keypad_period")),
         ),
         { description: "Pro Tools Marker: Select to 10" },
     ),
-
     bind(
         shift("q"),
         macro(
             key(shift("keypad_period")),
-            key(shift("keypad_11")),
+            key(shift("keypad_1")),
+            key(shift("keypad_1")),
             key(shift("keypad_period")),
         ),
         { description: "Pro Tools Marker: Select to 11" },
@@ -227,7 +282,8 @@ export const moonlanderPtMarkerBindings: Manipulator[] = [
         shift("w"),
         macro(
             key(shift("keypad_period")),
-            key(shift("keypad_12")),
+            key(shift("keypad_1")),
+            key(shift("keypad_2")),
             key(shift("keypad_period")),
         ),
         { description: "Pro Tools Marker: Select to 12" },
@@ -236,7 +292,8 @@ export const moonlanderPtMarkerBindings: Manipulator[] = [
         shift("e"),
         macro(
             key(shift("keypad_period")),
-            key(shift("keypad_13")),
+            key(shift("keypad_1")),
+            key(shift("keypad_3")),
             key(shift("keypad_period")),
         ),
         { description: "Pro Tools Marker: Select to 13" },
@@ -245,7 +302,8 @@ export const moonlanderPtMarkerBindings: Manipulator[] = [
         shift("r"),
         macro(
             key(shift("keypad_period")),
-            key(shift("keypad_14")),
+            key(shift("keypad_1")),
+            key(shift("keypad_4")),
             key(shift("keypad_period")),
         ),
         { description: "Pro Tools Marker: Select to 14" },
@@ -254,7 +312,8 @@ export const moonlanderPtMarkerBindings: Manipulator[] = [
         shift("t"),
         macro(
             key(shift("keypad_period")),
-            key(shift("keypad_15")),
+            key(shift("keypad_1")),
+            key(shift("keypad_5")),
             key(shift("keypad_period")),
         ),
         { description: "Pro Tools Marker: Select to 15" },
@@ -263,7 +322,8 @@ export const moonlanderPtMarkerBindings: Manipulator[] = [
         shift("y"),
         macro(
             key(shift("keypad_period")),
-            key(shift("keypad_16")),
+            key(shift("keypad_1")),
+            key(shift("keypad_6")),
             key(shift("keypad_period")),
         ),
         { description: "Pro Tools Marker: Select to 16" },
@@ -272,7 +332,8 @@ export const moonlanderPtMarkerBindings: Manipulator[] = [
         shift("u"),
         macro(
             key(shift("keypad_period")),
-            key(shift("keypad_17")),
+            key(shift("keypad_1")),
+            key(shift("keypad_7")),
             key(shift("keypad_period")),
         ),
         { description: "Pro Tools Marker: Select to 17" },
@@ -281,7 +342,8 @@ export const moonlanderPtMarkerBindings: Manipulator[] = [
         shift("i"),
         macro(
             key(shift("keypad_period")),
-            key(shift("keypad_18")),
+            key(shift("keypad_1")),
+            key(shift("keypad_8")),
             key(shift("keypad_period")),
         ),
         { description: "Pro Tools Marker: Select to 18" },
@@ -290,7 +352,8 @@ export const moonlanderPtMarkerBindings: Manipulator[] = [
         shift("o"),
         macro(
             key(shift("keypad_period")),
-            key(shift("keypad_19")),
+            key(shift("keypad_1")),
+            key(shift("keypad_9")),
             key(shift("keypad_period")),
         ),
         { description: "Pro Tools Marker: Select to 19" },
@@ -299,7 +362,8 @@ export const moonlanderPtMarkerBindings: Manipulator[] = [
         shift(";"),
         macro(
             key(shift("keypad_period")),
-            key(shift("keypad_20")),
+            key(shift("keypad_2")),
+            key(shift("keypad_0")),
             key(shift("keypad_period")),
         ),
         { description: "Pro Tools Marker: Select to 20" },
@@ -514,58 +578,112 @@ export const normalPtMarkerBindings = [
     ),
     bind(
         "0",
-        macro(key("keypad_period"), key("keypad_10"), key("keypad_period")),
+        macro(
+            key("keypad_period"),
+            key("keypad_1"),
+            key("keypad_0"),
+            key("keypad_period"),
+        ),
         { description: "Pro Tools Marker: Go to 10" },
     ),
-
     bind(
         "q",
-        macro(key("keypad_period"), key("keypad_11"), key("keypad_period")),
+        macro(
+            key("keypad_period"),
+            key("keypad_1"),
+            key("keypad_1"),
+            key("keypad_period"),
+        ),
         { description: "Pro Tools Marker: Go to 11" },
     ),
     bind(
         "w",
-        macro(key("keypad_period"), key("keypad_12"), key("keypad_period")),
+        macro(
+            key("keypad_period"),
+            key("keypad_1"),
+            key("keypad_2"),
+            key("keypad_period"),
+        ),
         { description: "Pro Tools Marker: Go to 12" },
     ),
     bind(
         "e",
-        macro(key("keypad_period"), key("keypad_13"), key("keypad_period")),
+        macro(
+            key("keypad_period"),
+            key("keypad_1"),
+            key("keypad_3"),
+            key("keypad_period"),
+        ),
         { description: "Pro Tools Marker: Go to 13" },
     ),
     bind(
         "r",
-        macro(key("keypad_period"), key("keypad_14"), key("keypad_period")),
+        macro(
+            key("keypad_period"),
+            key("keypad_1"),
+            key("keypad_4"),
+            key("keypad_period"),
+        ),
         { description: "Pro Tools Marker: Go to 14" },
     ),
     bind(
         "t",
-        macro(key("keypad_period"), key("keypad_15"), key("keypad_period")),
+        macro(
+            key("keypad_period"),
+            key("keypad_1"),
+            key("keypad_5"),
+            key("keypad_period"),
+        ),
         { description: "Pro Tools Marker: Go to 15" },
     ),
     bind(
         "y",
-        macro(key("keypad_period"), key("keypad_16"), key("keypad_period")),
+        macro(
+            key("keypad_period"),
+            key("keypad_1"),
+            key("keypad_6"),
+            key("keypad_period"),
+        ),
         { description: "Pro Tools Marker: Go to 16" },
     ),
     bind(
         "u",
-        macro(key("keypad_period"), key("keypad_17"), key("keypad_period")),
+        macro(
+            key("keypad_period"),
+            key("keypad_1"),
+            key("keypad_7"),
+            key("keypad_period"),
+        ),
         { description: "Pro Tools Marker: Go to 17" },
     ),
     bind(
         "i",
-        macro(key("keypad_period"), key("keypad_18"), key("keypad_period")),
+        macro(
+            key("keypad_period"),
+            key("keypad_1"),
+            key("keypad_8"),
+            key("keypad_period"),
+        ),
         { description: "Pro Tools Marker: Go to 18" },
     ),
     bind(
         "o",
-        macro(key("keypad_period"), key("keypad_19"), key("keypad_period")),
+        macro(
+            key("keypad_period"),
+            key("keypad_1"),
+            key("keypad_9"),
+            key("keypad_period"),
+        ),
         { description: "Pro Tools Marker: Go to 19" },
     ),
     bind(
         ";",
-        macro(key("keypad_period"), key("keypad_20"), key("keypad_period")),
+        macro(
+            key("keypad_period"),
+            key("keypad_2"),
+            key("keypad_0"),
+            key("keypad_period"),
+        ),
         { description: "Pro Tools Marker: Go to 20" },
     ),
 
@@ -654,17 +772,18 @@ export const normalPtMarkerBindings = [
         shift("0"),
         macro(
             key(shift("keypad_period")),
-            key(shift("keypad_10")),
+            key(shift("keypad_1")),
+            key(shift("keypad_0")),
             key(shift("keypad_period")),
         ),
         { description: "Pro Tools Marker: Select to 10" },
     ),
-
     bind(
         shift("q"),
         macro(
             key(shift("keypad_period")),
-            key(shift("keypad_11")),
+            key(shift("keypad_1")),
+            key(shift("keypad_1")),
             key(shift("keypad_period")),
         ),
         { description: "Pro Tools Marker: Select to 11" },
@@ -673,7 +792,8 @@ export const normalPtMarkerBindings = [
         shift("w"),
         macro(
             key(shift("keypad_period")),
-            key(shift("keypad_12")),
+            key(shift("keypad_1")),
+            key(shift("keypad_2")),
             key(shift("keypad_period")),
         ),
         { description: "Pro Tools Marker: Select to 12" },
@@ -682,7 +802,8 @@ export const normalPtMarkerBindings = [
         shift("e"),
         macro(
             key(shift("keypad_period")),
-            key(shift("keypad_13")),
+            key(shift("keypad_1")),
+            key(shift("keypad_3")),
             key(shift("keypad_period")),
         ),
         { description: "Pro Tools Marker: Select to 13" },
@@ -691,7 +812,8 @@ export const normalPtMarkerBindings = [
         shift("r"),
         macro(
             key(shift("keypad_period")),
-            key(shift("keypad_14")),
+            key(shift("keypad_1")),
+            key(shift("keypad_4")),
             key(shift("keypad_period")),
         ),
         { description: "Pro Tools Marker: Select to 14" },
@@ -700,7 +822,8 @@ export const normalPtMarkerBindings = [
         shift("t"),
         macro(
             key(shift("keypad_period")),
-            key(shift("keypad_15")),
+            key(shift("keypad_1")),
+            key(shift("keypad_5")),
             key(shift("keypad_period")),
         ),
         { description: "Pro Tools Marker: Select to 15" },
@@ -709,7 +832,8 @@ export const normalPtMarkerBindings = [
         shift("y"),
         macro(
             key(shift("keypad_period")),
-            key(shift("keypad_16")),
+            key(shift("keypad_1")),
+            key(shift("keypad_6")),
             key(shift("keypad_period")),
         ),
         { description: "Pro Tools Marker: Select to 16" },
@@ -718,7 +842,8 @@ export const normalPtMarkerBindings = [
         shift("u"),
         macro(
             key(shift("keypad_period")),
-            key(shift("keypad_17")),
+            key(shift("keypad_1")),
+            key(shift("keypad_7")),
             key(shift("keypad_period")),
         ),
         { description: "Pro Tools Marker: Select to 17" },
@@ -727,7 +852,8 @@ export const normalPtMarkerBindings = [
         shift("i"),
         macro(
             key(shift("keypad_period")),
-            key(shift("keypad_18")),
+            key(shift("keypad_1")),
+            key(shift("keypad_8")),
             key(shift("keypad_period")),
         ),
         { description: "Pro Tools Marker: Select to 18" },
@@ -736,7 +862,8 @@ export const normalPtMarkerBindings = [
         shift("o"),
         macro(
             key(shift("keypad_period")),
-            key(shift("keypad_19")),
+            key(shift("keypad_1")),
+            key(shift("keypad_9")),
             key(shift("keypad_period")),
         ),
         { description: "Pro Tools Marker: Select to 19" },
@@ -745,7 +872,8 @@ export const normalPtMarkerBindings = [
         shift(";"),
         macro(
             key(shift("keypad_period")),
-            key(shift("keypad_20")),
+            key(shift("keypad_2")),
+            key(shift("keypad_0")),
             key(shift("keypad_period")),
         ),
         { description: "Pro Tools Marker: Select to 20" },
