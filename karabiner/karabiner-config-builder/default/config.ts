@@ -16,6 +16,7 @@ import {
     opt,
     cmd,
     shell,
+    macro,
 } from "karabiner-config-builder";
 
 import aerospaceBindings from "./bindings/aerospace.ts";
@@ -52,25 +53,6 @@ export default setup({
                         }),
                     ],
                 },
-                layer("appspace", {
-                    trigger: "grave_accent_and_tilde",
-                    tapped: key("grave_accent_and_tilde"),
-                    block: true,
-                    tapTimeoutMs: 150,
-                    bindings: [...aerospaceBindings, ...appBindings],
-                }),
-
-                group(
-                    {
-                        description: "Global disable app specific command keys",
-                        conditions: [exceptInApp("com.avid.ProTools")],
-                    },
-                    bind("f16", none()),
-                    bind("f17", none()),
-                    bind("f18", none()),
-                    bind("f19", none()),
-                    bind("f20", none()),
-                ),
 
                 group(
                     {
@@ -117,6 +99,26 @@ export default setup({
                         description: "Pro Tools SF Command: Toggle click mute",
                     }),
                 ),
+
+                layer("appspace", {
+                    trigger: "grave_accent_and_tilde",
+                    tapped: key("grave_accent_and_tilde"),
+                    block: true,
+                    tapTimeoutMs: 150,
+                    bindings: [...aerospaceBindings, ...appBindings],
+                }),
+
+                group(
+                    {
+                        description: "Global disable app specific command keys",
+                        conditions: [exceptInApp("com.avid.ProTools")],
+                    },
+                    bind("f16", none()),
+                    bind("f17", none()),
+                    bind("f18", none()),
+                    bind("f19", none()),
+                    bind("f20", none()),
+                ),
             ),
 
             group(
@@ -147,6 +149,12 @@ export default setup({
                         tapped: key("backslash"),
                         tapTimeoutMs: 150,
                         bindings: normalPtMarkerBindings,
+                    }),
+                    layer("normal-pt-commands", {
+                        trigger: "tab",
+                        tapped: key(ctrl("backslash")),
+                        tapTimeoutMs: 150,
+                        bindings: [],
                     }),
                 ),
             ),

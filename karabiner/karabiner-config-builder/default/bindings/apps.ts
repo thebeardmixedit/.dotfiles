@@ -168,6 +168,16 @@ export default [
         cmd("k"),
         aerospace("move-node-to-workspace --focus-follows-window kr"),
     ),
+    bind(
+        shift("k"),
+        script(focusAppspace, {
+            args: ["org.pqrs.Karabiner-EventViewer", "ke"],
+        }),
+    ),
+    bind(
+        shift(cmd("k")),
+        aerospace("move-node-to-workspace --focus-follows-window ke"),
+    ),
     bind("v", script(focusAppspace, { args: ["com.electron.samply", "sm"] })),
     bind(
         cmd("v"),
