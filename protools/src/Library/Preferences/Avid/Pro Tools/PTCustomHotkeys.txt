@@ -284,6 +284,11 @@
             "New Modifiers": "<Ctrl>"
         },
         {
+            "Command": "RenderARAClipsMelodyne",
+            "New Key": "M",
+            "New Modifiers": "<Ctrl>+<Shift>"
+        },
+        {
             "Command": "GoToNextMemoryLocation",
             "New Key": "RightArrow",
             "New Modifiers": "<Cmd>+<Opt>"
