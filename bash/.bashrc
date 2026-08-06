@@ -5,6 +5,8 @@
 # Environment
 export DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
 export DOTFILESLOGS="$DOTFILES/.logs"
+export CODE="${CODE:-$HOME/Code}"
+export NEOVIM="${NEOVIM:-$HOME/.config/nvim}"
 
 # Java
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home"
@@ -71,3 +73,8 @@ complete -o nospace -W "Contacts Calendar Dock Finder Mail Safari Music SystemUI
 if command -v zoxide >/dev/null 2>&1; then
     eval "$(zoxide init bash)"
 fi
+
+bind -x '"\C-b\C-p":workspace_projects'
+bind -x '"\C-b\C-b":workspace_dotfiles'
+bind -x '"\C-b\C-n":workspace_neovim'
+bind '"\C-b\C-l":"clear\C-m"'

@@ -1,0 +1,359 @@
+#!/usr/bin/env zsh
+
+set -u
+
+mode="directory"
+path_arg=""
+
+search_dirs=()
+excluded_paths=()
+
+fzf_options=(
+    --height=100%
+    --border
+    --color='bg:#0a0a0a,bg+:#313244,gutter:#0a0a0a,preview-bg:#0a0a0a'
+    --color='fg:#cdd6f4,fg+:#cdd6f4'
+    --color='hl:#f38ba8,hl+:#f38ba8'
+    --color='pointer:#cba6f7,marker:#a6e3a1,prompt:#89b4fa'
+    --color='border:#6c7086,separator:#6c7086'
+)
+
+usage() {
+    cat <<'EOF'
+Usage:
+  workspace-picker [options] [path]
+
+Options:
+  -s, --search <directory>   Search the direct children of a directory.
+                             May be supplied multiple times.
+
+  -e, --exclude <path>       Exclude a path and all of its descendants.
+                             May be supplied multiple times.
+
+  -f, --file                 Search recursively for a file instead of a
+                             workspace directory.
+
+  -h, --help                 Show this help message.
+
+Behavior:
+  With no --search option, "$CODE" or "$HOME/Code" is searched.
+
+  Search roots are never included in their own results.
+
+  In directory mode, entering a query that does not match an existing
+  directory creates it under the search root. Creation requires exactly
+  one search root.
+
+Examples:
+  workspace-picker
+
+  workspace-picker -s "$CODE/personal"
+
+  workspace-picker \
+      -s "$CODE" \
+      -s "$CODE/personal" \
+      -s "$CODE/neovim"
+
+  workspace-picker \
+      -s "$CODE" \
+      -e "$CODE/archive"
+
+  workspace-picker --file -s "$NEOVIM"
+EOF
+}
+
+normalize_path() {
+    local path="$1"
+
+    if [[ "$path" == "~" ]]; then
+        path="$HOME"
+    elif [[ "$path" == "~/"* ]]; then
+        path="$HOME/${path#\~/}"
+    fi
+
+    while [[ "$path" != "/" && "$path" == */ ]]; do
+        path="${path%/}"
+    done
+
+    print -r -- "$path"
+}
+
+sanitize_relative_path() {
+    local path="$1"
+
+    path="${path#"${path%%[![:space:]]*}"}"
+    path="${path%"${path##*[![:space:]]}"}"
+    path="${path// /-}"
+    path="${path#/}"
+
+    if [[ -z "$path" ]]; then
+        print -u2 "Path cannot be empty."
+        return 1
+    fi
+
+    if [[ "$path" == ".." || "$path" == ../* || "$path" == */../* || "$path" == */.. ]]; then
+        print -u2 "Parent-directory traversal is not allowed."
+        return 1
+    fi
+
+    print -r -- "$path"
+}
+
+while (($# > 0)); do
+    case "$1" in
+    -s | --search)
+        shift
+
+        if (($# == 0)); then
+            print -u2 "Missing directory after --search."
+            exit 2
+        fi
+
+        search_dirs+=("$(normalize_path "$1")")
+        ;;
+
+    -e | --exclude)
+        shift
+
+        if (($# == 0)); then
+            print -u2 "Missing path after --exclude."
+            exit 2
+        fi
+
+        excluded_paths+=("$(normalize_path "$1")")
+        ;;
+
+    -f | --file)
+        mode="file"
+        ;;
+
+    -h | --help)
+        usage
+        exit 0
+        ;;
+
+    --)
+        shift
+        break
+        ;;
+
+    -*)
+        print -u2 "Unknown option: $1"
+        usage
+        exit 2
+        ;;
+
+    *)
+        if [[ -n "$path_arg" ]]; then
+            print -u2 "Only one positional path may be supplied."
+            exit 2
+        fi
+
+        path_arg="$1"
+        ;;
+    esac
+
+    shift
+done
+
+if (($# > 0)); then
+    if [[ -n "$path_arg" || $# -gt 1 ]]; then
+        print -u2 "Only one positional path may be supplied."
+        exit 2
+    fi
+
+    path_arg="$1"
+fi
+
+if ((${#search_dirs[@]} == 0)); then
+    search_dirs=("${CODE:-$HOME/Code}")
+fi
+
+for index in {1..${#search_dirs[@]}}; do
+    search_dirs[$index]="$(normalize_path "${search_dirs[$index]}")"
+
+    if [[ ! -d "${search_dirs[$index]}" ]]; then
+        print -u2 "Search directory does not exist: ${search_dirs[$index]}"
+        exit 1
+    fi
+done
+
+command -v find >/dev/null 2>&1 || {
+    print -u2 "find is not installed or is not available in PATH."
+    exit 1
+}
+
+command -v fzf >/dev/null 2>&1 || {
+    print -u2 "fzf is not installed or is not available in PATH."
+    exit 1
+}
+
+is_excluded() {
+    local path="$1"
+    local excluded
+
+    for excluded in "${excluded_paths[@]}"; do
+        if [[ "$path" == "$excluded" || "$path" == "$excluded/"* ]]; then
+            return 0
+        fi
+    done
+
+    return 1
+}
+
+list_directories() {
+    local search_dir
+    local candidate
+
+    for search_dir in "${search_dirs[@]}"; do
+        find "$search_dir" \
+            -mindepth 1 \
+            -maxdepth 1 \
+            -type d \
+            ! -name ".git" \
+            ! -name "node_modules" \
+            -print
+    done |
+        while IFS= read -r candidate; do
+            if ! is_excluded "$candidate"; then
+                print -r -- "$candidate"
+            fi
+        done |
+        awk '!seen[$0]++'
+}
+
+list_files() {
+    local search_dir
+    local candidate
+
+    for search_dir in "${search_dirs[@]}"; do
+        find "$search_dir" \
+            -type d \( \
+            -name ".git" -o \
+            -name "node_modules" \
+            \) -prune -o \
+            -type f \
+            -print
+    done |
+        while IFS= read -r candidate; do
+            if ! is_excluded "$candidate"; then
+                print -r -- "$candidate"
+            fi
+        done |
+        awk '!seen[$0]++'
+}
+
+resolve_path_arg() {
+    local path
+
+    path="$(normalize_path "$path_arg")"
+
+    if [[ "$path" == /* ]]; then
+        print -r -- "$path"
+        return
+    fi
+
+    if [[ "$path" == ./* || "$path" == ../* ]]; then
+        print -r -- "$path"
+        return
+    fi
+
+    if ((${#search_dirs[@]} != 1)); then
+        print -u2 "A relative path requires exactly one search directory."
+        return 1
+    fi
+
+    path="$(sanitize_relative_path "$path")" || return
+
+    print -r -- "${search_dirs[1]}/$path"
+}
+
+select_directory() {
+    local result
+    local status
+    local query
+    local selection
+    local target
+
+    result="$(
+        list_directories |
+            fzf \
+                "${fzf_options[@]}" \
+                --prompt="Workspace> " \
+                --print-query
+    )"
+
+    status=$?
+
+    query="$(print -r -- "$result" | sed -n '1p')"
+    selection="$(print -r -- "$result" | sed -n '2p')"
+
+    if [[ -n "$selection" ]]; then
+        print -r -- "$selection"
+        return 0
+    fi
+
+    if [[ -z "$query" ]]; then
+        return "$status"
+    fi
+
+    if ((${#search_dirs[@]} != 1)); then
+        print -u2 \
+            "Creating a workspace requires exactly one search directory."
+        return 1
+    fi
+
+    query="$(sanitize_relative_path "$query")" || return
+    target="${search_dirs[1]}/$query"
+
+    if is_excluded "$target"; then
+        print -u2 "Path is excluded: $target"
+        return 1
+    fi
+
+    mkdir -p -- "$target" || {
+        print -u2 "Could not create directory: $target"
+        return 1
+    }
+
+    print -r -- "$target"
+}
+
+select_file() {
+    list_files |
+        fzf \
+            "${fzf_options[@]}" \
+            --prompt="File> " \
+            --preview='sed -n "1,200p" -- {} 2>/dev/null'
+}
+
+if [[ -n "$path_arg" ]]; then
+    target="$(resolve_path_arg)" || exit
+elif [[ "$mode" == "file" ]]; then
+    target="$(select_file)" || exit
+else
+    target="$(select_directory)" || exit
+fi
+
+[[ -n "$target" ]] || exit
+
+if is_excluded "$target"; then
+    print -u2 "Path is excluded: $target"
+    exit 1
+fi
+
+if [[ "$mode" == "file" ]]; then
+    if [[ ! -f "$target" ]]; then
+        print -u2 "File does not exist: $target"
+        exit 1
+    fi
+else
+    if [[ ! -d "$target" ]]; then
+        mkdir -p -- "$target" || {
+            print -u2 "Could not create directory: $target"
+            exit 1
+        }
+    fi
+fi
+
+print -r -- "$target"

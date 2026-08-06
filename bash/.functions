@@ -26,3 +26,40 @@ cdf() {
 path() {
     printf '%s\n' "${PATH//:/$'\n'}"
 }
+
+workspace_cd() {
+    local target
+
+    target="$(workspace-picker "$@")" || return
+    [ -n "$target" ] || return
+
+    cd -- "$target" || return
+}
+
+workspace_edit() {
+    local target
+    local target_dir
+
+    target="$(workspace-picker --file "$@")" || return
+    [ -n "$target" ] || return
+
+    target_dir="$(dirname -- "$target")" || return
+
+    cd -- "$target_dir" || return
+    nvim -- "$target"
+}
+
+workspace_projects() {
+    workspace_cd \
+        --search "$CODE" \
+        --search "$CODE/personal" \
+        --search "$CODE/neovim"
+}
+
+workspace_dotfiles() {
+    workspace_cd "$DOTFILES"
+}
+
+workspace_neovim() {
+    workspace_edit --search "$NEOVIM"
+}
