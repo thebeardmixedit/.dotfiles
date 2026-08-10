@@ -23,12 +23,13 @@ import aerospaceBindings from "./bindings/aerospace.ts";
 import appBindings from "./bindings/apps.ts";
 import finderBindings from "./bindings/finder.ts";
 import {
+    markerBindings,
     normalPtMarkerBindings,
     moonlanderPtMarkerBindings,
 } from "./bindings/protools/markers.ts";
 import {
-    moonlanderPtCommandBindingsLeft,
-    moonlanderPtCommandBindingsRight,
+    ptCommandBindingsLeft,
+    ptCommandBindingsRight,
 } from "./bindings/protools/commands.ts";
 
 export default setup({
@@ -64,7 +65,10 @@ export default setup({
                         tapped: key("keypad_enter"),
                         block: true,
                         tapTimeoutMs: 150,
-                        bindings: moonlanderPtMarkerBindings,
+                        bindings: [
+                            ...moonlanderPtMarkerBindings,
+                            ...markerBindings,
+                        ],
                     }),
 
                     layer("moonlander-pt-commands", {
@@ -73,8 +77,8 @@ export default setup({
                         block: true,
                         tapTimeoutMs: 150,
                         bindings: [
-                            ...moonlanderPtCommandBindingsLeft,
-                            ...moonlanderPtCommandBindingsRight,
+                            ...ptCommandBindingsLeft,
+                            ...ptCommandBindingsRight,
                         ],
                     }),
 
@@ -132,13 +136,6 @@ export default setup({
                         }),
                     ],
                 },
-                layer("appspace", {
-                    trigger: "caps_lock",
-                    tapped: key("caps_lock"),
-                    block: true,
-                    tapTimeoutMs: 150,
-                    bindings: [...aerospaceBindings, ...appBindings],
-                }),
                 group(
                     {
                         description: "Pro Tools app specific command keys",
@@ -148,15 +145,28 @@ export default setup({
                         trigger: "backslash",
                         tapped: key("backslash"),
                         tapTimeoutMs: 150,
-                        bindings: normalPtMarkerBindings,
+                        bindings: [
+                            ...normalPtMarkerBindings,
+                            ...markerBindings,
+                        ],
                     }),
                     layer("normal-pt-commands", {
                         trigger: "tab",
                         tapped: key(ctrl("backslash")),
                         tapTimeoutMs: 150,
-                        bindings: [],
+                        bindings: [
+                            ...ptCommandBindingsLeft,
+                            ...ptCommandBindingsRight,
+                        ],
                     }),
                 ),
+                layer("appspace", {
+                    trigger: "caps_lock",
+                    tapped: key("caps_lock"),
+                    block: true,
+                    tapTimeoutMs: 150,
+                    bindings: [...aerospaceBindings, ...appBindings],
+                }),
             ),
 
             group(
