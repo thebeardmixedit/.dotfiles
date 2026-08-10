@@ -89,7 +89,6 @@ workspace_edit() {
 
 workspace_projects() {
     workspace_cd \
-        --search "$CODE" \
         --search "$CODE/personal" \
         --search "$CODE/neovim"
 }
