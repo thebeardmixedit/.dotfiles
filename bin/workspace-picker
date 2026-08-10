@@ -233,6 +233,9 @@ list_files() {
             -name "node_modules" \
             \) -prune -o \
             -type f \
+            ! -name ".DS_Store" \
+            ! -name "Desktop.ini" \
+            ! -name "Thumbs.db" \
             -print
     done |
         while IFS= read -r candidate; do
@@ -324,7 +327,13 @@ select_file() {
         fzf \
             "${fzf_options[@]}" \
             --prompt="File> " \
-            --preview='sed -n "1,200p" -- {} 2>/dev/null'
+            --preview='
+                if command -v bat >/dev/null 2>&1; then
+                    bat --style=numbers --color=always --line-range=:200 {}
+                else
+                    sed -n "1,200p" {}
+                fi
+            '
 }
 
 if [[ -n "$path_arg" ]]; then
