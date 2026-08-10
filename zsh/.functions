@@ -76,14 +76,10 @@ workspace_cd() {
 
 workspace_edit() {
     local target
-    local target_dir
 
     target="$(workspace-picker --file "$@")" || return
     [ -n "$target" ] || return
 
-    target_dir="$(dirname -- "$target")" || return
-
-    cd -- "$target_dir" || return
     nvim -- "$target"
 }
 
@@ -94,9 +90,11 @@ workspace_projects() {
 }
 
 workspace_dotfiles() {
-    workspace_cd "$DOTFILES"
+    cd "$DOTFILES" || return
+    workspace_edit --search "$DOTFILES"
 }
 
 workspace_neovim() {
+    cd "$NEOVIM" || return
     workspace_edit --search "$NEOVIM"
 }
