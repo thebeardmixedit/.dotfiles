@@ -24,6 +24,9 @@ on-window-detected = [
   { if = "test %{app-bundle-id} ~= com.uaudio.console3", run = [
     "move-node-to-workspace ua",
   ] },
+  { if = "test %{app-bundle-id} ~= com.uaudio.uad-meter", run = [
+    "move-node-to-workspace um",
+  ] },
   { if = "test %{app-bundle-id} = com.avid.ProTools", run = [
     "move-node-to-workspace pt",
   ] },

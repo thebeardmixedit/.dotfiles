@@ -29,6 +29,14 @@ export default [
         aerospace("move-node-to-workspace --focus-follows-window ua"),
     ),
     bind(
+        shift("u"),
+        script(focusAppspace, { args: ["com.uaudio.uad-meter", "um"] }),
+    ),
+    bind(
+        shift(cmd("u")),
+        aerospace("move-node-to-workspace --focus-follows-window um"),
+    ),
+    bind(
         "p",
         script(focusAppspace, {
             args: ["com.avid.ProTools", "pt"],
