@@ -47,7 +47,7 @@ end
 
 ---@param plugin_spec TheBeardLazyloadPluginSpec
 ---@return boolean
-local function has_triggers(plugin_spec)
+local function has_declared_triggers(plugin_spec)
 	return has_command_triggers(plugin_spec) or has_event_triggers(plugin_spec) or has_filetype_triggers(plugin_spec)
 end
 
@@ -202,7 +202,7 @@ local function maybe_wrap_string_keymap(plugin_spec, keymap, rhs)
 end
 
 ---@param plugin_spec TheBeardLazyloadPluginSpec
-local function load_keymaps(plugin_spec)
+local function register_keymaps(plugin_spec)
 	if state.keymaps_registered(plugin_spec) then
 		return
 	end
@@ -261,7 +261,7 @@ activate = function(plugin_spec, reason)
 
 		local loaded_now = M.load_spec(plugin_spec, reason)
 
-		load_keymaps(plugin_spec)
+		register_keymaps(plugin_spec)
 
 		debug.log("Activated", plugin_spec.spec_name, "loaded_now=" .. tostring(loaded_now), "reason=" .. reason)
 	end)
@@ -385,7 +385,7 @@ local function register_triggers(plugin_spec)
 	register_filetype_trigger(plugin_spec)
 	register_command_trigger(plugin_spec)
 
-	if not has_triggers(plugin_spec) and not has_keymaps(plugin_spec) then
+	if not has_declared_triggers(plugin_spec) and not has_keymaps(plugin_spec) then
 		register_default_trigger(plugin_spec)
 	end
 end
@@ -397,11 +397,11 @@ function M.setup_spec(plugin_spec)
 
 		if plugin_spec.eager then
 			M.load_spec(plugin_spec, "startup:eager")
-			load_keymaps(plugin_spec)
+			register_keymaps(plugin_spec)
 			return
 		end
 
-		load_keymaps(plugin_spec)
+		register_keymaps(plugin_spec)
 		register_triggers(plugin_spec)
 	end)
 end
