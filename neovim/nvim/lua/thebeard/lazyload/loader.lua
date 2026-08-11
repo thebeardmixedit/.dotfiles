@@ -7,7 +7,7 @@ local M = {}
 ---@type TheBeardLazyloadManifest
 local manifest
 
----@type fun(plugin_spec: TheBeardLazyloadPluginSpec, reason?: string)
+---@type fun(plugin_spec: TheBeardLazyloadPluginSpec, reason?: string, session_specs?: table<string, boolean>)
 local activate
 
 ---@param m TheBeardLazyloadManifest
@@ -51,6 +51,26 @@ local function has_declared_triggers(plugin_spec)
 	return has_command_triggers(plugin_spec) or has_event_triggers(plugin_spec) or has_filetype_triggers(plugin_spec)
 end
 
+---@param plugin_spec TheBeardLazyloadPluginSpec
+---@return boolean
+local function keymaps_are_triggers(plugin_spec)
+	if not has_keymaps(plugin_spec) then
+		return false
+	end
+
+	if plugin_spec.on_keymap ~= nil then
+		return plugin_spec.on_keymap
+	end
+
+	return has_declared_triggers(plugin_spec)
+end
+
+---@param plugin_spec TheBeardLazyloadPluginSpec
+---@return boolean
+local function has_effective_triggers(plugin_spec)
+	return has_declared_triggers(plugin_spec) or keymaps_are_triggers(plugin_spec)
+end
+
 ---@param source TheBeardLazyloadPluginSpecSource
 ---@return TheBeardLazyloadPluginSpec?
 local function disabled_source_owner(source)
@@ -90,7 +110,7 @@ local function load_dependencies(plugin_spec, reason, session_specs)
 				local dep_spec = manifest.by_name[util.plugin_name(dep)]
 
 				if dep_spec then
-					M.load_spec(dep_spec, "dependency:" .. plugin_spec.spec_name .. " via " .. reason, session_specs)
+					activate(dep_spec, "dependency:" .. plugin_spec.spec_name .. " via " .. reason, session_specs)
 				else
 					table.insert(raw_deps, dep)
 				end
@@ -213,6 +233,25 @@ local function register_keymaps(plugin_spec)
 
 	debug.measure("keymaps:" .. plugin_spec.spec_name, function()
 		for _, keymap in ipairs(plugin_spec.keymaps) do
+			util.keymap(vim.deepcopy(keymap))
+		end
+	end)
+
+	state.mark_keymaps_registered(plugin_spec)
+end
+
+---@param plugin_spec TheBeardLazyloadPluginSpec
+local function register_lazy_keymaps(plugin_spec)
+	if state.keymaps_registered(plugin_spec) then
+		return
+	end
+
+	if not has_keymaps(plugin_spec) then
+		return
+	end
+
+	debug.measure("keymaps.lazy:" .. plugin_spec.spec_name, function()
+		for _, keymap in ipairs(plugin_spec.keymaps) do
 			local map = vim.deepcopy(keymap)
 			local cmd = map.cmd
 
@@ -252,14 +291,14 @@ local function cleanup_triggers(plugin_spec)
 	remove_command_triggers(plugin_spec)
 end
 
-activate = function(plugin_spec, reason)
+activate = function(plugin_spec, reason, session_specs)
 	reason = reason or "manual"
 
 	debug.measure("activate:" .. plugin_spec.spec_name, function()
 		-- Remove command stubs before loading so the plugin can define the real commands.
 		cleanup_triggers(plugin_spec)
 
-		local loaded_now = M.load_spec(plugin_spec, reason)
+		local loaded_now = M.load_spec(plugin_spec, reason, session_specs)
 
 		register_keymaps(plugin_spec)
 
@@ -385,7 +424,7 @@ local function register_triggers(plugin_spec)
 	register_filetype_trigger(plugin_spec)
 	register_command_trigger(plugin_spec)
 
-	if not has_declared_triggers(plugin_spec) and not has_keymaps(plugin_spec) then
+	if not has_effective_triggers(plugin_spec) then
 		register_default_trigger(plugin_spec)
 	end
 end
@@ -393,15 +432,22 @@ end
 ---@param plugin_spec TheBeardLazyloadPluginSpec
 function M.setup_spec(plugin_spec)
 	debug.measure("setup:" .. plugin_spec.spec_name, function()
-		plugin_spec.before_load()
-
-		if plugin_spec.eager then
-			M.load_spec(plugin_spec, "startup:eager")
+		if state.is_loaded(plugin_spec) then
 			register_keymaps(plugin_spec)
 			return
 		end
 
-		register_keymaps(plugin_spec)
+		plugin_spec.before_load()
+
+		if plugin_spec.eager then
+			activate(plugin_spec, "startup:eager")
+			return
+		end
+
+		if keymaps_are_triggers(plugin_spec) then
+			register_lazy_keymaps(plugin_spec)
+		end
+
 		register_triggers(plugin_spec)
 	end)
 end

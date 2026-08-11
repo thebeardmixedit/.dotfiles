@@ -26,6 +26,7 @@
 ---@field on_event? vim.api.keyset.events|vim.api.keyset.events[]
 ---@field on_filetype? string|string[]
 ---@field on_cmd? string|string[]
+---@field on_keymap? boolean
 ---@field config? function
 ---@field keymaps? TheBeardLazyloadKeymap[]
 ---@field before_load? function

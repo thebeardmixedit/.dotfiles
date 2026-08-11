@@ -2,6 +2,7 @@
 return {
 	sources = { { src = "https://github.com/ThePrimeagen/harpoon.git", version = "harpoon2" } },
 	deps = { "https://github.com/nvim-lua/plenary.nvim.git" },
+	on_keymap = true,
 	config = function()
 		local harpoon = require("harpoon")
 		harpoon:setup()
