@@ -125,6 +125,11 @@ export default [
         cmd("r"),
         aerospace("move-node-to-workspace --focus-follows-window rm"),
     ),
+    bind("n", script(focusAppspace, { args: ["com.apple.Notes", "nt"] })),
+    bind(
+        cmd("n"),
+        aerospace("move-node-to-workspace --focus-follows-window nt"),
+    ),
     bind(
         shift("s"),
         script(focusAppspace, { args: ["com.spotify.client", "sp"] }),
