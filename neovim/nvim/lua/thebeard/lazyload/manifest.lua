@@ -80,8 +80,6 @@ function M.build(opts)
 			spec.on_event = util.as_list(spec.on_event)
 			spec.on_filetype = util.as_list(spec.on_filetype)
 
-			spec.before_load = spec.before_load or function() end
-
 			assert(not manifest.by_spec_name[spec_name], string.format("Duplicate spec '%s'", spec_name))
 
 			for _, source in ipairs(spec.sources) do

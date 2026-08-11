@@ -437,8 +437,6 @@ function M.setup_spec(plugin_spec)
 			return
 		end
 
-		plugin_spec.before_load()
-
 		if plugin_spec.eager then
 			activate(plugin_spec, "startup:eager")
 			return

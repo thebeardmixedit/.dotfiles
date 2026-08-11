@@ -29,7 +29,6 @@
 ---@field on_keymap? boolean
 ---@field config? function
 ---@field keymaps? TheBeardLazyloadKeymap[]
----@field before_load? function
 
 ---@class TheBeardLazyloadManifest
 ---@field specs TheBeardLazyloadPluginSpec[]
