@@ -165,28 +165,9 @@ if command -v zoxide >/dev/null 2>&1; then
 fi
 
 # Key bindings
-workspace_projects_widget() {
-    workspace_projects
-    zle reset-prompt
-}
-
-workspace_dotfiles_widget() {
-    workspace_dotfiles
-    zle reset-prompt
-}
-
-workspace_neovim_widget() {
-    workspace_neovim
-    zle reset-prompt
-}
-
-zle -N workspace_projects_widget
-zle -N workspace_dotfiles_widget
-zle -N workspace_neovim_widget
-
-bindkey '^B^P' workspace_projects_widget
-bindkey '^B^B' workspace_dotfiles_widget
-bindkey '^B^N' workspace_neovim_widget
+bindkey -s '^B^P' '^uworkspace_projects^M'
+bindkey -s '^B^B' '^uworkspace_dotfiles^M'
+bindkey -s '^B^N' '^uworkspace_neovim^M'
 # bindkey -s '^B^P' '^utmux-sessionizer -s "${CODE}" -e "${CODE}/personal" -e "${CODE}/neovim"^M'
 # bindkey -s '^B^B' '^utmux-sessionizer "${DOTFILES}"^M'
 # bindkey -s '^B^N' '^utmux-sessionizer -s "${NEOVIM}"^M'

@@ -273,7 +273,7 @@ resolve_path_arg() {
 
 select_directory() {
     local result
-    local status
+    local fzf_status
     local query
     local selection
     local target
@@ -286,7 +286,7 @@ select_directory() {
                 --print-query
     )"
 
-    status=$?
+    fzf_status=$?
 
     query="$(print -r -- "$result" | sed -n '1p')"
     selection="$(print -r -- "$result" | sed -n '2p')"
@@ -297,12 +297,11 @@ select_directory() {
     fi
 
     if [[ -z "$query" ]]; then
-        return "$status"
+        return "$fzf_status"
     fi
 
     if ((${#search_dirs[@]} != 1)); then
-        print -u2 \
-            "Creating a workspace requires exactly one search directory."
+        print -u2 "Creating a workspace requires exactly one search directory."
         return 1
     fi
 
@@ -314,7 +313,7 @@ select_directory() {
         return 1
     fi
 
-    mkdir -p -- "$target" || {
+    mkdir -p "$target" || {
         print -u2 "Could not create directory: $target"
         return 1
     }
