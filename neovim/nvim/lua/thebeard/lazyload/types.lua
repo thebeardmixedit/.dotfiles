@@ -36,3 +36,5 @@
 ---@field disabled_sources table<string, TheBeardLazyloadPluginSpec>
 ---@field by_name table<string, TheBeardLazyloadPluginSpec>
 ---@field by_spec_name table<string, TheBeardLazyloadPluginSpec>
+
+---@alias TheBeardLazyloadKeymapState "none"|"lazy"|"spec"

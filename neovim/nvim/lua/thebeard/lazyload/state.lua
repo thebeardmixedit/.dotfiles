@@ -15,22 +15,29 @@ local function now_ms()
 	return math.floor(((vim.uv.hrtime() - state.started_at) / 1e6) * 1000 + 0.5) / 1000
 end
 
+---@param spec TheBeardLazyloadPluginSpec
 function M.is_loaded(spec)
 	return state.loaded_specs[spec.spec_name] == true
 end
 
+---@param spec TheBeardLazyloadPluginSpec
 function M.mark_loaded(spec)
 	state.loaded_specs[spec.spec_name] = true
 end
 
-function M.keymaps_registered(spec)
-	return state.registered_keymaps[spec.spec_name] == true
+---@param spec TheBeardLazyloadPluginSpec
+---@return TheBeardLazyloadKeymapState
+function M.keymap_state(spec)
+	return state.registered_keymaps[spec.spec_name] or "none"
 end
 
-function M.mark_keymaps_registered(spec)
-	state.registered_keymaps[spec.spec_name] = true
+---@param spec TheBeardLazyloadPluginSpec
+---@param keymap_state TheBeardLazyloadKeymapState
+function M.set_keymap_state(spec, keymap_state)
+	state.registered_keymaps[spec.spec_name] = keymap_state
 end
 
+---@param spec TheBeardLazyloadPluginSpec
 function M.record_load_attempt(spec, reason, loaded_now)
 	table.insert(state.load_attempts, {
 		spec_name = spec.spec_name,
@@ -45,6 +52,7 @@ function M.record_load_attempt(spec, reason, loaded_now)
 	end
 end
 
+---@param spec TheBeardLazyloadPluginSpec
 function M.record_load_reason(spec, reason)
 	if not state.load_reasons[spec.spec_name] then
 		state.load_reasons[spec.spec_name] = reason

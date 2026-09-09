@@ -223,7 +223,7 @@ end
 
 ---@param plugin_spec TheBeardLazyloadPluginSpec
 local function register_keymaps(plugin_spec)
-	if state.keymaps_registered(plugin_spec) then
+	if state.keymap_state(plugin_spec) == "spec" then
 		return
 	end
 
@@ -237,15 +237,14 @@ local function register_keymaps(plugin_spec)
 		end
 	end)
 
-	state.mark_keymaps_registered(plugin_spec)
+	state.set_keymap_state(plugin_spec, "spec")
 end
 
 ---@param plugin_spec TheBeardLazyloadPluginSpec
 local function register_lazy_keymaps(plugin_spec)
-	if state.keymaps_registered(plugin_spec) then
+	if state.keymap_state(plugin_spec) ~= "none" then
 		return
 	end
-
 	if not has_keymaps(plugin_spec) then
 		return
 	end
@@ -276,7 +275,7 @@ local function register_lazy_keymaps(plugin_spec)
 		end
 	end)
 
-	state.mark_keymaps_registered(plugin_spec)
+	state.set_keymap_state(plugin_spec, "lazy")
 end
 
 ---@param prefix string
