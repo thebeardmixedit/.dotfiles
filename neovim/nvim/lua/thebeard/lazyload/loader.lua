@@ -279,6 +279,12 @@ local function register_lazy_keymaps(plugin_spec)
 	state.mark_keymaps_registered(plugin_spec)
 end
 
+---@param prefix string
+---@param plugin_spec TheBeardLazyloadPluginSpec
+local function remove_augroup(prefix, plugin_spec)
+	pcall(vim.api.nvim_del_augroup_by_name, prefix .. plugin_spec.spec_name)
+end
+
 ---@param plugin_spec TheBeardLazyloadPluginSpec
 local function remove_command_triggers(plugin_spec)
 	for _, cmd in ipairs(util.as_list(plugin_spec.on_cmd)) do
@@ -287,8 +293,25 @@ local function remove_command_triggers(plugin_spec)
 end
 
 ---@param plugin_spec TheBeardLazyloadPluginSpec
+local function remove_event_triggers(plugin_spec)
+	remove_augroup("thebeard-defer-", plugin_spec)
+end
+
+---@param plugin_spec TheBeardLazyloadPluginSpec
+local function remove_filetype_triggers(plugin_spec)
+	remove_augroup("thebeard-defer-ft-", plugin_spec)
+end
+
+---@param plugin_spec TheBeardLazyloadPluginSpec
+local function remove_default_trigger(plugin_spec)
+	remove_augroup("thebeard-defer-vimenter-", plugin_spec)
+end
+
 local function cleanup_triggers(plugin_spec)
 	remove_command_triggers(plugin_spec)
+	remove_event_triggers(plugin_spec)
+	remove_filetype_triggers(plugin_spec)
+	remove_default_trigger(plugin_spec)
 end
 
 activate = function(plugin_spec, reason, session_specs)
