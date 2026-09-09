@@ -6,35 +6,33 @@ import {
     opt,
     cmd,
     key,
-    macro,
     soundflow,
 } from "karabiner-config-builder";
 
 export const ptCommandBindingsLeft: Manipulator[] = [
-    bind("1", key("f1"), { description: "Pro Tools Command: Shuffle mode" }),
+    bind("spacebar", key(cmd("spacebar")), {
+        description: "Pro Tools Command: Toggle record",
+    }),
+
+    bind("1", key("f1"), {
+        description: "Pro Tools Command: Shuffle mode",
+    }),
     bind("2", key("f2"), { description: "Pro Tools Command: Slip mode" }),
     bind("3", key("f3"), { description: "Pro Tools Command: Spot mode" }),
     bind("4", key("f4"), { description: "Pro Tools Command: Grid mode" }),
     bind("5", key("f5"), { description: "Pro Tools Command: Zoom tool" }),
 
-    bind("grave_accent_and_tilde", key(ctrl("down_arrow")), {
+    bind("q", key(ctrl(ctrl("down_arrow"))), {
         description: "Pro Tools Command: Track size decrease",
     }),
-    bind("tab", key(ctrl("up_arrow")), {
+    bind("w", key(ctrl(ctrl("up_arrow"))), {
         description: "Pro Tools Command: Track size increase",
     }),
-    bind(opt("grave_accent_and_tilde"), key(ctrl(opt("down_arrow"))), {
+    bind(opt("q"), key(ctrl(opt("down_arrow"))), {
         description: "Pro Tools Command: Track size decrease all",
     }),
-    bind(opt("tab"), key(ctrl(opt("up_arrow"))), {
+    bind(opt("w"), key(ctrl(opt("up_arrow"))), {
         description: "Pro Tools Command: Track size increase all",
-    }),
-
-    bind("q", key(ctrl(cmd("left_arrow"))), {
-        description: "Pro Tools Command: Track automation previous view",
-    }),
-    bind("w", key(ctrl(cmd("right_arrow"))), {
-        description: "Pro Tools Command: Track automation next view",
     }),
     bind("e", key(opt(cmd("open_bracket"))), {
         description: "Pro Tools Command: Track waveform zoom out",
@@ -44,12 +42,6 @@ export const ptCommandBindingsLeft: Manipulator[] = [
     }),
     bind("t", key(ctrl(opt(cmd("open_bracket")))), {
         description: "Pro Tools Command: Track waveform zoom reset",
-    }),
-    bind("open_bracket", key(shift("hyphen")), {
-        description: "Pro Tools Command: Grid resolution decrease",
-    }),
-    bind("hyphen", key(shift("equal_sign")), {
-        description: "Pro Tools Command: Grid resolution increase",
     }),
 
     bind("a", key(shift("r")), {

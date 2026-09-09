@@ -17,16 +17,28 @@ export const moonlanderPtMarkerBindings: Manipulator[] = [
     bind("m", key(opt(cmd("right_arrow"))), {
         description: "Pro Tools Marker: Go to next",
     }),
+    bind(shift("n"), key(shift(opt(cmd("left_arrow")))), {
+        description: "Pro Tools Marker: Go to previous",
+    }),
+    bind(shift("m"), key(shift(opt(cmd("right_arrow")))), {
+        description: "Pro Tools Marker: Go to next",
+    }),
     bind("comma", key(cmd("keypad_5")), {
         description: "Pro Tools Marker: Open Marker Window",
     }),
 ];
 
-export const normalPtMarkerBindings = [
+export const internalPtMarkerBindings = [
     bind("hyphen", key(opt(cmd("left_arrow"))), {
         description: "Pro Tools Marker: Go to previous",
     }),
     bind("equal_sign", key(opt(cmd("right_arrow"))), {
+        description: "Pro Tools Marker: Go to next",
+    }),
+    bind(shift("hyphen"), key(shift(opt(cmd("left_arrow")))), {
+        description: "Pro Tools Marker: Go to previous",
+    }),
+    bind(shift("equal_sign"), key(shift(opt(cmd("right_arrow")))), {
         description: "Pro Tools Marker: Go to next",
     }),
     bind("return_or_enter", key(cmd("keypad_5")), {

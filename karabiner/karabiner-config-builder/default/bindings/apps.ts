@@ -57,13 +57,13 @@ export default [
         aerospace("move-node-to-workspace --focus-follows-window lg"),
     ),
     bind(
-        "a",
+        shift("b"),
         script(focusAppspace, {
             args: ["com.ableton.live", "ab"],
         }),
     ),
     bind(
-        cmd("a"),
+        cmd(shift("b")),
         aerospace("move-node-to-workspace --focus-follows-window ab"),
     ),
     bind(
@@ -166,6 +166,11 @@ export default [
         cmd("i"),
         aerospace("move-node-to-workspace --focus-follows-window il"),
     ),
+    bind("h", script(focusAppspace, { args: ["com.adobe.Photoshop", "ph"] })),
+    bind(
+        cmd("h"),
+        aerospace("move-node-to-workspace --focus-follows-window ph"),
+    ),
     bind("s", script(focusSfspace)),
     bind(
         cmd("s"),
@@ -203,5 +208,13 @@ export default [
     bind(
         shift(cmd("u")),
         aerospace("move-node-to-workspace --focus-follows-window mu"),
+    ),
+    bind(
+        shift("p"),
+        script(focusAppspace, { args: ["com.apple.Preview", "pr"] }),
+    ),
+    bind(
+        shift(cmd("p")),
+        aerospace("move-node-to-workspace --focus-follows-window pr"),
     ),
 ];

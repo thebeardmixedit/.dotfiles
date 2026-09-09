@@ -2,35 +2,14 @@ import {
     setup,
     profile,
     group,
-    layer,
     inApp,
-    fromDevice,
-    key,
-    exceptFromDevice,
     bind,
-    none,
-    exceptInApp,
-    ctrl,
-    hyper,
-    shift,
-    opt,
-    cmd,
-    shell,
-    macro,
+    key,
 } from "karabiner-config-builder";
+import moonlander from "./moonlander.ts";
+import internal from "./internal.ts";
 
-import aerospaceBindings from "./bindings/aerospace.ts";
-import appBindings from "./bindings/apps.ts";
 import finderBindings from "./bindings/finder.ts";
-import {
-    markerBindings,
-    normalPtMarkerBindings,
-    moonlanderPtMarkerBindings,
-} from "./bindings/protools/markers.ts";
-import {
-    ptCommandBindingsLeft,
-    ptCommandBindingsRight,
-} from "./bindings/protools/commands.ts";
 
 export default setup({
     global: {
@@ -42,139 +21,21 @@ export default setup({
                 name: "Main",
                 virtual_hid_keyboard: { keyboard_type_v2: "ansi" },
             },
-
-            group(
-                {
-                    description: "Moonlander group",
-                    conditions: [
-                        fromDevice({
-                            is_keyboard: true,
-                            product_id: 6505,
-                            vendor_id: 12951,
-                        }),
-                    ],
-                },
-
-                group(
-                    {
-                        description: "Pro Tools app specific command keys",
-                        conditions: [inApp("com.avid.ProTools")],
-                    },
-                    layer("moonlander-pt-markers", {
-                        trigger: "f19",
-                        tapped: key("keypad_enter"),
-                        block: true,
-                        tapTimeoutMs: 150,
-                        bindings: [
-                            ...moonlanderPtMarkerBindings,
-                            ...markerBindings,
-                        ],
-                    }),
-
-                    layer("moonlander-pt-commands", {
-                        trigger: "f16",
-                        tapped: key("f16"),
-                        block: true,
-                        tapTimeoutMs: 150,
-                        bindings: [
-                            ...ptCommandBindingsLeft,
-                            ...ptCommandBindingsRight,
-                        ],
-                    }),
-
-                    bind("f17", key(ctrl("backslash")), {
-                        description: "Pro Tools Command: New playlist",
-                    }),
-                    bind("f20", key(ctrl("f2")), {
-                        description:
-                            "Pro Tools SF Command: Toggle Slip/Grid modes",
-                    }),
-                    bind("right_command", key("right_command"), {
-                        tapped: key(hyper("equal_sign")),
-                        description: "Pro Tools SF Command: Toggle mix window",
-                    }),
-                    bind("right_option", key("right_option"), {
-                        tapped: key(shift(opt(cmd("o")))),
-                        description:
-                            "Pro Tools SF Command: Open current session directory in Finder",
-                    }),
-                    bind("right_control", key("right_control"), {
-                        tapped: key(ctrl("keypad_7")),
-                        description: "Pro Tools SF Command: Toggle click mute",
-                    }),
-                ),
-
-                layer("appspace", {
-                    trigger: "grave_accent_and_tilde",
-                    tapped: key("grave_accent_and_tilde"),
-                    block: true,
-                    tapTimeoutMs: 150,
-                    bindings: [...aerospaceBindings, ...appBindings],
-                }),
-
-                group(
-                    {
-                        description: "Global disable app specific command keys",
-                        conditions: [exceptInApp("com.avid.ProTools")],
-                    },
-                    bind("f16", none()),
-                    bind("f17", none()),
-                    bind("f18", none()),
-                    bind("f19", none()),
-                    bind("f20", none()),
-                ),
-            ),
-
-            group(
-                {
-                    description: "Normal group",
-                    conditions: [
-                        exceptFromDevice({
-                            is_keyboard: true,
-                            product_id: 6505,
-                            vendor_id: 12951,
-                        }),
-                    ],
-                },
-                group(
-                    {
-                        description: "Pro Tools app specific command keys",
-                        conditions: [inApp("com.avid.ProTools")],
-                    },
-                    layer("normal-pt-markers", {
-                        trigger: "backslash",
-                        tapped: key("backslash"),
-                        tapTimeoutMs: 150,
-                        bindings: [
-                            ...normalPtMarkerBindings,
-                            ...markerBindings,
-                        ],
-                    }),
-                    layer("normal-pt-commands", {
-                        trigger: "tab",
-                        tapped: key(ctrl("backslash")),
-                        tapTimeoutMs: 150,
-                        bindings: [
-                            ...ptCommandBindingsLeft,
-                            ...ptCommandBindingsRight,
-                        ],
-                    }),
-                ),
-                layer("appspace", {
-                    trigger: "caps_lock",
-                    tapped: key("caps_lock"),
-                    block: true,
-                    tapTimeoutMs: 150,
-                    bindings: [...aerospaceBindings, ...appBindings],
-                }),
-            ),
-
+            moonlander(),
+            internal(),
             group(
                 {
                     description: "Finder Tools",
                     conditions: [inApp("com.apple.finder")],
                 },
                 [...finderBindings],
+            ),
+            group(
+                {
+                    description: "Globals",
+                },
+                bind("f", key("left_shift"), { tapped: key("f") }),
+                bind("j", key("right_shift"), { tapped: key("j") }),
             ),
         ),
     ],

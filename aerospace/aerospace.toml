@@ -75,6 +75,9 @@ on-window-detected = [
   { if = "test %{app-bundle-id} = com.adobe.illustrator", run = [
     "move-node-to-workspace il",
   ] },
+  { if = "test %{app-bundle-id} = com.adobe.Photoshop", run = [
+    "move-node-to-workspace ph",
+  ] },
   { if = "test %{app-bundle-id} = org.pqrs.Karabiner-Elements.Settings", run = [
     "move-node-to-workspace kr",
   ] },
@@ -87,11 +90,13 @@ on-window-detected = [
   { if = "test %{app-bundle-id} = com.apple.Music", run = [
     "move-node-to-workspace mu",
   ] },
+  { if = "test %{app-bundle-id} = com.apple.Preview", run = [
+    "move-node-to-workspace pr",
+  ] },
   { if = """\
             test %{app-bundle-id} = org.m0k.transmission \
             || test %{app-bundle-id} = com.apple.AppStore \
             || test %{app-bundle-id} = com.apple.ActivityMonitor \
-            || test %{app-bundle-id} = com.apple.Preview \
             || test %{app-bundle-id} = com.1password.1password \
             || test %{app-bundle-id} = com.runningwithcrayons.Alfred-Preferences \
             || test %{app-bundle-id} = io.zsa.keymapp \
