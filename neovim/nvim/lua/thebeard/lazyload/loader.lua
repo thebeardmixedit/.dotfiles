@@ -235,6 +235,10 @@ local function wrap_lazy(plugin_spec, keymap, fn)
 			state.record_load_attempt(plugin_spec, reason, false)
 		end
 
+		if not state.is_loaded(plugin_spec) then
+			return
+		end
+
 		return fn(...)
 	end
 end
