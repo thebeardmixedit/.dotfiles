@@ -202,11 +202,11 @@ export default [
         aerospace("move-node-to-workspace --focus-follows-window sm"),
     ),
     bind(
-        shift("u"),
+        shift("l"),
         script(focusAppspace, { args: ["com.apple.Music", "mu"] }),
     ),
     bind(
-        shift(cmd("u")),
+        shift(cmd("l")),
         aerospace("move-node-to-workspace --focus-follows-window mu"),
     ),
     bind(
