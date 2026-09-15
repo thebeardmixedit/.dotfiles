@@ -129,9 +129,35 @@ function M.print_spec_names(manifest, opts)
 	util.dump(sorted_keys(manifest.by_spec_name), opts)
 end
 
+---@param manifest TheBeardLazyloadManifest
 ---@param opts? TheBeardLazyloadPrintOptions
-function M.print_loaded(opts)
-	util.dump(state.loaded_specs(), opts)
+function M.print_loaded(manifest, opts)
+	local loaded = {}
+
+	for _, spec in ipairs(manifest.specs) do
+		if state.spec_state(spec) == "loaded" then
+			loaded[spec.spec_name] = true
+		end
+	end
+
+	util.dump(loaded, opts)
+end
+
+---@param manifest TheBeardLazyloadManifest
+---@param opts? TheBeardLazyloadPrintOptions
+function M.print_spec_states(manifest, opts)
+	local states = {}
+
+	for _, spec in ipairs(manifest.specs) do
+		states[spec.spec_name] = state.spec_state(spec)
+	end
+
+	util.dump(states, opts)
+end
+
+---@param opts? TheBeardLazyloadPrintOptions
+function M.print_spec_errors(opts)
+	util.dump(state.spec_errors(), opts)
 end
 
 ---@param opts? TheBeardLazyloadPrintOptions

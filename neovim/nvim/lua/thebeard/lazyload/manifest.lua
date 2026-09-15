@@ -1,4 +1,4 @@
-local debug = require("thebeard.lazyload.debug")
+local lazy_debug = require("thebeard.lazyload.debug")
 local util = require("thebeard.lazyload.util")
 
 local M = {}
@@ -54,7 +54,7 @@ function M.build(opts)
 
 	local import = opts.import or "plugins"
 
-	return debug.measure("manifest.build", function()
+	return lazy_debug.measure("manifest.build", function()
 		local manifest = {
 			specs = {},
 			disabled_specs = {},
@@ -64,12 +64,12 @@ function M.build(opts)
 		}
 
 		for _, spec_name in
-			ipairs(debug.measure("manifest.scan", function()
+			ipairs(lazy_debug.measure("manifest.scan", function()
 				return scan(import)
 			end))
 		do
 			---@type TheBeardLazyloadPluginSpec
-			local spec = debug.measure("spec.require:" .. spec_name, function()
+			local spec = lazy_debug.measure("spec.require:" .. spec_name, function()
 				return require(import .. "." .. spec_name)
 			end)
 
@@ -93,7 +93,7 @@ function M.build(opts)
 			else
 				table.insert(manifest.disabled_specs, spec)
 				index_disabled_sources(manifest, spec)
-				debug.log("Disabled spec", spec_name)
+				lazy_debug.log("Disabled spec", spec_name)
 			end
 		end
 

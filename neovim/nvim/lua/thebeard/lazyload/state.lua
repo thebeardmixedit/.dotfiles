@@ -3,7 +3,8 @@ local M = {}
 local MAX_LOAD_ATTEMPTS = 500
 
 local state = {
-	loaded_specs = {},
+	spec_states = {},
+	spec_errors = {},
 	registered_keymaps = {},
 	load_reasons = {},
 	load_events = {},
@@ -16,13 +17,44 @@ local function now_ms()
 end
 
 ---@param spec TheBeardLazyloadPluginSpec
-function M.is_loaded(spec)
-	return state.loaded_specs[spec.spec_name] == true
+---@return TheBeardLazyloadSpecState
+function M.spec_state(spec)
+	return state.spec_states[spec.spec_name] or "unloaded"
 end
 
 ---@param spec TheBeardLazyloadPluginSpec
-function M.mark_loaded(spec)
-	state.loaded_specs[spec.spec_name] = true
+---@param spec_state TheBeardLazyloadSpecState
+function M.set_spec_state(spec, spec_state)
+	state.spec_states[spec.spec_name] = spec_state
+end
+
+---@param spec TheBeardLazyloadPluginSpec
+---@return boolean
+function M.is_loaded(spec)
+	return M.spec_state(spec) == "loaded"
+end
+
+---@param spec TheBeardLazyloadPluginSpec
+---@return boolean
+function M.is_loading(spec)
+	return M.spec_state(spec) == "loading"
+end
+
+---@param spec TheBeardLazyloadPluginSpec
+---@return boolean
+function M.has_failed(spec)
+	return M.spec_state(spec) == "failed"
+end
+
+---@param spec TheBeardLazyloadPluginSpec
+---@param message string
+---@param reason string
+function M.mark_failed(spec, message, reason)
+	state.spec_states[spec.spec_name] = "failed"
+	state.spec_errors[spec.spec_name] = {
+		message = message,
+		reason = reason,
+	}
 end
 
 ---@param spec TheBeardLazyloadPluginSpec
@@ -66,8 +98,9 @@ function M.record_load_reason(spec, reason)
 	})
 end
 
-function M.loaded_specs()
-	return state.loaded_specs
+---@return table<string, TheBeardLazyloadSpecState>
+function M.spec_states()
+	return state.spec_states
 end
 
 function M.registered_keymaps()
@@ -86,8 +119,14 @@ function M.load_attempts()
 	return state.load_attempts
 end
 
+---@return table<string, TheBeardLazyloadSpecError>
+function M.spec_errors()
+	return state.spec_errors
+end
+
 function M.reset()
-	state.loaded_specs = {}
+	state.spec_states = {}
+	state.spec_errors = {}
 	state.registered_keymaps = {}
 	state.load_reasons = {}
 	state.load_events = {}

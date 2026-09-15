@@ -38,3 +38,9 @@
 ---@field by_spec_name table<string, TheBeardLazyloadPluginSpec>
 
 ---@alias TheBeardLazyloadKeymapState "none"|"lazy"|"spec"
+
+---@alias TheBeardLazyloadSpecState "unloaded"|"loading"|"loaded"|"failed"
+
+---@class TheBeardLazyloadSpecError
+---@field message string
+---@field reason string

@@ -1,4 +1,4 @@
-local debug = require("thebeard.lazyload.debug")
+local lazy_debug = require("thebeard.lazyload.debug")
 local manifest = require("thebeard.lazyload.manifest")
 local loader = require("thebeard.lazyload.loader")
 
@@ -23,10 +23,10 @@ function M.setup(opts)
 	opts = opts or {}
 
 	if opts.debug then
-		debug.enable()
+		lazy_debug.enable()
 	end
 
-	debug.measure("setup.total", function()
+	lazy_debug.measure("setup.total", function()
 		M.manifest = manifest.build({
 			import = opts.import or "plugins",
 		})
@@ -41,58 +41,68 @@ function M.setup(opts)
 	initialized = true
 end
 
-M.enable_debug = debug.enable
-M.disable_debug = debug.disable
-M.clear_timings = debug.clear_timings
+M.enable_debug = lazy_debug.enable
+M.disable_debug = lazy_debug.disable
+M.clear_timings = lazy_debug.clear_timings
 
 ---@param opts? TheBeardLazyloadPrintOptions
 function M.print_specs(opts)
-	debug.print_specs(get_manifest(), opts)
+	lazy_debug.print_specs(get_manifest(), opts)
 end
 
 ---@param opts? TheBeardLazyloadPrintOptions
 function M.print_plugins(opts)
-	debug.print_plugins(get_manifest(), opts)
+	lazy_debug.print_plugins(get_manifest(), opts)
 end
 
 ---@param opts? TheBeardLazyloadPrintOptions
 function M.print_spec_names(opts)
-	debug.print_spec_names(get_manifest(), opts)
+	lazy_debug.print_spec_names(get_manifest(), opts)
 end
 
 ---@param opts? TheBeardLazyloadPrintOptions
 function M.print_loaded(opts)
-	debug.print_loaded(opts)
+	lazy_debug.print_loaded(get_manifest(), opts)
+end
+
+---@param opts? TheBeardLazyloadPrintOptions
+function M.print_spec_states(opts)
+	lazy_debug.print_spec_states(get_manifest(), opts)
+end
+
+---@param opts? TheBeardLazyloadPrintOptions
+function M.print_spec_errors(opts)
+	lazy_debug.print_spec_errors(opts)
 end
 
 ---@param opts? TheBeardLazyloadPrintOptions
 function M.print_registered_keymaps(opts)
-	debug.print_registered_keymaps(opts)
+	lazy_debug.print_registered_keymaps(opts)
 end
 
 ---@param opts? TheBeardLazyloadPrintOptions
 function M.print_timings(opts)
-	debug.print_timings(opts)
+	lazy_debug.print_timings(opts)
 end
 
 ---@param opts? TheBeardLazyloadPrintOptions
 function M.print_timeline(opts)
-	debug.print_timeline(opts)
+	lazy_debug.print_timeline(opts)
 end
 
 ---@param opts? TheBeardLazyloadPrintOptions
 function M.print_load_reasons(opts)
-	debug.print_load_reasons(opts)
+	lazy_debug.print_load_reasons(opts)
 end
 
 ---@param opts? TheBeardLazyloadPrintOptions
 function M.print_load_events(opts)
-	debug.print_load_events(opts)
+	lazy_debug.print_load_events(opts)
 end
 
 ---@param opts? TheBeardLazyloadPrintOptions
 function M.print_load_attempts(opts)
-	debug.print_load_attempts(opts)
+	lazy_debug.print_load_attempts(opts)
 end
 
 return M

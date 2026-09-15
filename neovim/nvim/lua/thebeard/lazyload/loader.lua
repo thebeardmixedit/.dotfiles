@@ -1,4 +1,4 @@
-local debug = require("thebeard.lazyload.debug")
+local lazy_debug = require("thebeard.lazyload.debug")
 local state = require("thebeard.lazyload.state")
 local util = require("thebeard.lazyload.util")
 
@@ -91,14 +91,14 @@ local function load_dependencies(plugin_spec, reason, session_specs)
 		return
 	end
 
-	debug.measure("pack.add.deps:" .. plugin_spec.spec_name, function()
+	lazy_debug.measure("pack.add.deps:" .. plugin_spec.spec_name, function()
 		local raw_deps = {}
 
 		for _, dep in ipairs(plugin_spec.deps) do
 			if source_is_disabled(dep) then
 				local owner = disabled_source_owner(dep) or { spec_name = "unknown" }
 
-				debug.log(
+				lazy_debug.log(
 					"Skipped disabled dependency",
 					util.plugin_name(dep),
 					"owned by",
@@ -110,7 +110,16 @@ local function load_dependencies(plugin_spec, reason, session_specs)
 				local dep_spec = manifest.by_name[util.plugin_name(dep)]
 
 				if dep_spec then
-					activate(dep_spec, "dependency:" .. plugin_spec.spec_name .. " via " .. reason, session_specs)
+					if state.has_failed(dep_spec) then
+						lazy_debug.log(
+							"Skipped failed dependency",
+							dep_spec.spec_name,
+							"required by",
+							plugin_spec.spec_name
+						)
+					else
+						activate(dep_spec, "dependency:" .. plugin_spec.spec_name .. " via " .. reason, session_specs)
+					end
 				else
 					table.insert(raw_deps, dep)
 				end
@@ -128,42 +137,67 @@ end
 ---@param session_specs? table<string, boolean>
 ---@return boolean loaded_now
 function M.load_spec(plugin_spec, reason, session_specs)
-	return debug.measure("load:" .. plugin_spec.spec_name, function()
+	return lazy_debug.measure("load:" .. plugin_spec.spec_name, function()
 		session_specs = session_specs or {}
 		reason = reason or "manual"
 
 		if not is_enabled(plugin_spec) then
 			state.record_load_attempt(plugin_spec, reason, false)
-			debug.log("Skipped disabled spec", plugin_spec.spec_name, "via", reason)
+			lazy_debug.log("Skipped disabled spec", plugin_spec.spec_name, "via", reason)
 			return false
 		end
 
+		-- Dependency traversal concern only.
 		if session_specs[plugin_spec.spec_name] then
+			lazy_debug.log("Skipped dependency cycle", plugin_spec.spec_name, "via", reason)
+			return false
+		end
+
+		local spec_state = state.spec_state(plugin_spec)
+
+		if spec_state == "loaded" then
+			state.record_load_attempt(plugin_spec, reason, false)
+			return false
+		end
+
+		if spec_state == "loading" then
+			state.record_load_attempt(plugin_spec, reason, false)
+			lazy_debug.log("Skipped loading spec", plugin_spec.spec_name, "via", reason)
+			return false
+		end
+
+		if spec_state == "failed" then
+			state.record_load_attempt(plugin_spec, reason, false)
+			lazy_debug.log("Skipped failed spec", plugin_spec.spec_name, "via", reason)
 			return false
 		end
 
 		session_specs[plugin_spec.spec_name] = true
 
-		if state.is_loaded(plugin_spec) then
-			state.record_load_attempt(plugin_spec, reason, false)
+		state.record_load_attempt(plugin_spec, reason, true)
+		state.record_load_reason(plugin_spec, reason)
+		state.set_spec_state(plugin_spec, "loading")
+
+		local ok, err = xpcall(function()
+			load_dependencies(plugin_spec, reason, session_specs)
+
+			lazy_debug.measure("pack.add:" .. plugin_spec.spec_name, function()
+				vim.pack.add(plugin_spec.sources)
+			end)
+
+			if plugin_spec.config then
+				lazy_debug.measure("config:" .. plugin_spec.spec_name, plugin_spec.config)
+			end
+		end, debug.traceback)
+
+		if not ok then
+			state.mark_failed(plugin_spec, tostring(err), reason)
+			lazy_debug.log("Failed", plugin_spec.spec_name, "via", reason)
 			return false
 		end
 
-		state.record_load_attempt(plugin_spec, reason, true)
-		state.record_load_reason(plugin_spec, reason)
-
-		load_dependencies(plugin_spec, reason, session_specs)
-
-		debug.measure("pack.add:" .. plugin_spec.spec_name, function()
-			vim.pack.add(plugin_spec.sources)
-		end)
-
-		if plugin_spec.config then
-			debug.measure("config:" .. plugin_spec.spec_name, plugin_spec.config)
-		end
-
-		state.mark_loaded(plugin_spec)
-		debug.log("Loaded", plugin_spec.spec_name, "via", reason)
+		state.set_spec_state(plugin_spec, "loaded")
+		lazy_debug.log("Loaded", plugin_spec.spec_name, "via", reason)
 
 		return true
 	end)
@@ -231,7 +265,7 @@ local function register_keymaps(plugin_spec)
 		return
 	end
 
-	debug.measure("keymaps:" .. plugin_spec.spec_name, function()
+	lazy_debug.measure("keymaps:" .. plugin_spec.spec_name, function()
 		for _, keymap in ipairs(plugin_spec.keymaps) do
 			util.keymap(vim.deepcopy(keymap))
 		end
@@ -249,7 +283,7 @@ local function register_lazy_keymaps(plugin_spec)
 		return
 	end
 
-	debug.measure("keymaps.lazy:" .. plugin_spec.spec_name, function()
+	lazy_debug.measure("keymaps.lazy:" .. plugin_spec.spec_name, function()
 		for _, keymap in ipairs(plugin_spec.keymaps) do
 			local map = vim.deepcopy(keymap)
 			local cmd = map.cmd
@@ -316,15 +350,30 @@ end
 activate = function(plugin_spec, reason, session_specs)
 	reason = reason or "manual"
 
-	debug.measure("activate:" .. plugin_spec.spec_name, function()
-		-- Remove command stubs before loading so the plugin can define the real commands.
+	local spec_state = state.spec_state(plugin_spec)
+
+	if spec_state == "loading" then
+		state.record_load_attempt(plugin_spec, reason, false)
+		lazy_debug.log("Skipped loading spec", plugin_spec.spec_name, "via", reason)
+		return
+	end
+
+	if spec_state == "failed" then
+		state.record_load_attempt(plugin_spec, reason, false)
+		lazy_debug.log("Skipped failed spec", plugin_spec.spec_name, "via", reason)
+		return
+	end
+
+	lazy_debug.measure("activate:" .. plugin_spec.spec_name, function()
 		cleanup_triggers(plugin_spec)
 
 		local loaded_now = M.load_spec(plugin_spec, reason, session_specs)
 
-		register_keymaps(plugin_spec)
+		if state.is_loaded(plugin_spec) then
+			register_keymaps(plugin_spec)
+		end
 
-		debug.log("Activated", plugin_spec.spec_name, "loaded_now=" .. tostring(loaded_now), "reason=" .. reason)
+		lazy_debug.log("Activated", plugin_spec.spec_name, "loaded_now=" .. tostring(loaded_now), "reason=" .. reason)
 	end)
 end
 
@@ -341,7 +390,7 @@ local function register_event_trigger(plugin_spec)
 		return
 	end
 
-	debug.measure("trigger.event:" .. plugin_spec.spec_name, function()
+	lazy_debug.measure("trigger.event:" .. plugin_spec.spec_name, function()
 		vim.api.nvim_create_autocmd(util.as_list(plugin_spec.on_event), {
 			group = augroup("thebeard-defer-", plugin_spec),
 			once = true,
@@ -358,7 +407,7 @@ local function register_filetype_trigger(plugin_spec)
 		return
 	end
 
-	debug.measure("trigger.filetype:" .. plugin_spec.spec_name, function()
+	lazy_debug.measure("trigger.filetype:" .. plugin_spec.spec_name, function()
 		vim.api.nvim_create_autocmd("FileType", {
 			pattern = util.as_list(plugin_spec.on_filetype),
 			group = augroup("thebeard-defer-ft-", plugin_spec),
@@ -412,7 +461,7 @@ local function register_command_trigger(plugin_spec)
 		return
 	end
 
-	debug.measure("trigger.command:" .. plugin_spec.spec_name, function()
+	lazy_debug.measure("trigger.command:" .. plugin_spec.spec_name, function()
 		for _, cmd in ipairs(util.as_list(plugin_spec.on_cmd)) do
 			vim.api.nvim_create_user_command(cmd, function(args)
 				activate(plugin_spec, "cmd:" .. cmd)
@@ -429,7 +478,7 @@ end
 
 ---@param plugin_spec TheBeardLazyloadPluginSpec
 local function register_default_trigger(plugin_spec)
-	debug.measure("trigger.default:" .. plugin_spec.spec_name, function()
+	lazy_debug.measure("trigger.default:" .. plugin_spec.spec_name, function()
 		vim.api.nvim_create_autocmd("VimEnter", {
 			group = augroup("thebeard-defer-vimenter-", plugin_spec),
 			once = true,
@@ -453,9 +502,15 @@ end
 
 ---@param plugin_spec TheBeardLazyloadPluginSpec
 function M.setup_spec(plugin_spec)
-	debug.measure("setup:" .. plugin_spec.spec_name, function()
-		if state.is_loaded(plugin_spec) then
+	lazy_debug.measure("setup:" .. plugin_spec.spec_name, function()
+		local spec_state = state.spec_state(plugin_spec)
+
+		if spec_state == "loaded" then
 			register_keymaps(plugin_spec)
+			return
+		end
+
+		if spec_state == "loading" or spec_state == "failed" then
 			return
 		end
 
