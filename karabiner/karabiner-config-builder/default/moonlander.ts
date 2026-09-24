@@ -13,10 +13,7 @@ import {
 import aerospaceBindings from "./bindings/aerospace.ts";
 import appBindings from "./bindings/apps.ts";
 import moonlanderRemaps from "./bindings/protools/moonlander-remaps.ts";
-import {
-    markerBindings,
-    moonlanderPtMarkerBindings,
-} from "./bindings/protools/markers.ts";
+import { markerBindings } from "./bindings/protools/markers.ts";
 import {
     ptCommandBindingsLeft,
     ptCommandBindingsRight,
@@ -45,7 +42,7 @@ export default function (): GroupDefinition {
                 tapped: key("keypad_enter"),
                 block: true,
                 tapTimeoutMs: 150,
-                bindings: [...moonlanderPtMarkerBindings, ...markerBindings],
+                bindings: [...markerBindings],
             }),
 
             layer("moonlander-pt-commands", {

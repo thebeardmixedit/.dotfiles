@@ -10,43 +10,22 @@ import {
     soundflow,
 } from "karabiner-config-builder";
 
-export const moonlanderPtMarkerBindings: Manipulator[] = [
-    bind("n", key(opt(cmd("left_arrow"))), {
+export const markerBindings: Manipulator[] = [
+    bind("comma", key(opt(cmd("left_arrow"))), {
         description: "Pro Tools Marker: Go to previous",
     }),
-    bind("m", key(opt(cmd("right_arrow"))), {
+    bind("period", key(opt(cmd("right_arrow"))), {
         description: "Pro Tools Marker: Go to next",
     }),
-    bind(shift("n"), key(shift(opt(cmd("left_arrow")))), {
+    bind(shift("comma"), key(shift(opt(cmd("left_arrow")))), {
         description: "Pro Tools Marker: Go to previous",
     }),
-    bind(shift("m"), key(shift(opt(cmd("right_arrow")))), {
+    bind(shift("period"), key(shift(opt(cmd("right_arrow")))), {
         description: "Pro Tools Marker: Go to next",
     }),
-    bind("comma", key(cmd("keypad_5")), {
+    bind("slash", key(cmd("keypad_5")), {
         description: "Pro Tools Marker: Open Marker Window",
     }),
-];
-
-export const internalPtMarkerBindings = [
-    bind("hyphen", key(opt(cmd("left_arrow"))), {
-        description: "Pro Tools Marker: Go to previous",
-    }),
-    bind("equal_sign", key(opt(cmd("right_arrow"))), {
-        description: "Pro Tools Marker: Go to next",
-    }),
-    bind(shift("hyphen"), key(shift(opt(cmd("left_arrow")))), {
-        description: "Pro Tools Marker: Go to previous",
-    }),
-    bind(shift("equal_sign"), key(shift(opt(cmd("right_arrow")))), {
-        description: "Pro Tools Marker: Go to next",
-    }),
-    bind("return_or_enter", key(cmd("keypad_5")), {
-        description: "Pro Tools Marker: Open Marker Window",
-    }),
-];
-
-export const markerBindings = [
     bind(
         "1",
         macro(key("keypad_period"), key("keypad_1"), key("keypad_period")),

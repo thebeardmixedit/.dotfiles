@@ -10,10 +10,7 @@ import {
 
 import aerospaceBindings from "./bindings/aerospace.ts";
 import appBindings from "./bindings/apps.ts";
-import {
-    markerBindings,
-    internalPtMarkerBindings,
-} from "./bindings/protools/markers.ts";
+import { markerBindings } from "./bindings/protools/markers.ts";
 import {
     ptCommandBindingsLeft,
     ptCommandBindingsRight,
@@ -40,7 +37,7 @@ export default function (): GroupDefinition {
                 trigger: "backslash",
                 tapped: key("backslash"),
                 tapTimeoutMs: 150,
-                bindings: [...internalPtMarkerBindings, ...markerBindings],
+                bindings: [...markerBindings],
             }),
             layer("internal-pt-commands", {
                 trigger: "tab",
