@@ -9,7 +9,12 @@ return {
 		local ensure_installed = {
 			-- LSP servers
 			"lua-language-server",
-			"csharp-language-server",
+			{
+				"csharp-language-server",
+				condition = function()
+					return vim.fn.executable("dotnet") == 1
+				end,
+			},
 			"bash-language-server",
 			"typescript-language-server",
 			"html-lsp",

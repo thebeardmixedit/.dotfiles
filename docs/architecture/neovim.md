@@ -18,7 +18,7 @@ Managed specs move from `unloaded` to `loading`, then to `loaded` or `failed`. F
 
 ## C# Editing
 
-The `cs` filetype activates `csharp_ls`, Conform, and Treesitter. Blink provides LSP completion, and LuaSnip loads the C# snippets supplied by friendly-snippets. `TSInstallConfigured` includes the `c_sharp` parser. Mason declares `csharp-language-server` for installation when the normal configuration starts.
+The `cs` filetype activates `csharp_ls`, Conform, and Treesitter. Blink provides LSP completion, and LuaSnip loads the C# snippets supplied by friendly-snippets. `TSInstallConfigured` includes the `c_sharp` parser. Mason installs `csharp-language-server` at startup once `dotnet` is available.
 
 C# formatting is manual through the existing Conform mapping, using LSP formatting when available. No C# formatter or linter is configured. Put C# style rules in the audio engine project's `.editorconfig` when that project exists. Revisit a dedicated formatter and format-on-save only after editing real C# code. The language server needs the .NET SDK, which is outside this Neovim configuration.
 
