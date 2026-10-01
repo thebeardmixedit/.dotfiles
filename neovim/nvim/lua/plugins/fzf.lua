@@ -100,7 +100,7 @@ return {
 							})
 
 							vim.defer_fn(function()
-								vim.lsp.buf.format({ bufnr = bufnr })
+								require("conform").format({ bufnr = bufnr })
 							end, 50)
 						end,
 						opts = { buffer = bufnr, desc = "[o]rganize imports" },
