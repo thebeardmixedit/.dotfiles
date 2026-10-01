@@ -32,17 +32,6 @@ local function new_file()
 	end)
 end
 
-local function make_executable()
-	local file = vim.fn.expand("%:p")
-
-	if file == "" then
-		return
-	end
-
-	vim.cmd("silent !chmod +x " .. vim.fn.shellescape(file))
-	vim.cmd("redraw!")
-end
-
 -- Files
 u.keymap({ keys = "<A-r>", cmd = "<cmd>confirm edit<CR>", opts = { desc = "Reload the current buffer" } })
 u.keymap({ keys = "<A-s>", cmd = "<cmd>write<CR>", opts = { desc = "Write (save) the current buffer" } })
