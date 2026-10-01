@@ -12,6 +12,7 @@ return {
 	config = function()
 		---@type table<string, vim.lsp.Config>
 		local servers = {
+			csharp_ls = {},
 			lua_ls = {
 				on_init = function(client)
 					if client.workspace_folders then

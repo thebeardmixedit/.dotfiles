@@ -1,5 +1,6 @@
 local parsers = {
 	"lua",
+	"c_sharp",
 	"vim",
 	"bash",
 	"gitignore",
@@ -17,6 +18,7 @@ local parsers = {
 
 local filetypes = {
 	"lua",
+	"cs",
 	"vim",
 	"bash",
 	"sh",

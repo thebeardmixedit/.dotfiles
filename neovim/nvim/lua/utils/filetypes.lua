@@ -1,6 +1,7 @@
 return {
 	lsp = {
 		"lua",
+		"cs",
 		"javascript",
 		"javascriptreact",
 		"typescript",
@@ -17,6 +18,7 @@ return {
 	},
 	format = {
 		"lua",
+		"cs",
 		"javascript",
 		"javascriptreact",
 		"typescript",

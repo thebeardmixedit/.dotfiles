@@ -9,6 +9,7 @@ return {
 		local ensure_installed = {
 			-- LSP servers
 			"lua-language-server",
+			"csharp-language-server",
 			"bash-language-server",
 			"typescript-language-server",
 			"html-lsp",
