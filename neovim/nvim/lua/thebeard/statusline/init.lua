@@ -1,5 +1,6 @@
 local u = require("utils")
 local state = require("thebeard.statusline.state")
+local statusline_utils = require("thebeard.statusline.utils")
 
 local separator = require("thebeard.statusline.modules.separator")
 local spacer = require("thebeard.statusline.modules.spacer")
@@ -57,7 +58,7 @@ function StatuslineAi.render()
 	local bufnr = vim.fn.winbufnr(statusline_winid)
 	local ft = vim.bo[bufnr].filetype
 
-	if ft == "fzf" or ft == "harpoon" then
+	if statusline_utils.is_empty_statusline_filetype(ft) then
 		return ""
 	end
 
