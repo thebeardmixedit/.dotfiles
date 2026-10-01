@@ -146,7 +146,7 @@ export default [
         shift(cmd("s")),
         aerospace("move-node-to-workspace --focus-follows-window sp"),
     ),
-    bind("g", script(focusAppspace, { args: ["com.openai.chat", "ai"] })),
+    bind("g", script(focusAppspace, { args: ["com.openai.codex", "ai"] })),
     bind(
         cmd("g"),
         aerospace("move-node-to-workspace --focus-follows-window ai"),
