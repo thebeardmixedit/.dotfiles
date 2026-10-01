@@ -28,6 +28,6 @@ return {
 
 		local hl = state.git_branch_modified() and "%#StatusLineGitBranchModified#" or "%#StatusLineGitBranchUpToDate#"
 
-		return hl .. " " .. gitsigns_status.head .. "%*"
+		return hl .. " " .. utils.escape(gitsigns_status.head) .. "%*"
 	end,
 }

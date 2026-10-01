@@ -29,6 +29,6 @@ return {
 			return "            "
 		end
 
-		return " " .. table.concat(names, "|")
+		return " " .. utils.escape(table.concat(names, "|"))
 	end,
 }

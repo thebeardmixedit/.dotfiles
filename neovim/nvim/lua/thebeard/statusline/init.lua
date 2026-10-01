@@ -63,7 +63,7 @@ function StatuslineAi.render()
 
 	local statusline = {}
 
-	table.insert(statusline, mode.render())
+	table.insert(statusline, mode.render({ bufnr = bufnr }))
 	table.insert(statusline, spacer.render())
 	table.insert(statusline, gitbranch.render({ bufnr = bufnr }))
 	table.insert(statusline, spacer.render(2))

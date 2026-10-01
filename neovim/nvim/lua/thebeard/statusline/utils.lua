@@ -1,5 +1,11 @@
 local M = {}
 
+---@param value string
+---@return string
+function M.escape(value)
+	return value:gsub("%%", "%%%%")
+end
+
 local hidden_filetypes = {
 	netrw = true,
 	toggleterm = true,

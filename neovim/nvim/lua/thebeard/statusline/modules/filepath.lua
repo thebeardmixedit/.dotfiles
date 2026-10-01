@@ -27,13 +27,13 @@ return {
 		local hl = utils.buffer_hl(bufnr)
 
 		if filetype == "netrw" then
-			return "%#StatusLineNetrw#" .. workingpath .. "%*"
+			return "%#StatusLineNetrw#" .. utils.escape(workingpath) .. "%*"
 		end
 
 		if filetype == "toggleterm" then
 			local shell = vim.fn.fnamemodify(name, ":t"):gsub(";#toggleterm#", "")
 
-			return "%#StatusLine# " .. shell .. "%*"
+			return "%#StatusLine# " .. utils.escape(shell) .. "%*"
 		end
 
 		if filetype == "NeogitStatus" then
@@ -43,13 +43,13 @@ return {
 				hl = "%#StatusLineGitBranchUpToDate#"
 			end
 
-			return hl .. filetype .. "%*"
+			return hl .. utils.escape(filetype) .. "%*"
 		end
 
 		if state.show_path() then
-			return hl .. workingpath .. "%*"
+			return hl .. utils.escape(workingpath) .. "%*"
 		end
 
-		return hl .. filename .. "%*"
+		return hl .. utils.escape(filename) .. "%*"
 	end,
 }
