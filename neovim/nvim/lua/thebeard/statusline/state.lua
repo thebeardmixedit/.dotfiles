@@ -29,8 +29,13 @@ function M.set_git_branch_modified(value)
 	git_branch_modified = value == true
 end
 
-function M.refresh_git_branch_modified()
-	git_branch_modified = vim.fn.system("git status --porcelain 2>/dev/null") ~= ""
+---@param bufnr? integer
+function M.refresh_git_branch_modified(bufnr)
+	bufnr = bufnr or vim.api.nvim_get_current_buf()
+	local name = vim.api.nvim_buf_get_name(bufnr)
+	local directory = name ~= "" and vim.bo[bufnr].buftype == "" and vim.fn.fnamemodify(name, ":h") or vim.fn.getcwd()
+	local output = vim.fn.system({ "git", "-C", directory, "status", "--porcelain" })
+	git_branch_modified = vim.v.shell_error == 0 and output ~= ""
 
 	return git_branch_modified
 end
