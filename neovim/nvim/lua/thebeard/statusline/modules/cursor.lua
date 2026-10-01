@@ -14,7 +14,7 @@ return {
 		local icon_hl = "%#Structure#"
 		local pos_hl = "%#StatusLine#"
 		local pos = vim.api.nvim_win_get_cursor(win)
-		local position = pos[1] .. ":" .. pos[2]
+		local position = pos[1] .. ":" .. (pos[2] + 1)
 
 		return icon_hl .. " " .. pos_hl .. position .. "%*"
 	end,
