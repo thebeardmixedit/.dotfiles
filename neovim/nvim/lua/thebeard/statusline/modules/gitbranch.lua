@@ -4,8 +4,8 @@ local utils = require("thebeard.statusline.utils")
 vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "DirChanged" }, {
 	group = vim.api.nvim_create_augroup("thebeard-statusline-gitbranchupdate", { clear = true }),
 	desc = "Update statusline git branch state for the current buffer",
-	callback = function(event)
-		state.refresh_git_branch_modified(event.event == "DirChanged" and nil or event.buf)
+	callback = function()
+		state.refresh_git_branch_modified()
 		vim.cmd("redrawstatus")
 	end,
 })
