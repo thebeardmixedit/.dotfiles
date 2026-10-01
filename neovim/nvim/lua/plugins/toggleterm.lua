@@ -25,7 +25,7 @@ return {
 		{
 			keys = "<C-t>",
 			cmd = ":ToggleTerm size=40 direction=horizontal<CR>",
-			desc = "Toggle terminal",
+			opts = { desc = "Toggle terminal" },
 		},
 		{
 			modes = "t",
@@ -34,7 +34,7 @@ return {
 				vim.cmd("stopinsert")
 				vim.cmd("ToggleTerm size=40 direction=horizontal")
 			end,
-			desc = "Close terminal",
+			opts = { desc = "Close terminal" },
 		},
 	},
 }
