@@ -30,6 +30,7 @@ Managed specs move from `unloaded` to `loading`, then to `loaded` or `failed`. F
 | `on_keymap = false` | Mappings do not activate it; other triggers or the default `VimEnter` path remain |
 
 `eager` takes precedence over deferred loading. The supported setup options are `import` and `debug`; `load_keymaps_eagerly` is not a current option.
+Lazy command stubs intentionally load the owning spec and replay the invocation without reproducing every attribute of the eventual plugin-defined command.
 
 ### Lifecycle Ownership
 
@@ -46,6 +47,10 @@ Mapping state is `none -> lazy -> spec` or `none -> spec`. A dependency cycle sk
 The `cs` filetype activates `csharp_ls`, Conform, and Treesitter. Blink provides LSP completion, and LuaSnip loads the C# snippets supplied by friendly-snippets. `TSInstallConfigured` includes the `c_sharp` parser. Mason installs `csharp-language-server` at startup once `dotnet` is available.
 
 C# formatting is manual through the existing Conform mapping (`<S-A-f>`), using LSP formatting when available. No dedicated C# formatter or linter is configured, and C# has no configured format-on-save path. SDK selection and style rules belong to each application's `global.json` and `.editorconfig`. The language server needs the .NET SDK, which is outside this Neovim configuration.
+
+The supported Apple Silicon workstation installation route is the native Arm64 .NET SDK via `brew install --cask dotnet-sdk`. The SDK includes the runtime. This route needs no dedicated `DOTNET_ROOT` or custom .NET `PATH` configuration beyond the existing [Homebrew shell initialization](shell.md#deployment-and-prerequisites).
+
+Mason's prerequisite guard checks only that `dotnet` is executable, not that its version satisfies the active `csharp-language-server`. When troubleshooting installation or startup, explicitly compare the installed SDK/runtime with the active server's requirements; executable availability alone does not establish compatibility.
 
 ## Statusline
 
@@ -93,3 +98,14 @@ Choose checks for the changed behavior rather than repeating an entire editor au
 - For statusline changes, use active/background buffers, multiple repositories, special buffers, and literal `%` in dynamic text when relevant.
 
 The workstation links `~/.config/nvim` and `~/.config/nvim-lab` into this checkout. An isolated worktree alone does not redirect those links. Startup can install tools through Mason and add packages through `vim.pack`; use isolated data/cache/config locations and controlled dependencies for tests. Disable automatic installation for a test when needed and report that limitation. Do not update packages, install parsers, or switch the active configuration merely to validate documentation.
+
+### C# Validation
+
+Use a disposable or authorized application project with an app and a test project; their SDK pins, style rules, test dependencies, and code remain outside dotfiles. Run commands from that project's root. Build/test commands may restore its dependencies.
+
+1. Run `dotnet --info` and verify the SDK/runtime architecture and compatibility with the active language server.
+2. Open a C# project file in a fresh Neovim session. `:echo executable('dotnet')` should return `1`; `:!dotnet --info` confirms the SDK is visible from the editor.
+3. Use `:checkhealth vim.lsp` to verify `csharp_ls` is attached to the C# buffer, then type a member access such as `Console.` and verify LSP completion.
+4. Check `:lua print(vim.treesitter.get_parser(0):lang())` reports `c_sharp` and syntax highlighting works. If the parser is missing, install it explicitly with `:TSInstall c_sharp` before repeating the check.
+5. Disturb indentation, invoke `<S-A-f>` or `:lua require('conform').format({ async = true })`, and verify manual LSP formatting repairs it. Separately disturb indentation and save to confirm saving alone does not format C#; manually format again afterward.
+6. From Neovim, run `:!dotnet build <app.csproj>`, `:!dotnet run --project <app.csproj> --no-build`, and `:!dotnet test <tests.csproj>`, replacing the placeholders with actual project paths. Verify expected output and a passing test; introduce a deliberate behavior error that still compiles, save, and verify the test fails. Restore the behavior, save, and verify the test passes again.
