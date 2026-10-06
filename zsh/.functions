@@ -85,8 +85,8 @@ workspace_edit() {
 
 workspace_projects() {
     workspace_cd \
-        --search "$CODE/personal" \
-        --search "$CODE/neovim"
+        --search "$CODE" \
+        --exclude "$CODE/tmp"
 }
 
 workspace_dotfiles() {
