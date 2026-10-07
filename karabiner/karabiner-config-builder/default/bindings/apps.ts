@@ -128,6 +128,14 @@ export default [
         cmd("c"),
         aerospace("move-node-to-workspace --focus-follows-window ca"),
     ),
+    bind(
+        shift("c"),
+        script(focusAppspace, { args: ["com.bombich.ccc", "cc"] }),
+    ),
+    bind(
+        shift(cmd("c")),
+        aerospace("move-node-to-workspace --focus-follows-window cc"),
+    ),
     bind("r", script(focusAppspace, { args: ["com.apple.reminders", "rm"] })),
     bind(
         cmd("r"),

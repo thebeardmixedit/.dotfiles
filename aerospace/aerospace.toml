@@ -96,6 +96,9 @@ on-window-detected = [
   { if = "test %{app-bundle-id} = com.apple.Preview", run = [
     "move-node-to-workspace pr",
   ] },
+  { if = "test %{app-bundle-id} = com.bombich.ccc", run = [
+    "move-node-to-workspace cc",
+  ] },
   { if = """\
             test %{app-bundle-id} = org.m0k.transmission \
             || test %{app-bundle-id} = com.apple.AppStore \
