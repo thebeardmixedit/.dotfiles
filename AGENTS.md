@@ -1,26 +1,20 @@
-# Dotfiles execution map
+# Dotfiles repository guidance
 
-This public repository owns implemented workstation configuration and stable architecture. Read README.md, then only the documentation relevant to the task:
+This repository owns workstation configuration, integration, and stable architecture. Use the repository map in README.md and read the subsystem documentation relevant to the task.
 
-- Shell startup/support: bash/, zsh/, bin/; docs/architecture/shell.md.
-- Production Neovim and experimental lab: neovim/nvim and neovim/nvim-lab; docs/architecture/neovim.md.
-- Terminal configuration: ghostty/, tmux/; docs/architecture/terminal.md.
-- Keyboard/window integration: karabiner/, aerospace/, borders/, routing helpers in bin/; docs/architecture/window-management.md.
-- Workstation application assets: protools/ and tbp/. Verify deployment destinations rather than assuming tracked assets are active.
+Separate projects own their product implementation, releases, and backlogs. Application SDK and coding-style policy belong in their owning repositories.
 
-## Execution and validation
+## Configuration safety and validation
 
-- This checkout can be live configuration through symlinks, sourced files, PATH entries, and deployed output. Verify relevant relationships before editing.
-- Use an isolated worktree in this same repository when isolation is needed. It does not redirect live configuration links. Do not switch, reload, or deploy active configuration outside the authorized scope.
-- Follow subsystem validation guidance. Use matching syntax/static checks and focused behavior checks for implementation changes; check documentation links, factual accuracy, and diffs for documentation-only changes. Report evidence and limits.
-- Startup and build commands may install dependencies, write caches/output, or launch applications. Use controlled test locations and inspect their effects before running them.
-- Separate projects own their product architecture, implementation, releases, and backlogs. Dotfiles owns workstation integration. Keep application SDK/style policy project-local; keep Karabiner Config Builder, Neovim plugin, and SoundFlow product work in their owning projects.
+- Tracked files may be active configuration through symlinks, sourced files, PATH entries, or deployed output. Check the relevant source-to-active relationships before editing; tracked application assets are not necessarily deployed.
+- Use isolation appropriate to the task. A separate worktree does not redirect live configuration links. Switching, reloading, or deploying active configuration must be within the authorized scope.
+- Startup, build, and validation commands may install dependencies, write output or caches, launch applications, or invoke automation. Check their effects and use controlled test locations where needed.
+- Follow the relevant subsystem validation guidance. For documentation changes, check references, factual accuracy, and the diff. State what was verified and any material limits.
 
-## Private planning boundary
+## Private planning and Git
 
-- When present, internal/ is the optional private .dotfiles-internal submodule for roadmap and project-management truth. Public configuration and documentation must work without it.
-- Read internal/AGENTS.md before using private material. If it is unavailable, report the limitation and continue independent authorized public work; do not infer current planning or claim private milestone completion.
-- Do not copy or summarize private planning into public files, issues, pull requests, commit messages, or other public outputs without explicit authorization.
-- Actionable work defaults to the private repository. Public issue tracking is exceptional and must be explicitly chosen.
-- The parent gitlink records a deliberate checkpoint, not the latest private state. Inspect both repositories when relevant and report the private revision used.
-- Private changes do not authorize parent pointer changes. Synchronization is deliberate; preserve unrelated work, stage explicit paths, and inspect each repository's diff separately.
+- `internal/` is the optional private `.dotfiles-internal` submodule for planning and project management. Public configuration and documentation must work without it. Read `internal/AGENTS.md` before using or changing private material.
+- Do not publish private planning or personal account/security information in public files, issues, pull requests, or commit metadata without explicit authorization. Do not commit credentials or other secrets to either repository.
+- Preserve unrelated work. Commit and push only with explicit authorization.
+- The parent gitlink records a checkpoint, not necessarily current private planning. Inspect both repositories when relevant; identify the private revision used and disclose unavailable evidence.
+- Private repository changes do not authorize a parent pointer update. Such updates require explicit authorization. Review each repository’s changes separately and ensure the referenced private commit is available on the private remote before publishing the parent pointer.
