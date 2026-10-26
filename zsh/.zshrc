@@ -129,6 +129,7 @@ path=(
     $path
     "$ANDROID_HOME/emulator"
     "$ANDROID_HOME/platform-tools"
+    "$HOME/.lmstudio/bin"
 )
 
 # Source a file if it is readable.

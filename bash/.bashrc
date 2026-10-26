@@ -20,6 +20,7 @@ PATH="$HOME/.local/share/bob/nvim-bin:$PATH"
 PATH="/Applications/Carbon Copy Cloner.app/Contents/MacOS:$PATH"
 PATH="$PATH:$ANDROID_HOME/emulator"
 PATH="$PATH:$ANDROID_HOME/platform-tools"
+PATH="$PATH:$HOME/.lmstudio/bin"
 
 export PATH
 
