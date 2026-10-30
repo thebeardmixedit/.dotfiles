@@ -111,6 +111,13 @@ fi
 
 zle_highlight=('paste:none')
 
+# Platform detection
+case "$OSTYPE" in
+darwin*) DOTFILES_OS=macos ;;
+linux*) DOTFILES_OS=linux ;;
+*) DOTFILES_OS=unknown ;;
+esac
+
 # Environment exports
 export CODE="$HOME/Code"
 export DOTFILES="$HOME/.dotfiles"
@@ -118,19 +125,31 @@ export DOTFILESLOGS="$DOTFILES/.logs"
 export NEOVIM="$DOTFILES/neovim"
 
 # PATH exports
-export ANDROID_HOME="$HOME/Library/Android/sdk"
-
 typeset -U path PATH
 
-path=(
-    "$DOTFILES/bin"
-    "$HOME/.local/share/bob/nvim-bin"
-    "/Applications/Carbon Copy Cloner.app/Contents/MacOS"
-    $path
-    "$ANDROID_HOME/emulator"
-    "$ANDROID_HOME/platform-tools"
-    "$HOME/.lmstudio/bin"
-)
+case "$DOTFILES_OS" in
+macos)
+    export ANDROID_HOME="$HOME/Library/Android/sdk"
+
+    path=(
+        "$DOTFILES/bin"
+        "$HOME/.local/share/bob/nvim-bin"
+        "/Applications/Carbon Copy Cloner.app/Contents/MacOS"
+        $path
+        "$ANDROID_HOME/emulator"
+        "$ANDROID_HOME/platform-tools"
+        "$HOME/.lmstudio/bin"
+    )
+    ;;
+linux)
+    path=(
+        "$DOTFILES/bin"
+        "$HOME/.local/share/bob/nvim-bin"
+        $path
+        "$HOME/.lmstudio/bin"
+    )
+    ;;
+esac
 
 # Source a file if it is readable.
 source_file() {
@@ -183,11 +202,37 @@ bindkey -s '^B^N' '^uworkspace_neovim^M'
 # bindkey -s '^B^N' '^utmux-sessionizer -s "${NEOVIM}"^M'
 bindkey -s '^B^L' '^uclear^M'
 
-if [[ -n "${HOMEBREW_PREFIX:-}" ]]; then
-    # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-    source_file "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
-    source_file "$DOTFILES/zsh/.p10k.zsh"
+# Powerlevel10k
+case "$DOTFILES_OS" in
+macos)
+    p10k_theme="$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
+    ;;
+linux)
+    p10k_theme="$HOME/.local/share/powerlevel10k/powerlevel10k.zsh-theme"
+    ;;
+esac
 
-    source_file "$HOME/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh"
-    source_file "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+if [[ -n "${p10k_theme:-}" && -r "$p10k_theme" ]]; then
+    source_file "$p10k_theme"
+    source_file "$DOTFILES/zsh/.p10k.zsh"
 fi
+
+unset p10k_theme
+
+# Syntax highlighting
+source_file "$HOME/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh"
+
+case "$DOTFILES_OS" in
+macos)
+    syntax_highlighting="$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+    ;;
+linux)
+    syntax_highlighting="/usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+    ;;
+esac
+
+if [[ -n "${syntax_highlighting:-}" ]]; then
+    source_file "$syntax_highlighting"
+fi
+
+unset syntax_highlighting

@@ -63,7 +63,9 @@ alias egrep='egrep --color=auto'
 alias myip='curl -fsS https://ipecho.net/plain && echo'
 
 # PlistBuddy alias, because sometimes `defaults` just doesn't cut it.
-alias plistbuddy='/usr/libexec/PlistBuddy'
+if [[ "$DOTFILES_OS" == macos ]]; then
+    alias plistbuddy='/usr/libexec/PlistBuddy'
+fi
 
 # Print each PATH entry on a separate line.
 alias path='print -l -- $path'
