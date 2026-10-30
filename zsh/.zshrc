@@ -144,6 +144,15 @@ source_file "$DOTFILES/zsh/.history"
 source_file "$DOTFILES/zsh/.aliases"
 source_file "$DOTFILES/zsh/.functions"
 
+# Set the terminal title for ghostty
+set_terminal_title() {
+    [[ -n "${GHOSTTY_RESOURCES_DIR:-}" ]] || return
+    print -Pn '\e]0;%1~\a'
+}
+
+precmd_functions+=(set_terminal_title)
+chpwd_functions+=(set_terminal_title)
+
 # Autoload commands and functions
 autoload -U zmv
 

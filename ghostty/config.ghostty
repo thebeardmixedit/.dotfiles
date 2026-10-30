@@ -4,8 +4,6 @@ font-family =	MesloLG Nerd Font Mono
 font-size = 14
 
 background = #0a0a0a 
-# background-opacity = 0.95
-# background-blur = 30
 
 window-padding-x = 20,10
 window-padding-y = 10
@@ -15,6 +13,7 @@ copy-on-select = clipboard
 
 macos-option-as-alt = true
 # macos-titlebar-style = hidden
+shell-integration-features = no-title
 
 # Entry point to activate Vim mode
 keybind = alt+v=activate_key_table:vim
