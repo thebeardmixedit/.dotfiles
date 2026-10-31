@@ -39,8 +39,6 @@ alias aic='ascii-image-converter'
 
 # Detect which `ls` flavor is available.
 if command ls --color >/dev/null 2>&1; then
-    export LS_COLORS='...'
-
     alias ls='command ls --color'
     alias l='ls -lF --color'
     alias la='ls -lAF --color'
