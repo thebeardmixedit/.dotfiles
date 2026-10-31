@@ -220,7 +220,7 @@ fi
 unset p10k_theme
 
 # Syntax highlighting
-source_file "$HOME/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh"
+source_file "$DOTFILES/zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh"
 
 case "$DOTFILES_OS" in
 macos)
