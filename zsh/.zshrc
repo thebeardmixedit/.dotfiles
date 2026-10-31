@@ -144,6 +144,7 @@ macos)
 linux)
     path=(
         "$DOTFILES/bin"
+        "$HOME/.local/bin"
         "$HOME/.local/share/bob/nvim-bin"
         $path
         "$HOME/.lmstudio/bin"
